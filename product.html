@@ -179,13 +179,13 @@
         </div>
 
         <form id="p-zip" data-zip-form style="display:none;gap:8px;flex-wrap:wrap;align-items:center;
-             border:1px solid var(--rule);border-left:3px solid var(--local-bright);border-radius:3px;
+             border-left:1px solid var(--local);
              background:var(--local-wash);padding:16px">
           <label for="zip-pdp" style="font-size:var(--t-sm);color:var(--local);flex:1 1 100%;margin:0">
             Enter your ZIP and this page will show what your dealer charges for it.
           </label>
           <input id="zip-pdp" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="25143"
-                 style="height:48px;width:120px;padding:0 14px;border:1.5px solid var(--local);border-radius:3px;background:var(--surface);font-family:var(--mono);letter-spacing:.1em">
+                 style="height:48px;width:120px;padding:0 14px;border:1px solid var(--local);background:var(--surface);font-family:var(--mono);letter-spacing:.1em">
           <button class="btn btn--solid-local btn--sm" type="submit" style="min-height:48px">Show my price</button>
           <p data-zip-error hidden style="flex-basis:100%;color:var(--stop);font-size:13px;margin:0"></p>
         </form>

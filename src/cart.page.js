@@ -105,7 +105,7 @@
         '<form data-zip-form style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">' +
         '<label class="vis-hidden" for="zip-cart">ZIP code</label>' +
         '<input id="zip-cart" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="25143" ' +
-        'style="height:46px;width:116px;padding:0 13px;border:1.5px solid var(--local);border-radius:3px;background:var(--surface);font-family:var(--mono);letter-spacing:.1em">' +
+        'style="height:46px;width:116px;padding:0 13px;border:1px solid var(--local);background:var(--surface);font-family:var(--mono);letter-spacing:.1em">' +
         '<button class="btn btn--solid-local btn--sm" type="submit" style="min-height:46px">Show the figure</button>' +
         '<p data-zip-error hidden style="flex-basis:100%;color:var(--stop);font-size:13px;margin:0"></p>' +
         '</form>';

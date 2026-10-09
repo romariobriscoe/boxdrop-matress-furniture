@@ -14,6 +14,11 @@
 
 <!-- 04 · hero ------------------------------------------------------------ -->
 <section class="hero">
+  <figure class="hero__bleed">
+    <img src="assets/img/hero-bedroom.jpg" width="1800" height="1200"
+         alt="A charcoal quilted pillowtop mattress on an upholstered frame in a daylit bedroom with a wood floor and a palm beside the window."
+         fetchpriority="high" decoding="async">
+  </figure>
   <div class="wrap">
     <div class="hero__grid">
       <div class="hero__copy">
@@ -31,11 +36,7 @@
         <p class="hero__note">Free delivery over $599 · 101 night trial · Financing from $29 a month</p>
       </div>
 
-      <figure class="hero__figure">
-        <img src="assets/img/hero-bedroom.jpg" width="1800" height="1200"
-             alt="A charcoal quilted pillowtop mattress on an upholstered frame in a daylit bedroom with a wood floor and a palm beside the window."
-             fetchpriority="high" decoding="async">
-        <figcaption class="hero__tag">
+      <aside class="hero__tag">
           <p class="eyebrow eyebrow--local">Shown above</p>
           <p class="name">Sapphire Sleep Immense Luxury Firm Pillow Top, Queen</p>
           <div class="ledger ledger--sm" data-online="1199">
@@ -49,8 +50,7 @@
               <p class="ledger__why"></p>
             </div>
           </div>
-        </figcaption>
-      </figure>
+      </aside>
     </div>
   </div>
 </section>
@@ -68,29 +68,30 @@
 
     <div class="cats">
       <a class="cat" href="category.html#mattresses">
-        <img src="assets/img/s-showroom-2.jpg" alt="A woman asleep on her side on a dark quilted mattress in low morning light." loading="lazy" decoding="async">
-        <span class="cat__scrim"></span>
-        <span class="cat__body"><h3>Mattresses</h3><span class="count">148 models · Sapphire Sleep, Beautyrest, Serta, Nectar</span></span>
+        <span class="cat__media"><img src="assets/img/s-showroom-2.jpg" alt="A woman asleep on her side on a dark quilted mattress in low morning light." loading="lazy" decoding="async"></span>
+        <span class="cat__body"><h3>Mattresses</h3><span class="count">148 models · four brands</span></span>
       </a>
       <a class="cat" href="category.html#bases">
-        <img src="assets/img/a-premier.jpg" alt="An adjustable bed base raised at the head beneath a white mattress." loading="lazy" decoding="async">
-        <span class="cat__scrim"></span>
+        <span class="cat__media"><img src="assets/img/a-premier.jpg" alt="An adjustable bed base raised at the head beneath a white mattress." loading="lazy" decoding="async"></span>
         <span class="cat__body"><h3>Adjustable bases</h3><span class="count">24 models</span></span>
       </a>
       <a class="cat" href="category.html#bedroom">
-        <img src="assets/img/b-mornington.jpg" alt="A slate upholstered bed frame with a tall headboard in a sunlit bedroom." loading="lazy" decoding="async">
-        <span class="cat__scrim"></span>
+        <span class="cat__media"><img src="assets/img/b-mornington.jpg" alt="A slate upholstered bed frame with a tall headboard in a sunlit bedroom." loading="lazy" decoding="async"></span>
         <span class="cat__body"><h3>Bedroom</h3><span class="count">96 pieces</span></span>
       </a>
       <a class="cat" href="category.html#living">
-        <img src="assets/img/l-sectional-fawn.jpg" alt="A large modular sectional sofa in a living room with a rug and plants." loading="lazy" decoding="async">
-        <span class="cat__scrim"></span>
+        <span class="cat__media"><img src="assets/img/l-sectional-fawn.jpg" alt="A large modular sectional sofa in a living room with a rug and plants." loading="lazy" decoding="async"></span>
         <span class="cat__body"><h3>Living room</h3><span class="count">212 pieces</span></span>
       </a>
       <a class="cat" href="category.html#outlet">
-        <img src="assets/img/l-sectional-alloy2.jpg" alt="A grey modular sectional and coffee table in a furnished living room." loading="lazy" decoding="async">
-        <span class="cat__scrim"></span>
+        <span class="cat__media"><img src="assets/img/l-sectional-alloy2.jpg" alt="A grey modular sectional and coffee table in a furnished living room." loading="lazy" decoding="async"></span>
         <span class="cat__body"><h3>Outlet</h3><span class="count">60 one off pieces</span></span>
+      </a>
+      <a class="cat cat--note" href="category.html#dining">
+        <span class="cat__media">
+          <p><b>Not shipped nationally</b>Tables travel badly on a pallet, so dining lives on your dealer's floor where you can sit at it first.</p>
+        </span>
+        <span class="cat__body"><h3>Dining</h3><span class="count">At your dealer</span></span>
       </a>
     </div>
   </div>
@@ -142,14 +143,14 @@
       </article>
     </div>
 
-    <div class="note-band" style="margin-top:34px;border-radius:3px">
+    <div class="note-band" style="margin-top:34px">
       <div class="wrap" style="padding-inline:22px">
         <svg width="18" height="18" aria-hidden="true" style="color:var(--local);flex:none"><use href="#i-pin"></use></svg>
         <p><b>Want the real number instead of a range?</b> Enter your ZIP and every price on this site switches to your dealer's.</p>
         <form data-zip-form style="display:flex;gap:8px;margin-left:auto;flex-wrap:wrap">
           <label class="vis-hidden" for="zip-how">ZIP code</label>
           <input id="zip-how" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="25143"
-                 style="height:48px;width:118px;padding:0 14px;border:1.5px solid var(--local);border-radius:3px;background:var(--surface);font-family:var(--mono);letter-spacing:.1em">
+                 style="height:48px;width:118px;padding:0 14px;border:1px solid var(--local);background:var(--surface);font-family:var(--mono);letter-spacing:.1em">
           <button class="btn btn--solid-local btn--sm" type="submit" style="min-height:48px">Show my prices</button>
         </form>
         <p data-zip-error hidden style="flex-basis:100%;color:var(--stop);font-size:13px;margin:0"></p>
