@@ -1,0 +1,99 @@
+<main id="main">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li><span aria-current="page" id="crumb-cat">Mattresses</span></li>
+      </ol>
+    </nav>
+
+    <header class="pagehead">
+      <p class="eyebrow" id="cat-eyebrow">Shop the floor</p>
+      <h1 id="cat-title">Mattresses</h1>
+      <p class="lede" id="cat-lede"></p>
+    </header>
+
+    <!-- dealer first state, used for dining -->
+    <section class="dealer-only" id="dealer-only" hidden style="margin-block:var(--s6)">
+      <div>
+        <p class="eyebrow eyebrow--local">Dealer floors only</p>
+        <h2 id="do-title">Dining is on your dealer's floor</h2>
+        <p class="measure" style="margin-top:var(--s3);color:var(--ink-2)">
+          Dining sets are the one thing we do not ship from a national warehouse. Tables arrive on a
+          pallet, chairs come in cartons of two, and the damage rate on a freight carrier is high enough
+          that we stopped. Your dealer buys dining for the market they know, so what is on their floor
+          is what sells where you live.
+        </p>
+      </div>
+      <div class="cols2">
+        <div>
+          <h3 style="font-family:var(--display);font-size:var(--t-md);margin-bottom:var(--s2)">What you will find there</h3>
+          <ul class="lead" style="display:grid;gap:10px;font-size:var(--t-sm);color:var(--ink-2)">
+            <li>Counter height and standard height sets, five to nine pieces</li>
+            <li>Solid tops in oak, acacia and painted hardwood</li>
+            <li>Benches, upholstered chairs and bar stools sold separately</li>
+            <li>Delivery and assembly by the same crew that brings a mattress</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="font-family:var(--display);font-size:var(--t-md);margin-bottom:var(--s2)">Call before you drive</h3>
+          <p style="font-size:var(--t-sm);color:var(--ink-2);margin-bottom:var(--s4)">
+            Dining turns over fast. One phone call tells you what is on the floor today and what they
+            can have in by the weekend.
+          </p>
+          <a class="btn btn--solid-local" href="dealers.html">Find your dealer</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="shop" id="shop">
+
+      <form class="filters" id="filters" aria-label="Filter products" onsubmit="return false">
+        <div class="fgroup">
+          <div class="flabel" style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+            <span>Refine</span>
+            <button type="button" class="fclear" id="clear-all">Clear all</button>
+          </div>
+          <label class="fswitch" id="stock-switch">
+            <input type="checkbox" id="f-stock">
+            <span>In stock at my dealer
+              <small id="stock-note">Set your location to use this</small>
+            </span>
+          </label>
+        </div>
+        <div id="filter-groups"></div>
+      </form>
+
+      <div>
+        <div class="toolbar">
+          <p class="toolbar__count"><b id="count">0</b> <span id="count-word">products</span></p>
+          <button type="button" class="btn btn--ghost btn--sm filter-open" id="filter-open" aria-expanded="false" aria-controls="filters">Filters</button>
+          <div class="sortwrap">
+            <label for="sort">Sort</label>
+            <select class="sortsel" id="sort">
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price, low to high</option>
+              <option value="price-desc">Price, high to low</option>
+              <option value="rating">Best reviewed</option>
+              <option value="firm-asc">Softest first</option>
+              <option value="firm-desc">Firmest first</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="applied" id="applied"></div>
+        <div class="pgrid" id="grid"></div>
+
+        <div class="empty" id="empty" hidden>
+          <h3>Nothing matches all of those at once</h3>
+          <p>Try dropping one filter. If you are after something specific, your dealer can usually
+             order it in even when it is not on this site.</p>
+          <p style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap">
+            <button type="button" class="btn btn--ghost btn--sm" id="clear-empty">Clear filters</button>
+            <a class="btn btn--local btn--sm" href="dealers.html">Ask a dealer</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

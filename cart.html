@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Your BoxDrop cart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/boxdrop.css">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+<symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.6.8-4.9 4.6 1.3 6.8L12 17.3 6.1 20.5l1.3-6.8L2.5 9.1l6.6-.8z"/></symbol>
+<symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h11v9H2zM13 10h4.5l3.5 3.5V16h-8z"/><circle cx="6.5" cy="18.5" r="1.8"/><circle cx="17" cy="18.5" r="1.8"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6z"/><path d="M9.3 12l1.9 2 3.5-4"/></symbol>
+<symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19M6 15h4"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 006 6L16 13l5 2v4a2 2 0 01-2.2 2A17 17 0 013 5.2 2 2 0 015 3z"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+</defs></svg>
+
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- 01 · utility bar ----------------------------------------------------- -->
+<div class="utility">
+  <div class="wrap">
+    <a class="chip-dealer" href="dealers.html" style="color:#EDEFFA">
+      <svg class="pin" aria-hidden="true"><use href="#i-pin"></use></svg>
+      <span data-nodealer-only>Your BoxDrop: <b data-dealer-city>Set your location</b></span>
+      <span data-dealer-only hidden>Your BoxDrop: <b data-dealer-name>Find your dealer</b></span>
+    </a>
+    <p class="utility__promise">Every order delivered by your local dealer</p>
+    <ul class="utility__links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#guarantees">Financing</a></li>
+      <li><a href="dealers.html">Dealer login</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- 02 · masthead -------------------------------------------------------- -->
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__row">
+      <div class="masthead__left">
+        <button class="icon-btn burger" type="button" data-drawer-open aria-expanded="false" aria-controls="drawer" aria-label="Open menu">
+          <svg aria-hidden="true"><use href="#i-menu"></use></svg>
+        </button>
+        <form class="search" role="search" action="category.html" onsubmit="return false">
+          <svg aria-hidden="true"><use href="#i-search"></use></svg>
+          <label class="vis-hidden" for="q">Search mattresses and furniture</label>
+          <input id="q" name="q" type="search" placeholder="Search queen hybrid, sectional, base" autocomplete="off">
+        </form>
+      </div>
+
+      <a class="wordmark" href="index.html" aria-label="BoxDrop home">
+        <span class="box">Box</span><span class="drop">Drop</span><span class="dot" aria-hidden="true"></span>
+      </a>
+
+      <div class="masthead__right">
+        <a class="icon-btn" href="dealers.html" aria-label="Find a dealer">
+          <svg aria-hidden="true"><use href="#i-pin"></use></svg>
+        </a>
+        <a class="icon-btn" href="#guarantees" aria-label="Your account">
+          <svg aria-hidden="true"><use href="#i-user"></use></svg>
+        </a>
+        <a class="icon-btn" href="cart.html" aria-label="Cart">
+          <svg aria-hidden="true"><use href="#i-bag"></use></svg>
+          <span class="cart-count" data-cart-count hidden>0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Product categories">
+    <div class="wrap">
+      <ul class="nav__list">
+        <li><a href="category.html#mattresses">Mattresses</a></li>
+        <li><a href="category.html#bases">Adjustable bases</a></li>
+        <li><a href="category.html#bedroom">Bedroom</a></li>
+        <li><a href="category.html#living">Living room</a></li>
+        <li><a href="category.html#dining">Dining</a></li>
+        <li><a href="category.html#outlet">Outlet</a></li>
+      </ul>
+      <a class="nav__find" href="dealers.html">
+        <svg width="14" height="14" aria-hidden="true"><use href="#i-pin"></use></svg> Find your dealer
+      </a>
+    </div>
+  </nav>
+
+  <div class="mobile-dealerbar">
+    <div class="wrap">
+      <a class="dealerbar-btn" href="dealers.html">
+        <svg aria-hidden="true"><use href="#i-pin"></use></svg>
+        <span data-nodealer-only>Set your location for local pricing</span>
+        <span data-dealer-only hidden>Your dealer: <b data-dealer-name></b></span>
+        <span class="muted">Change</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- mobile drawer -->
+<div class="drawer" id="drawer" hidden>
+  <div class="wrap">
+    <div class="drawer__head">
+      <span class="wordmark"><span class="box">Box</span><span class="drop">Drop</span><span class="dot" aria-hidden="true"></span></span>
+      <button class="icon-btn" type="button" data-drawer-close aria-label="Close menu">
+        <svg aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+    <nav class="drawer__list" aria-label="Mobile menu">
+      <a href="category.html#mattresses">Mattresses <span>148</span></a>
+      <a href="category.html#bases">Adjustable bases <span>24</span></a>
+      <a href="category.html#bedroom">Bedroom <span>96</span></a>
+      <a href="category.html#living">Living room <span>212</span></a>
+      <a href="category.html#dining">Dining <span>On the floor</span></a>
+      <a href="category.html#outlet">Outlet <span>60</span></a>
+    </nav>
+    <div style="padding-block:22px">
+      <a class="btn btn--solid-local btn--block" href="dealers.html">Find your dealer</a>
+      <a class="btn btn--ghost btn--block" href="cart.html" style="margin-top:10px">View cart</a>
+    </div>
+  </div>
+</div>
+
+
+<main id="main">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li><span aria-current="page">Cart</span></li>
+      </ol>
+    </nav>
+
+    <header class="pagehead">
+      <p class="eyebrow">Review your order</p>
+      <h1>Your cart</h1>
+      <p class="lede" id="cart-lede">Nothing here yet.</p>
+    </header>
+
+    <div id="cart-empty" class="cartempty" style="margin-block:var(--s6)" hidden>
+      <p class="eyebrow">Empty</p>
+      <h2>There is nothing in here yet</h2>
+      <p>Start with the mattresses, or find your dealer first so every price you see on the way
+         through is already theirs.</p>
+      <p style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+        <a class="btn btn--online" href="category.html#mattresses">Shop mattresses</a>
+        <a class="btn btn--local" href="dealers.html">Find your dealer</a>
+      </p>
+      <p style="border-top:1px solid var(--rule);padding-top:22px;margin-top:10px;font-size:var(--t-xs);color:var(--ink-3)">
+        Reviewing this prototype?
+        <button type="button" class="linkbtn" id="load-sample">Load a sample order</button>
+        to see the full cart.
+      </p>
+    </div>
+
+    <div class="cartgrid" id="cart-grid" hidden>
+      <div>
+        <div class="lines" id="lines"></div>
+        <p style="margin-top:22px;display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+          <a class="link-arrow" href="category.html#mattresses">Keep shopping <svg width="15" height="15" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          <button type="button" class="linkbtn" id="empty-cart">Empty the cart</button>
+        </p>
+
+        <div class="delivery" id="cart-delivery" style="margin-top:30px"></div>
+      </div>
+
+      <aside>
+        <div class="summary">
+          <h2>Order summary</h2>
+          <div class="srow"><span>Subtotal</span><span id="s-sub">$0</span></div>
+          <div class="srow"><span id="s-ship-label">Delivery and setup</span><span id="s-ship">Free</span></div>
+          <div class="srow"><span>Old mattress removal</span><span>Included</span></div>
+          <div class="srow"><span>Estimated tax</span><span id="s-tax">$0</span></div>
+          <div class="srow srow--total"><span>Total</span><span id="s-total">$0</span></div>
+          <p class="finance" id="s-finance" style="margin:0"></p>
+          <button type="button" class="btn btn--online btn--block" id="checkout">Checkout</button>
+          <p style="font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);margin:0;text-align:center">
+            Prototype. No payment is taken.
+          </p>
+        </div>
+
+        <div class="localnudge" id="nudge" style="margin-top:16px"></div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+
+<!-- 11 · footer ---------------------------------------------------------- -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div>
+        <span class="wordmark" style="color:#fff"><span class="box" style="color:#fff">Box</span><span class="drop" style="color:#A9B6F2">Drop</span><span class="dot" aria-hidden="true"></span></span>
+        <p style="margin-top:14px;font-size:14px;max-width:34ch;color:#B9C0E2">
+          400 independently owned mattress and furniture stores. One national catalogue.
+          A division of Retail Service Systems.
+        </p>
+        <h4 style="margin-top:26px">Find your dealer</h4>
+        <form class="footer__zip" data-zip-form data-zip-goto="dealers.html">
+          <label class="vis-hidden" for="zip-foot">ZIP code</label>
+          <input id="zip-foot" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="ZIP code">
+          <button class="btn btn--solid-local btn--sm" type="submit" style="min-height:48px">Go</button>
+        </form>
+        <p data-zip-error hidden style="color:#F0B3A6;font-size:13px;margin-top:8px"></p>
+      </div>
+
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="category.html#mattresses">Mattresses</a></li>
+          <li><a href="category.html#bases">Adjustable bases</a></li>
+          <li><a href="category.html#bedroom">Bedroom</a></li>
+          <li><a href="category.html#living">Living room</a></li>
+          <li><a href="category.html#dining">Dining</a></li>
+          <li><a href="category.html#outlet">Outlet</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Buying</h4>
+        <ul>
+          <li><a href="#how">Why there are two prices</a></li>
+          <li><a href="#guarantees">Delivery and setup</a></li>
+          <li><a href="#guarantees">Financing</a></li>
+          <li><a href="#guarantees">101 night trial</a></li>
+          <li><a href="#guarantees">Warranty</a></li>
+          <li><a href="cart.html">Your cart</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="dealers.html">Find a dealer</a></li>
+          <li><a href="dealers.html">Own a BoxDrop</a></li>
+          <li><a href="dealers.html">Dealer login</a></li>
+          <li><a href="#how">About RSS</a></li>
+          <li><a href="#guarantees">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__states">
+      <h4>Dealers by state</h4>
+      <ul>
+        <li><a href="dealers.html">Alabama</a></li><li><a href="dealers.html">Arkansas</a></li>
+        <li><a href="dealers.html">Florida</a></li><li><a href="dealers.html">Georgia</a></li>
+        <li><a href="dealers.html">Illinois</a></li><li><a href="dealers.html">Indiana</a></li>
+        <li><a href="dealers.html">Iowa</a></li><li><a href="dealers.html">Kansas</a></li>
+        <li><a href="dealers.html">Kentucky</a></li><li><a href="dealers.html">Louisiana</a></li>
+        <li><a href="dealers.html">Michigan</a></li><li><a href="dealers.html">Minnesota</a></li>
+        <li><a href="dealers.html">Mississippi</a></li><li><a href="dealers.html">Missouri</a></li>
+        <li><a href="dealers.html">North Carolina</a></li><li><a href="dealers.html">Ohio</a></li>
+        <li><a href="dealers.html">Oklahoma</a></li><li><a href="dealers.html">Pennsylvania</a></li>
+        <li><a href="dealers.html">South Carolina</a></li><li><a href="dealers.html">Tennessee</a></li>
+        <li><a href="dealers.html">Texas</a></li><li><a href="dealers.html">Virginia</a></li>
+        <li><a href="dealers.html">West Virginia</a></li><li><a href="dealers.html">Wisconsin</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__legal">
+      <p>
+        Prototype built for internal review. Products, prices, dealers, reviews and hours are
+        realistic samples, not live data. Product photography is placeholder imagery from the
+        brands BoxDrop carries and is for layout only.
+      </p>
+      <p>© 2026 Retail Service Systems</p>
+    </div>
+  </div>
+</footer>
+
+
+<script src="assets/js/catalog.js"></script>
+<script src="assets/js/boxdrop.js"></script>
+<script>
+/* Cart. The last place to be straight with somebody about the two prices. */
+(function () {
+  'use strict';
+  var BD = window.BoxDrop;
+  var $ = function (s) { return document.querySelector(s); };
+  var TAX = 0.06;              // WV state rate, used as a plausible estimate
+  var FREE_OVER = 599;
+
+  var SAMPLE = [
+    { sku: 's2w-reactive-hybrid', size: 'Queen', qty: 1 },
+    { sku: 'sap-ss200', size: 'Queen', qty: 1 },
+    { sku: 'ne-nightstand', size: 'Walnut', qty: 2 }
+  ];
+
+  function lines() {
+    return BD.cart().map(function (l) {
+      var p = BD.bySku(l.sku);
+      return {
+        raw: l, p: p,
+        name: l.name || (p && p.name) || l.sku,
+        brand: l.brand || (p && p.brand) || '',
+        img: l.img || (p && p.img) || '',
+        size: l.size || '',
+        price: typeof l.price === 'number' ? l.price : (p ? p.price : 0),
+        qty: l.qty || 1
+      };
+    });
+  }
+
+  function save(list) {
+    BD.store.set('bd.cart', list.map(function (l) {
+      return { sku: l.raw.sku, name: l.name, brand: l.brand, price: l.price, img: l.img, size: l.size, qty: l.qty };
+    }));
+    BD.paintCart();
+  }
+
+  function render() {
+    var L = lines();
+    var any = L.length > 0;
+    $('#cart-empty').hidden = any;
+    $('#cart-grid').hidden = !any;
+    $('#cart-lede').textContent = any
+      ? 'Both prices are held side by side all the way through, so you can still change your mind about how you buy it.'
+      : 'Nothing here yet.';
+    if (!any) return;
+
+    var d = BD.currentDealer();
+
+    $('#lines').innerHTML = L.map(function (l, i) {
+      var line = l.price * l.qty;
+      var localLine = d ? Math.round(line * d.factor) : null;
+      return '<div class="line">' +
+        '<div class="line__media"><img src="' + BD.esc(l.img) + '" alt="' + BD.esc(l.name) + '" loading="lazy"></div>' +
+        '<div class="line__body">' +
+          '<span class="line__brand">' + BD.esc(l.brand) + '</span>' +
+          '<h3 class="line__name"><a href="product.html#' + BD.esc(l.raw.sku) + '">' + BD.esc(l.name) + '</a></h3>' +
+          (l.size ? '<span class="line__opt">' + BD.esc(l.size) + '</span>' : '') +
+          '<div class="line__tools">' +
+            '<span class="qty"><button type="button" data-q="-1" data-i="' + i + '" aria-label="Reduce quantity">−</button>' +
+            '<span class="num">' + l.qty + '</span>' +
+            '<button type="button" data-q="1" data-i="' + i + '" aria-label="Increase quantity">+</button></span>' +
+            '<button type="button" class="linkbtn" data-rm="' + i + '">Remove</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="line__price">' +
+          '<span class="amt num">' + BD.money(line) + '</span>' +
+          '<span class="loc num">' + (localLine
+              ? BD.money(localLine) + ' at ' + BD.esc(d.name)
+              : BD.localRange(line) + ' local') + '</span>' +
+        '</div></div>';
+    }).join('');
+
+    var sub = L.reduce(function (a, l) { return a + l.price * l.qty; }, 0);
+    var ship = sub >= FREE_OVER ? 0 : 89;
+    var tax = (sub + ship) * TAX;
+    var total = sub + ship + tax;
+
+    $('#s-sub').textContent = BD.money(sub);
+    $('#s-ship').textContent = ship ? BD.money(ship) : 'Free';
+    $('#s-ship-label').textContent = ship ? 'Delivery and setup' : 'Delivery and setup, over ' + BD.money(FREE_OVER);
+    $('#s-tax').textContent = BD.money(tax);
+    $('#s-total').textContent = BD.money(total);
+    $('#s-finance').innerHTML = '<b>' + BD.money(total / 12) + ' a month</b> for 12 months at 0% APR on approved credit.';
+
+    // the final, honest reminder
+    if (d) {
+      var localSub = L.reduce(function (a, l) { return a + Math.round(l.price * l.qty * d.factor); }, 0);
+      var localTotal = localSub + localSub * TAX;
+      $('#nudge').innerHTML =
+        '<p class="eyebrow eyebrow--local" style="margin:0">The same basket at your dealer</p>' +
+        '<p class="figure num">' + BD.money(localTotal) + '</p>' +
+        '<p>That is <b>' + BD.money(total - localTotal) + ' less</b> at ' + BD.esc(d.name) +
+        ', collected or delivered by the same crew. Nothing about the order changes except where you pay for it.</p>' +
+        '<p style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">' +
+        '<a class="btn btn--solid-local btn--sm" href="dealers.html">Call ' + BD.esc(d.name) + '</a>' +
+        '</p>' +
+        '<p style="font-size:var(--t-xs);color:var(--ink-3);margin:0">' +
+        'Dealers set their own prices, so treat this as their usual rather than a quote.</p>';
+    } else {
+      $('#nudge').innerHTML =
+        '<p class="eyebrow eyebrow--local" style="margin:0">Before you check out</p>' +
+        '<p class="figure num">' + BD.money(total * (1 - BD.rangeHigh)) + ' to ' + BD.money(total * (1 - BD.rangeLow)) + '</p>' +
+        '<p>That is roughly what this basket would be cheaper by at your local BoxDrop. ' +
+        'Enter your ZIP and we will show you the real figure and who it is.</p>' +
+        '<form data-zip-form style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">' +
+        '<label class="vis-hidden" for="zip-cart">ZIP code</label>' +
+        '<input id="zip-cart" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="25143" ' +
+        'style="height:46px;width:116px;padding:0 13px;border:1.5px solid var(--local);border-radius:3px;background:var(--surface);font-family:var(--mono);letter-spacing:.1em">' +
+        '<button class="btn btn--solid-local btn--sm" type="submit" style="min-height:46px">Show the figure</button>' +
+        '<p data-zip-error hidden style="flex-basis:100%;color:var(--stop);font-size:13px;margin:0"></p>' +
+        '</form>';
+      var form = $('#nudge').querySelector('[data-zip-form]');
+      if (form) form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var v = (form.querySelector('input').value || '').trim();
+        var err = form.querySelector('[data-zip-error]');
+        if (!/^\d{5}$/.test(v)) { err.hidden = false; err.textContent = 'Enter a five digit ZIP code, for example 25143.'; return; }
+        BD.store.set('bd.zip', v);
+        BD.setDealer(BD.nearest(v));
+      });
+    }
+
+    var when = new Date(Date.now() + 5 * 864e5).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    $('#cart-delivery').innerHTML = d
+      ? '<b>' + BD.esc(d.name) + ' will bring this</b><p class="when">Earliest ' + when + '</p>' +
+        '<p>' + BD.esc(d.addr) + '. Two people, into the room you choose, old mattress away with them. ' +
+        'They will call the day before with a two hour window.</p>'
+      : '<b>Delivered by your local BoxDrop</b><p class="when">Usually 3 to 7 days</p>' +
+        '<p>We route the order to the dealer nearest the delivery address at checkout. Set your location ' +
+        'now if you would rather know who that is first.</p>';
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (t.id === 'load-sample') {
+      BD.store.set('bd.cart', SAMPLE.map(function (s) {
+        var p = BD.bySku(s.sku);
+        return { sku: s.sku, name: p.name, brand: p.brand, price: p.price, img: p.img, size: s.size, qty: s.qty };
+      }));
+      BD.paintCart(); render();
+      BD.toast('Sample order loaded for review');
+      return;
+    }
+    if (t.id === 'empty-cart') { BD.store.set('bd.cart', []); BD.paintCart(); render(); return; }
+    if (t.id === 'checkout') {
+      BD.toast('Checkout is out of scope for this prototype. The flow stops here.');
+      return;
+    }
+    if (t.dataset && t.dataset.q) {
+      var L = lines(), i = parseInt(t.dataset.i, 10);
+      L[i].qty = Math.max(1, L[i].qty + parseInt(t.dataset.q, 10));
+      save(L); render(); return;
+    }
+    if (t.dataset && t.dataset.rm !== undefined) {
+      var L2 = lines(); L2.splice(parseInt(t.dataset.rm, 10), 1);
+      save(L2); render();
+    }
+  });
+
+  document.addEventListener('bd:dealerchange', render);
+  render();
+})();
+</script>
+</body>
+</html>

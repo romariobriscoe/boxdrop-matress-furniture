@@ -1,0 +1,62 @@
+<main id="main">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li><span aria-current="page">Cart</span></li>
+      </ol>
+    </nav>
+
+    <header class="pagehead">
+      <p class="eyebrow">Review your order</p>
+      <h1>Your cart</h1>
+      <p class="lede" id="cart-lede">Nothing here yet.</p>
+    </header>
+
+    <div id="cart-empty" class="cartempty" style="margin-block:var(--s6)" hidden>
+      <p class="eyebrow">Empty</p>
+      <h2>There is nothing in here yet</h2>
+      <p>Start with the mattresses, or find your dealer first so every price you see on the way
+         through is already theirs.</p>
+      <p style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+        <a class="btn btn--online" href="category.html#mattresses">Shop mattresses</a>
+        <a class="btn btn--local" href="dealers.html">Find your dealer</a>
+      </p>
+      <p style="border-top:1px solid var(--rule);padding-top:22px;margin-top:10px;font-size:var(--t-xs);color:var(--ink-3)">
+        Reviewing this prototype?
+        <button type="button" class="linkbtn" id="load-sample">Load a sample order</button>
+        to see the full cart.
+      </p>
+    </div>
+
+    <div class="cartgrid" id="cart-grid" hidden>
+      <div>
+        <div class="lines" id="lines"></div>
+        <p style="margin-top:22px;display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+          <a class="link-arrow" href="category.html#mattresses">Keep shopping <svg width="15" height="15" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          <button type="button" class="linkbtn" id="empty-cart">Empty the cart</button>
+        </p>
+
+        <div class="delivery" id="cart-delivery" style="margin-top:30px"></div>
+      </div>
+
+      <aside>
+        <div class="summary">
+          <h2>Order summary</h2>
+          <div class="srow"><span>Subtotal</span><span id="s-sub">$0</span></div>
+          <div class="srow"><span id="s-ship-label">Delivery and setup</span><span id="s-ship">Free</span></div>
+          <div class="srow"><span>Old mattress removal</span><span>Included</span></div>
+          <div class="srow"><span>Estimated tax</span><span id="s-tax">$0</span></div>
+          <div class="srow srow--total"><span>Total</span><span id="s-total">$0</span></div>
+          <p class="finance" id="s-finance" style="margin:0"></p>
+          <button type="button" class="btn btn--online btn--block" id="checkout">Checkout</button>
+          <p style="font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);margin:0;text-align:center">
+            Prototype. No payment is taken.
+          </p>
+        </div>
+
+        <div class="localnudge" id="nudge" style="margin-top:16px"></div>
+      </aside>
+    </div>
+  </div>
+</main>

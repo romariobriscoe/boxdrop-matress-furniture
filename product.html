@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sleep2Win Reactive Hybrid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/boxdrop.css">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+<symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.6.8-4.9 4.6 1.3 6.8L12 17.3 6.1 20.5l1.3-6.8L2.5 9.1l6.6-.8z"/></symbol>
+<symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h11v9H2zM13 10h4.5l3.5 3.5V16h-8z"/><circle cx="6.5" cy="18.5" r="1.8"/><circle cx="17" cy="18.5" r="1.8"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6z"/><path d="M9.3 12l1.9 2 3.5-4"/></symbol>
+<symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19M6 15h4"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 006 6L16 13l5 2v4a2 2 0 01-2.2 2A17 17 0 013 5.2 2 2 0 015 3z"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+</defs></svg>
+
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- 01 · utility bar ----------------------------------------------------- -->
+<div class="utility">
+  <div class="wrap">
+    <a class="chip-dealer" href="dealers.html" style="color:#EDEFFA">
+      <svg class="pin" aria-hidden="true"><use href="#i-pin"></use></svg>
+      <span data-nodealer-only>Your BoxDrop: <b data-dealer-city>Set your location</b></span>
+      <span data-dealer-only hidden>Your BoxDrop: <b data-dealer-name>Find your dealer</b></span>
+    </a>
+    <p class="utility__promise">Every order delivered by your local dealer</p>
+    <ul class="utility__links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#guarantees">Financing</a></li>
+      <li><a href="dealers.html">Dealer login</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- 02 · masthead -------------------------------------------------------- -->
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__row">
+      <div class="masthead__left">
+        <button class="icon-btn burger" type="button" data-drawer-open aria-expanded="false" aria-controls="drawer" aria-label="Open menu">
+          <svg aria-hidden="true"><use href="#i-menu"></use></svg>
+        </button>
+        <form class="search" role="search" action="category.html" onsubmit="return false">
+          <svg aria-hidden="true"><use href="#i-search"></use></svg>
+          <label class="vis-hidden" for="q">Search mattresses and furniture</label>
+          <input id="q" name="q" type="search" placeholder="Search queen hybrid, sectional, base" autocomplete="off">
+        </form>
+      </div>
+
+      <a class="wordmark" href="index.html" aria-label="BoxDrop home">
+        <span class="box">Box</span><span class="drop">Drop</span><span class="dot" aria-hidden="true"></span>
+      </a>
+
+      <div class="masthead__right">
+        <a class="icon-btn" href="dealers.html" aria-label="Find a dealer">
+          <svg aria-hidden="true"><use href="#i-pin"></use></svg>
+        </a>
+        <a class="icon-btn" href="#guarantees" aria-label="Your account">
+          <svg aria-hidden="true"><use href="#i-user"></use></svg>
+        </a>
+        <a class="icon-btn" href="cart.html" aria-label="Cart">
+          <svg aria-hidden="true"><use href="#i-bag"></use></svg>
+          <span class="cart-count" data-cart-count hidden>0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Product categories">
+    <div class="wrap">
+      <ul class="nav__list">
+        <li><a href="category.html#mattresses">Mattresses</a></li>
+        <li><a href="category.html#bases">Adjustable bases</a></li>
+        <li><a href="category.html#bedroom">Bedroom</a></li>
+        <li><a href="category.html#living">Living room</a></li>
+        <li><a href="category.html#dining">Dining</a></li>
+        <li><a href="category.html#outlet">Outlet</a></li>
+      </ul>
+      <a class="nav__find" href="dealers.html">
+        <svg width="14" height="14" aria-hidden="true"><use href="#i-pin"></use></svg> Find your dealer
+      </a>
+    </div>
+  </nav>
+
+  <div class="mobile-dealerbar">
+    <div class="wrap">
+      <a class="dealerbar-btn" href="dealers.html">
+        <svg aria-hidden="true"><use href="#i-pin"></use></svg>
+        <span data-nodealer-only>Set your location for local pricing</span>
+        <span data-dealer-only hidden>Your dealer: <b data-dealer-name></b></span>
+        <span class="muted">Change</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- mobile drawer -->
+<div class="drawer" id="drawer" hidden>
+  <div class="wrap">
+    <div class="drawer__head">
+      <span class="wordmark"><span class="box">Box</span><span class="drop">Drop</span><span class="dot" aria-hidden="true"></span></span>
+      <button class="icon-btn" type="button" data-drawer-close aria-label="Close menu">
+        <svg aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+    <nav class="drawer__list" aria-label="Mobile menu">
+      <a href="category.html#mattresses">Mattresses <span>148</span></a>
+      <a href="category.html#bases">Adjustable bases <span>24</span></a>
+      <a href="category.html#bedroom">Bedroom <span>96</span></a>
+      <a href="category.html#living">Living room <span>212</span></a>
+      <a href="category.html#dining">Dining <span>On the floor</span></a>
+      <a href="category.html#outlet">Outlet <span>60</span></a>
+    </nav>
+    <div style="padding-block:22px">
+      <a class="btn btn--solid-local btn--block" href="dealers.html">Find your dealer</a>
+      <a class="btn btn--ghost btn--block" href="cart.html" style="margin-top:10px">View cart</a>
+    </div>
+  </div>
+</div>
+
+
+<main id="main">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="category.html#mattresses" id="crumb-cat">Mattresses</a></li>
+        <li><span aria-current="page" id="crumb-name">Product</span></li>
+      </ol>
+    </nav>
+
+    <div class="pdp">
+      <!-- gallery -->
+      <div class="gallery">
+        <div class="gallery__thumbs" id="thumbs" role="group" aria-label="Product images"></div>
+        <figure class="gallery__main" style="margin:0">
+          <img id="main-img" src="assets/img/m-reactive.jpg" alt="" width="900" height="900" fetchpriority="high">
+        </figure>
+      </div>
+
+      <!-- buy rail -->
+      <div class="rail">
+        <div>
+          <p class="rail__brand" id="p-brand"></p>
+          <h1 id="p-name"></h1>
+          <p class="rail__meta">
+            <span id="p-stars"></span>
+            <a href="#reviews" id="p-reviews"></a>
+            <span class="rail__sku"><span aria-hidden="true">·</span> <span class="num" id="p-sku"></span></span>
+          </p>
+        </div>
+
+        <div id="p-ledger"></div>
+        <p class="finance" id="p-finance"></p>
+
+        <p class="rail__blurb" id="p-blurb"></p>
+
+        <div class="optset" id="p-options"></div>
+        <div class="optset" id="p-feel" hidden></div>
+
+        <div class="buyrow">
+          <button class="btn btn--online" type="button" id="p-add" data-add>Add to cart</button>
+          <a class="btn btn--local" href="dealers.html" id="p-local">Check your dealer's price</a>
+        </div>
+
+        <form id="p-zip" data-zip-form style="display:none;gap:8px;flex-wrap:wrap;align-items:center;
+             border:1px solid var(--rule);border-left:3px solid var(--local-bright);border-radius:3px;
+             background:var(--local-wash);padding:16px">
+          <label for="zip-pdp" style="font-size:var(--t-sm);color:var(--local);flex:1 1 100%;margin:0">
+            Enter your ZIP and this page will show what your dealer charges for it.
+          </label>
+          <input id="zip-pdp" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="25143"
+                 style="height:48px;width:120px;padding:0 14px;border:1.5px solid var(--local);border-radius:3px;background:var(--surface);font-family:var(--mono);letter-spacing:.1em">
+          <button class="btn btn--solid-local btn--sm" type="submit" style="min-height:48px">Show my price</button>
+          <p data-zip-error hidden style="flex-basis:100%;color:var(--stop);font-size:13px;margin:0"></p>
+        </form>
+
+        <div class="delivery" id="p-delivery"></div>
+
+        <div class="trustrows">
+          <div class="trustrow">
+            <svg aria-hidden="true"><use href="#i-truck"></use></svg>
+            <div><b>Delivered by your local dealer</b><span>A BoxDrop crew sets it up in the room and takes the old mattress away. Free over $599.</span></div>
+          </div>
+          <div class="trustrow">
+            <svg aria-hidden="true"><use href="#i-moon"></use></svg>
+            <div><b>101 night trial</b><span>If the feel is wrong, your dealer swaps it once for a different comfort level.</span></div>
+          </div>
+          <div class="trustrow">
+            <svg aria-hidden="true"><use href="#i-shield"></use></svg>
+            <div><b>10 year warranty</b><span>Non prorated. No registration card and no matching foundation required.</span></div>
+          </div>
+          <div class="trustrow">
+            <svg aria-hidden="true"><use href="#i-card"></use></svg>
+            <div><b>Financing on approved credit</b><span>0% APR for 12 months. The monthly figure above is the full price divided by twelve, with nothing added.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- construction -->
+  <section class="section section--sunk" id="construction">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Construction</p>
+          <h2 class="sec-title" id="con-title">What is actually inside it</h2>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:16px">
+        <div class="diagram" id="layer-card" hidden>
+          <h3>Every layer, to scale</h3>
+          <p class="sub" id="layer-sub"></p>
+          <div id="layer-svg"></div>
+          <div class="layers" id="layer-rows"></div>
+        </div>
+        <div class="diagram" id="height-card" hidden>
+          <h3>How high does it sit?</h3>
+          <p class="sub" id="height-sub"></p>
+          <div id="height-svg"></div>
+          <p style="font-size:var(--t-xs);color:var(--ink-3);margin:16px 0 0">
+            Heights are to scale against a standard 8 inch foundation. Knee height is taken at
+            28.5% of standing height, which is the figure furniture is designed around.
+          </p>
+        </div>
+        <div class="diagram" id="spec-card">
+          <h3>Specifications</h3>
+          <p class="sub">The numbers a tape measure cares about.</p>
+          <table class="spectable"><tbody id="spec-rows"></tbody></table>
+          <p style="margin-top:20px"><button type="button" class="btn btn--ghost btn--sm" id="copy-specs">Copy specifications</button></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- reviews -->
+  <section class="section" id="reviews">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Reviews</p>
+          <h2 class="sec-title">What owners said after 90 days</h2>
+          <p>Every review here is from somebody whose order was delivered by a BoxDrop dealer, collected
+             three months after delivery rather than three days.</p>
+        </div>
+      </div>
+      <div class="revsummary">
+        <div>
+          <p class="big num" id="rev-score">4.8</p>
+          <p id="rev-stars" style="margin:8px 0 0"></p>
+          <p class="num" id="rev-count" style="font-size:var(--t-xs);color:var(--ink-3);margin:6px 0 0"></p>
+        </div>
+        <div class="revbars" id="rev-bars"></div>
+      </div>
+      <div class="revlist" id="rev-list"></div>
+    </div>
+  </section>
+
+  <!-- related -->
+  <section class="section section--sunk">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Also on the floor</p>
+          <h2 class="sec-title">What people compare this with</h2>
+        </div>
+        <a class="link-arrow" href="category.html#mattresses" id="rel-all">See the whole category <svg width="15" height="15" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+      </div>
+      <div class="pgrid" id="related"></div>
+    </div>
+  </section>
+</main>
+
+<div class="stickybuy" id="stickybuy" aria-hidden="true">
+  <div class="wrap">
+    <div class="stickybuy__who">
+      <b id="sb-name"></b>
+      <span id="sb-price"></span>
+    </div>
+    <div class="stickybuy__acts">
+      <a class="btn btn--local" href="dealers.html" id="sb-local">Dealer price</a>
+      <button class="btn btn--online" type="button" id="sb-add" data-add>Add to cart</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- 11 · footer ---------------------------------------------------------- -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div>
+        <span class="wordmark" style="color:#fff"><span class="box" style="color:#fff">Box</span><span class="drop" style="color:#A9B6F2">Drop</span><span class="dot" aria-hidden="true"></span></span>
+        <p style="margin-top:14px;font-size:14px;max-width:34ch;color:#B9C0E2">
+          400 independently owned mattress and furniture stores. One national catalogue.
+          A division of Retail Service Systems.
+        </p>
+        <h4 style="margin-top:26px">Find your dealer</h4>
+        <form class="footer__zip" data-zip-form data-zip-goto="dealers.html">
+          <label class="vis-hidden" for="zip-foot">ZIP code</label>
+          <input id="zip-foot" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="ZIP code">
+          <button class="btn btn--solid-local btn--sm" type="submit" style="min-height:48px">Go</button>
+        </form>
+        <p data-zip-error hidden style="color:#F0B3A6;font-size:13px;margin-top:8px"></p>
+      </div>
+
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="category.html#mattresses">Mattresses</a></li>
+          <li><a href="category.html#bases">Adjustable bases</a></li>
+          <li><a href="category.html#bedroom">Bedroom</a></li>
+          <li><a href="category.html#living">Living room</a></li>
+          <li><a href="category.html#dining">Dining</a></li>
+          <li><a href="category.html#outlet">Outlet</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Buying</h4>
+        <ul>
+          <li><a href="#how">Why there are two prices</a></li>
+          <li><a href="#guarantees">Delivery and setup</a></li>
+          <li><a href="#guarantees">Financing</a></li>
+          <li><a href="#guarantees">101 night trial</a></li>
+          <li><a href="#guarantees">Warranty</a></li>
+          <li><a href="cart.html">Your cart</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="dealers.html">Find a dealer</a></li>
+          <li><a href="dealers.html">Own a BoxDrop</a></li>
+          <li><a href="dealers.html">Dealer login</a></li>
+          <li><a href="#how">About RSS</a></li>
+          <li><a href="#guarantees">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__states">
+      <h4>Dealers by state</h4>
+      <ul>
+        <li><a href="dealers.html">Alabama</a></li><li><a href="dealers.html">Arkansas</a></li>
+        <li><a href="dealers.html">Florida</a></li><li><a href="dealers.html">Georgia</a></li>
+        <li><a href="dealers.html">Illinois</a></li><li><a href="dealers.html">Indiana</a></li>
+        <li><a href="dealers.html">Iowa</a></li><li><a href="dealers.html">Kansas</a></li>
+        <li><a href="dealers.html">Kentucky</a></li><li><a href="dealers.html">Louisiana</a></li>
+        <li><a href="dealers.html">Michigan</a></li><li><a href="dealers.html">Minnesota</a></li>
+        <li><a href="dealers.html">Mississippi</a></li><li><a href="dealers.html">Missouri</a></li>
+        <li><a href="dealers.html">North Carolina</a></li><li><a href="dealers.html">Ohio</a></li>
+        <li><a href="dealers.html">Oklahoma</a></li><li><a href="dealers.html">Pennsylvania</a></li>
+        <li><a href="dealers.html">South Carolina</a></li><li><a href="dealers.html">Tennessee</a></li>
+        <li><a href="dealers.html">Texas</a></li><li><a href="dealers.html">Virginia</a></li>
+        <li><a href="dealers.html">West Virginia</a></li><li><a href="dealers.html">Wisconsin</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__legal">
+      <p>
+        Prototype built for internal review. Products, prices, dealers, reviews and hours are
+        realistic samples, not live data. Product photography is placeholder imagery from the
+        brands BoxDrop carries and is for layout only.
+      </p>
+      <p>© 2026 Retail Service Systems</p>
+    </div>
+  </div>
+</footer>
+
+
+<script src="assets/js/catalog.js"></script>
+<script src="assets/js/boxdrop.js"></script>
+<script>
+/* Product page. Driven by the SKU in the URL hash, defaults to the hero bed. */
+(function () {
+  'use strict';
+  var BD = window.BoxDrop, CAT = window.BD_CATEGORIES, ALL = window.BD_CATALOG;
+  var $ = function (s) { return document.querySelector(s); };
+  var DEFAULT_SKU = 's2w-reactive-hybrid';
+  var FOUNDATION = 8;          // inches, standard BoxDrop foundation
+  var HEIGHTS = [
+    { label: "5 ft 3 in", inches: 63 },
+    { label: "5 ft 7 in", inches: 67 },
+    { label: "6 ft 1 in", inches: 73 }
+  ];
+
+  var REVIEW_POOL = [
+    { who: 'Dana R.', where: 'Delivered by BoxDrop Nitro', stars: 5,
+      text: 'Ordered on a Sunday night, the Nitro store called Monday morning and it was in the room Wednesday. They took the old one and the plastic with them. I have bought mattresses from big chains and never had that.' },
+    { who: 'Marcus T.', where: 'Delivered by BoxDrop Charleston', stars: 5,
+      text: 'My wife sleeps on her side and I sleep on my back, which has been a twenty year argument. This is the first bed neither of us complains about. Ninety days in and it has not developed a trench.' },
+    { who: 'Priya N.', where: 'Delivered by BoxDrop Teays Valley', stars: 4,
+      text: 'Took about three weeks to stop feeling firm. It is what the salesman said would happen so I waited it out, and he was right. Knocking one star off only because the first fortnight was rough.' },
+    { who: 'Bill O.', where: 'Delivered by BoxDrop Huntington', stars: 5,
+      text: 'I went into the store first, lay on it, then bought it here because I wanted the delivery slot. Found out afterwards the store would have been cheaper. My own fault, they do say so on the site.' },
+    { who: 'Jess K.', where: 'Delivered by BoxDrop Parkersburg', stars: 4,
+      text: 'Heavier than I expected and the two of them had to take a door off. Worth it. Edge support is the thing that sold me, I sit on the side to put shoes on and it does not collapse.' },
+    { who: 'Ray M.', where: 'Delivered by BoxDrop Nitro', stars: 5,
+      text: 'Second one I have bought from this dealer. Same crew turned up, remembered the house. That is the part the website cannot really sell you.' }
+  ];
+
+  function pick(sku, n) {
+    var h = 0;
+    for (var i = 0; i < sku.length; i++) h = (h * 31 + sku.charCodeAt(i)) >>> 0;
+    var out = [], used = {};
+    for (var j = 0; j < n; j++) {
+      var k = (h + j * 7) % REVIEW_POOL.length;
+      while (used[k]) k = (k + 1) % REVIEW_POOL.length;
+      used[k] = 1; out.push(REVIEW_POOL[k]);
+    }
+    return out;
+  }
+
+  var product = null, option = null, feel = 'Medium firm';
+
+  function readHash() {
+    var sku = (location.hash || '').replace('#', '');
+    product = BD.bySku(sku) || BD.bySku(DEFAULT_SKU) || ALL[0];
+    option = BD.baseOption(product);
+  }
+
+  function price() { return product.price + (option ? (option.delta || 0) : 0); }
+
+  /* ---------- diagrams ---------- */
+  function layerSVG(layers) {
+    var total = layers.reduce(function (a, l) { return a + l.h; }, 0);
+    var W = 300, H = 230, pad = 2, y = 0;
+    var shades = ['#C9CEEA', '#8E98D4', '#5A67B4', '#2F3C8E', '#111D6B'];
+    var parts = layers.map(function (l, i) {
+      var h = (l.h / total) * (H - layers.length * pad);
+      var r = '<rect x="0" y="' + y.toFixed(1) + '" width="' + W + '" height="' + h.toFixed(1) +
+              '" fill="' + shades[i % shades.length] + '" rx="2"></rect>' +
+              '<text x="12" y="' + (y + h / 2 + 4).toFixed(1) + '" font-family="IBM Plex Mono, monospace" font-size="11" ' +
+              'fill="' + (i < 2 ? '#0E1538' : '#F4F1EA') + '">' + BD.esc(l.name) + '</text>' +
+              '<text x="' + (W - 12) + '" y="' + (y + h / 2 + 4).toFixed(1) + '" text-anchor="end" ' +
+              'font-family="IBM Plex Mono, monospace" font-size="11" fill="' + (i < 2 ? '#0E1538' : '#F4F1EA') + '">' +
+              l.h + ' in</text>';
+      y += h + pad;
+      return r;
+    }).join('');
+    return '<svg viewBox="0 0 ' + (W + 2) + ' ' + (H + 2) + '" role="img" aria-label="' +
+      BD.esc(product.name + ' shown layer by layer: ' + layers.map(function (l) { return l.name + ' ' + l.h + ' inches'; }).join(', ')) +
+      '">' + parts + '</svg>';
+  }
+
+  function heightSVG(mattressH) {
+    var surface = mattressH + FOUNDATION;
+    var maxIn = 76, S = 3.0, floorY = maxIn * S + 10, W = 420;
+    var y = function (inches) { return floorY - inches * S; };
+    var out = ['<svg viewBox="0 0 ' + W + ' ' + (floorY + 44) + '" role="img" aria-label="' +
+      'The sleep surface sits ' + surface + ' inches from the floor, drawn to scale beside people ' +
+      HEIGHTS.map(function (h) { return h.label; }).join(', ') + '.">'];
+
+    out.push('<line x1="0" y1="' + floorY + '" x2="' + W + '" y2="' + floorY + '" stroke="#C3BAA7" stroke-width="1.5"/>');
+    // the bed stack
+    out.push('<rect x="8" y="' + y(FOUNDATION) + '" width="96" height="' + (FOUNDATION * S) + '" fill="#C9CEEA" stroke="#111D6B" stroke-width="1"/>');
+    out.push('<rect x="8" y="' + y(surface) + '" width="96" height="' + (mattressH * S) + '" fill="#111D6B"/>');
+    out.push('<text x="56" y="' + (y(surface) - 10) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" fill="#0E1538">' + surface + ' in</text>');
+    out.push('<text x="56" y="' + (floorY + 18) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#7B8199">BED</text>');
+    out.push('<text x="56" y="' + (floorY + 32) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#7B8199">' + mattressH + ' + ' + FOUNDATION + '</text>');
+    // dashed surface line
+    out.push('<line x1="8" y1="' + y(surface) + '" x2="' + (W - 6) + '" y2="' + y(surface) +
+             '" stroke="#156B2E" stroke-width="1.5" stroke-dasharray="5 4"/>');
+
+    HEIGHTS.forEach(function (p, i) {
+      var x = 160 + i * 86, knee = p.inches * 0.285;
+      out.push('<rect x="' + x + '" y="' + y(p.inches) + '" width="26" height="' + (p.inches * S) + '" rx="13" fill="#EBE6DB" stroke="#C3BAA7"/>');
+      out.push('<rect x="' + x + '" y="' + y(knee) + '" width="26" height="' + (knee * S) + '" rx="13" fill="#DDD6C8"/>');
+      out.push('<line x1="' + (x - 5) + '" y1="' + y(knee) + '" x2="' + (x + 31) + '" y2="' + y(knee) + '" stroke="#0E1538" stroke-width="1.5"/>');
+      out.push('<text x="' + (x + 13) + '" y="' + (y(p.inches) - 9) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#0E1538">' + p.label + '</text>');
+      out.push('<text x="' + (x + 13) + '" y="' + (floorY + 18) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#7B8199">knee</text>');
+      out.push('<text x="' + (x + 13) + '" y="' + (floorY + 32) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#7B8199">' + Math.round(knee) + ' in</text>');
+    });
+    out.push('</svg>');
+    return out.join('');
+  }
+
+  function heightVerdict(mattressH) {
+    var surface = mattressH + FOUNDATION;
+    var shortest = Math.round(HEIGHTS[0].inches * 0.285);
+    var gap = surface - shortest;
+    if (gap <= 1) return 'At ' + surface + ' inches this sits at about knee height for everybody, so feet reach the floor when you sit on the edge.';
+    return 'At ' + surface + ' inches the edge is ' + gap + ' inches above the knee of a ' + HEIGHTS[0].label +
+           ' adult, so their feet will hang when they sit on it. Drop to a low profile foundation if that matters.';
+  }
+
+  /* ---------- render ---------- */
+  function renderGallery() {
+    var imgs = product.gallery && product.gallery.length ? product.gallery : [product.img];
+    $('#thumbs').innerHTML = imgs.map(function (src, i) {
+      return '<button type="button" class="thumb" aria-pressed="' + (i === 0) + '" data-img="' + BD.esc(src) + '">' +
+        '<img src="' + BD.esc(src) + '" alt="View ' + (i + 1) + ' of ' + BD.esc(product.name) + '" loading="lazy">' +
+        '</button>';
+    }).join('');
+    var m = $('#main-img');
+    m.src = imgs[0];
+    m.alt = product.brand + ' ' + product.name + ', main product view';
+  }
+
+  function renderOptions() {
+    if (!product.options) { $('#p-options').hidden = true; return; }
+    var o = product.options;
+    $('#p-options').innerHTML =
+      '<div class="optset__label"><span>' + BD.esc(o.label) + '</span><b id="opt-current">' + BD.esc(option.name) + '</b></div>' +
+      '<div class="optrows">' + o.values.map(function (v, i) {
+        return '<label class="optrow"><input type="radio" name="opt" value="' + i + '"' + (v.name === option.name ? ' checked' : '') + '>' +
+          '<span>' + BD.esc(v.name) +
+          '<span class="dims">' + BD.esc(v.dims || '') + '</span>' +
+          '<span class="delta">' + (v.delta ? (v.delta > 0 ? '+' : '') + BD.money(v.delta) : 'included') + '</span>' +
+          '</span></label>';
+      }).join('') + '</div>';
+
+    // the swappable comfort top is this bed's whole idea, so it gets its own control
+    var swappable = (product.features || []).indexOf('Swappable comfort top') > -1;
+    $('#p-feel').hidden = !swappable;
+    if (swappable) {
+      $('#p-feel').innerHTML =
+        '<div class="optset__label"><span>Feel, each side</span><b>' + BD.esc(feel) + '</b></div>' +
+        '<div class="optrows">' +
+        ['Medium firm', 'Medium plush'].map(function (f) {
+          return '<label class="optrow"><input type="radio" name="feel" value="' + BD.esc(f) + '"' + (f === feel ? ' checked' : '') + '>' +
+            '<span>' + f + '<span class="dims">' +
+            (f === 'Medium firm' ? '1.5 in bamboo foam over micro coils' : '3 in bamboo foam over micro coils') +
+            '</span><span class="delta">swap any time</span></span></label>';
+        }).join('') + '</div>';
+    }
+  }
+
+  function renderPrice() {
+    var p = price(), d = BD.currentDealer();
+    $('#p-ledger').innerHTML = BD.ledgerHTML(p, 'lg');
+    $('#p-finance').innerHTML = '<b>' + BD.money(p / 12) + ' a month</b> for 12 months at 0% APR on approved credit, or pay in full.';
+    $('#p-add').setAttribute('data-price', p);
+    $('#sb-add').setAttribute('data-price', p);
+    $('#sb-price').innerHTML = BD.money(p) + ' online · <span class="lo">' + BD.localRange(p) + (d ? ' at ' + BD.esc(d.name) : ' local') + '</span>';
+
+    var local = $('#p-local'), zip = $('#p-zip');
+    if (d) {
+      local.textContent = d.name + ': ' + BD.money(Math.round(p * d.factor));
+      local.setAttribute('aria-label', d.name + ' price, ' + BD.money(Math.round(p * d.factor)) + '. Go to the dealer page.');
+      $('#sb-local').textContent = BD.money(Math.round(p * d.factor)) + ' local';
+      zip.style.display = 'none';
+    } else {
+      local.textContent = "Check your dealer's price";
+      local.removeAttribute('aria-label');
+      $('#sb-local').textContent = 'Dealer price';
+      zip.style.display = 'flex';
+    }
+    BD.paintLedgers();
+  }
+
+  function renderDelivery() {
+    var d = BD.currentDealer();
+    var when = new Date(Date.now() + 5 * 864e5).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    $('#p-delivery').innerHTML = d
+      ? '<b>Delivered by ' + BD.esc(d.name) + '</b>' +
+        '<p class="when">Earliest ' + when + '</p>' +
+        '<p>' + BD.stockLine(product).replace(/<\/?b>/g, '') + '. Their crew brings it in, sets it up in the room you choose and takes the old mattress away.</p>'
+      : '<b>Delivered by your local BoxDrop</b>' +
+        '<p class="when">Usually 3 to 7 days</p>' +
+        '<p>Set your location and this will show the dealer who would bring it, the earliest date they have, and whether it is already on their floor.</p>';
+  }
+
+  function renderConstruction() {
+    var isMattress = product.cat === 'mattresses' || product.cat === 'outlet';
+    var hasLayers = !!(product.layers && product.layers.length);
+    $('#layer-card').hidden = !hasLayers;
+    if (hasLayers) {
+      var total = product.layers.reduce(function (a, l) { return a + l.h; }, 0);
+      $('#layer-sub').textContent = Math.round(total) + ' inches, nothing hidden.';
+      $('#layer-svg').innerHTML = layerSVG(product.layers);
+      $('#layer-rows').innerHTML = product.layers.slice().reverse().map(function (l) {
+        return '<div class="layerrow"><div><b>' + BD.esc(l.name) + '</b>' +
+          (l.note ? '<small>' + BD.esc(l.note) + '</small>' : '') + '</div>' +
+          '<span class="h">' + l.h + ' in</span></div>';
+      }).join('');
+    }
+
+    var showHeight = isMattress && typeof product.height === 'number';
+    $('#height-card').hidden = !showHeight;
+    if (showHeight) {
+      $('#height-sub').textContent = heightVerdict(product.height);
+      $('#height-svg').innerHTML = heightSVG(product.height);
+    }
+
+    $('#con-title').textContent = isMattress ? 'What is actually inside it' : 'The measurements that matter';
+    $('#spec-rows').innerHTML = (product.specs || []).map(function (r) {
+      return '<tr><th scope="row">' + BD.esc(r[0]) + '</th><td>' + BD.esc(r[1]) + '</td></tr>';
+    }).join('');
+  }
+
+  function renderReviews() {
+    var revs = pick(product.sku, 3);
+    $('#rev-score').textContent = product.rating.toFixed(1);
+    $('#rev-stars').innerHTML = BD.starsHTML(product.rating);
+    $('#rev-count').textContent = product.reviews.toLocaleString('en-US') + ' verified owners';
+    var dist = [72, 19, 6, 2, 1];
+    $('#rev-bars').innerHTML = dist.map(function (pct, i) {
+      return '<div class="revbar"><span>' + (5 - i) + ' star</span>' +
+        '<span class="track"><span class="fill" style="width:' + pct + '%"></span></span>' +
+        '<span>' + pct + '%</span></div>';
+    }).join('');
+    $('#rev-list').innerHTML = revs.map(function (r) {
+      return '<article class="review"><div class="review__head">' +
+        BD.starsHTML(r.stars) + '<b>' + BD.esc(r.who) + '</b>' +
+        '<span class="verified">Verified delivery</span>' +
+        '<span class="where">' + BD.esc(r.where) + '</span></div>' +
+        '<p>' + BD.esc(r.text) + '</p></article>';
+    }).join('');
+  }
+
+  function renderRelated() {
+    var rel = ALL.filter(function (p) { return p.cat === product.cat && p.sku !== product.sku; }).slice(0, 4);
+    $('#related').innerHTML = rel.map(BD.cardHTML).join('');
+    $('#rel-all').setAttribute('href', 'category.html#' + product.cat);
+    BD.paintLedgers();
+  }
+
+  function renderAll() {
+    var c = CAT[product.cat];
+    document.title = product.name + ' · BoxDrop';
+    $('#crumb-cat').textContent = c.title;
+    $('#crumb-cat').setAttribute('href', 'category.html#' + product.cat);
+    $('#crumb-name').textContent = product.name;
+    $('#p-brand').textContent = product.brand;
+    $('#p-name').textContent = product.name;
+    $('#p-stars').innerHTML = BD.starsHTML(product.rating);
+    $('#p-reviews').textContent = product.rating.toFixed(1) + ' · ' + product.reviews.toLocaleString('en-US') + ' reviews';
+    $('#p-sku').textContent = 'SKU ' + product.sku.toUpperCase();
+    $('#p-blurb').textContent = product.blurb;
+    $('#sb-name').textContent = product.name;
+
+    [['#p-add', 1], ['#sb-add', 1]].forEach(function (pair) {
+      var b = $(pair[0]);
+      b.setAttribute('data-sku', product.sku);
+      b.setAttribute('data-name', product.name);
+      b.setAttribute('data-brand', product.brand);
+      b.setAttribute('data-img', product.img);
+      b.setAttribute('data-size', option ? option.name : '');
+    });
+
+    renderGallery(); renderOptions(); renderPrice(); renderDelivery();
+    renderConstruction(); renderReviews(); renderRelated();
+  }
+
+  /* ---------- events ---------- */
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('.thumb');
+    if (t) {
+      document.querySelectorAll('.thumb').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      t.setAttribute('aria-pressed', 'true');
+      $('#main-img').src = t.getAttribute('data-img');
+      return;
+    }
+    if (e.target.id === 'copy-specs') {
+      var text = product.brand + ' ' + product.name + '\n' +
+        (product.specs || []).map(function (r) { return r[0] + ': ' + r[1]; }).join('\n');
+      var done = function () { BD.toast('Specifications copied'); };
+      try {
+        navigator.clipboard.writeText(text).then(done, function () { BD.toast('Select the table to copy it'); });
+      } catch (err) { BD.toast('Select the table to copy it'); }
+    }
+  });
+
+  document.addEventListener('change', function (e) {
+    if (e.target.name === 'opt') {
+      option = product.options.values[parseInt(e.target.value, 10)];
+      var cur = document.getElementById('opt-current'); if (cur) cur.textContent = option.name;
+      [$('#p-add'), $('#sb-add')].forEach(function (b) { b.setAttribute('data-size', option.name); });
+      renderPrice(); renderDelivery();
+    }
+    if (e.target.name === 'feel') {
+      feel = e.target.value;
+      var lbl = $('#p-feel').querySelector('.optset__label b'); if (lbl) lbl.textContent = feel;
+    }
+  });
+
+  window.addEventListener('hashchange', function () { readHash(); renderAll(); window.scrollTo({ top: 0 }); });
+  document.addEventListener('bd:dealerchange', function () { renderPrice(); renderDelivery(); renderRelated(); });
+
+  readHash();
+  renderAll();
+
+  /* sticky buy bar once the real buttons have scrolled away */
+  var bar = $('#stickybuy'), row = document.querySelector('.buyrow');
+  if ('IntersectionObserver' in window && row) {
+    new IntersectionObserver(function (entries) {
+      var gone = !entries[0].isIntersecting && entries[0].boundingClientRect.top < 0;
+      bar.classList.toggle('is-up', gone);
+      bar.setAttribute('aria-hidden', String(!gone));
+    }, { threshold: 0 }).observe(row);
+  }
+})();
+</script>
+</body>
+</html>
