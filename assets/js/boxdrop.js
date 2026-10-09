@@ -283,6 +283,11 @@
 
   function cardHTML(p) {
     var b = baseOption(p), opt = b ? b.name : '';
+    var vals = (p.options && p.options.values) || [];
+    var label = (p.options && p.options.label) || 'Size';
+    var optLine = vals.length > 1
+      ? vals.length + ' ' + label.toLowerCase() + (label.toLowerCase().slice(-1) === 's' ? '' : 's')
+      : opt;
     var flag = p.flag
       ? '<span class="pcard__flag' + (p.flag.toLowerCase().indexOf('dealer') > -1 ? ' pcard__flag--local' : '') + '">' + esc(p.flag) + '</span>'
       : (p.condition ? '<span class="pcard__flag pcard__flag--local">One only</span>' : '');
@@ -291,15 +296,17 @@
         '<img src="' + esc(p.img) + '" alt="' + esc(p.brand + ' ' + p.name) + '" loading="lazy" decoding="async">' +
       '</div>' +
       '<div class="pcard__body">' +
-        '<span class="pcard__brand">' + esc(p.brand) + '</span>' +
-        '<h3 class="pcard__name">' + esc(p.name) + '</h3>' +
-        '<p class="pcard__meta">' + starsHTML(p.rating) +
-          '<span>' + p.rating.toFixed(1) + ' · ' + p.reviews.toLocaleString('en-US') + ' reviews</span>' +
+        '<p class="pcard__opts">' + esc(optLine) +
+          '<span class="dot" aria-hidden="true">·</span>' +
+          '<span class="rate">' + p.rating.toFixed(1) + ' (' + p.reviews.toLocaleString('en-US') + ')</span>' +
           (p.was ? '<span class="pcard__was">' + money(p.was) + '</span>' : '') +
         '</p>' +
+        '<span class="pcard__rule" aria-hidden="true"></span>' +
+        '<span class="pcard__brand">' + esc(p.brand) + (p.type ? ' · ' + esc(p.type) : '') + '</span>' +
+        '<h3 class="pcard__name">' + esc(p.name) + '</h3>' +
         (p.condition ? '<p class="pcard__cond">' + esc(p.condition) + '</p>' : '') +
         ledgerHTML(p.price, 'sm') +
-        '<p class="pcard__ship">' + esc(opt) + ' · ' + stockLine(p) + '</p>' +
+        '<p class="pcard__ship">' + stockLine(p) + '</p>' +
       '</div></a>';
   }
 

@@ -17,7 +17,7 @@
   --paper-sunk: #FFFFFF;
   --surface:    #FFFFFF;
   --surface-2:  #FFFFFF;
-  --wash:       #F6F9FC;   /* the panel tint RSS uses beside that white */
+  --wash:       #F2F5F9;   /* RSS's panel tint, one step down so tiles read on white */
 
   --ink:    #0E1538;
   --ink-2:  #4C5370;
@@ -63,6 +63,7 @@
 
   --gutter: clamp(16px, 4vw, 48px);
   --maxw: 1280px;
+  --chrome: 137px;   /* masthead row + category nav, for anything sticky below them */
 
   /* Square. A radius on every block is what made this read as admin UI
      rather than a catalogue. Only genuinely floating things keep a shadow. */
@@ -308,6 +309,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .mobile-dealerbar{display:none}
 .drawer{display:none}
 @media (max-width:900px){
+  :root{--chrome:125px}
   .masthead__row{grid-template-columns:auto 1fr auto;min-height:60px}
   .wordmark{grid-column:2;justify-self:center}
   .masthead .search{display:none}
@@ -437,16 +439,17 @@ ul,ol{margin:0;padding:0;list-style:none}
 @media (max-width:860px){.paths{grid-template-columns:1fr}}
 
 /* ---------- product cards ---------- */
-.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4)}
+/* Tiles butt together with a hairline gutter, the way a catalogue grid does. */
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
 @media (max-width:1040px){.pgrid{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:820px){.pgrid{grid-template-columns:repeat(2,1fr);gap:var(--s3)}}
+@media (max-width:820px){.pgrid{grid-template-columns:repeat(2,1fr);gap:3px}}
 /* No border, no radius, no shadow, no lift. The white image block is the
    only frame; everything under it sits straight on the paper. */
 .pcard{
   display:flex;flex-direction:column;text-decoration:none;color:inherit;min-width:0;
 }
-.pcard__media{position:relative;background:var(--wash);aspect-ratio:4/3;overflow:hidden}
-.pcard__media img{width:100%;height:100%;object-fit:contain;padding:var(--s5);transition:transform 600ms var(--ease)}
+.pcard__media{position:relative;background:var(--wash);aspect-ratio:1/1;overflow:hidden}
+.pcard__media img{width:100%;height:100%;object-fit:contain;padding:var(--s6);transition:transform 600ms var(--ease)}
 .pcard:hover .pcard__media img{transform:scale(1.035)}
 /* A word, not a sticker. */
 .pcard__flag{
@@ -454,13 +457,21 @@ ul,ol{margin:0;padding:0;list-style:none}
   letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:var(--ink-2);
 }
 .pcard__flag--local{color:var(--local)}
-.pcard__body{padding:var(--s4) 0 0;display:flex;flex-direction:column;gap:var(--s3);flex:1}
-.pcard__brand{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
-.pcard__name{font-family:var(--display);font-weight:600;font-size:var(--t-md);line-height:1.3;letter-spacing:-.022em;margin:0}
+.pcard__body{padding:var(--s4) var(--s4) var(--s6);display:flex;flex-direction:column;gap:var(--s2);flex:1;background:var(--wash)}
+.pcard__opts{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin:0;
+  font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.06em;color:var(--ink-3)}
+.pcard__opts .dot{color:var(--rule-strong)}
+.pcard__rule{display:block;width:16px;border-top:1px solid var(--rule-strong);margin-block:var(--s2)}
+/* One line each, so names and prices stay on a baseline across the row. */
+.pcard__brand{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.pcard__name{font-family:var(--display);font-weight:600;font-size:var(--t-md);line-height:1.3;letter-spacing:-.022em;margin:0;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
 .pcard__meta{display:flex;align-items:center;gap:var(--s2);font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);flex-wrap:wrap}
 .stars{display:inline-flex;gap:1px;color:var(--navy)}
 .stars svg{width:12px;height:12px}
-.pcard .ledger{margin-top:auto}
+.pcard .ledger{margin-top:var(--s3);border-left-color:var(--rule-strong)}
+.pcard__ship{margin-top:auto}
 .pcard__ship{font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);letter-spacing:.05em;padding-top:var(--s3);border-top:1px solid var(--rule)}
 .pcard__ship b{color:var(--local);font-weight:600}
 
@@ -574,21 +585,51 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 .pagehead{padding-block:var(--s5) var(--s8);border-bottom:1px solid var(--rule)}
 .pagehead h1{font-size:var(--t-2xl);font-weight:700;letter-spacing:-.04em;max-width:18ch}
-.pagehead .lede{margin-top:var(--s4);max-width:62ch}
+.pagehead .lede{margin-top:var(--s4);max-width:86ch}
 
 /* ---------- shop layout ---------- */
-.shop{display:grid;grid-template-columns:250px minmax(0,1fr);gap:clamp(24px,3vw,46px);padding-block:var(--s6) var(--s9);align-items:start}
-/* three across beside the filter rail: four makes the price ledger too narrow */
-.shop .pgrid{grid-template-columns:repeat(3,1fr)}
-@media (max-width:1240px){.shop .pgrid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:980px){.shop .pgrid{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:820px){.shop .pgrid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:980px){.shop{grid-template-columns:1fr;gap:var(--s4)}}
+/* The filters moved into a slide over, so the grid gets the full page width
+   and the tiles can butt together the way a catalogue's do. */
+.shop{display:block;padding-bottom:var(--s9)}
+.shop .pgrid{grid-template-columns:repeat(3,1fr);gap:4px}
+@media (max-width:980px){.shop .pgrid{grid-template-columns:repeat(2,1fr);gap:3px}}
+@media (max-width:460px){.shop .pgrid{grid-template-columns:1fr}}
 
-.filters{position:sticky;top:calc(env(safe-area-inset-top,0px) + 150px);display:grid;gap:var(--s5);min-width:0}
-@media (max-width:980px){.filters{position:static;top:auto}}
-.fgroup{border-top:1px solid var(--rule);padding-top:var(--s4);min-width:0}
-.fgroup:first-child{border-top:0;padding-top:0}
+/* Filter panel: a slide over on the right, full screen on a phone.
+   No Apply button, the grid updates as you tick. */
+.fscrim{position:fixed;inset:0;z-index:70;background:rgba(14,21,56,.34);opacity:0;transition:opacity var(--base) var(--ease)}
+.fscrim.is-open{opacity:1}
+.fscrim[hidden]{display:none!important}
+.filters{
+  position:fixed;top:0;right:0;bottom:0;z-index:71;width:min(420px,100%);
+  display:flex;flex-direction:column;background:var(--paper);
+  padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);
+  transform:translateX(100%);transition:transform var(--base) var(--ease);
+  box-shadow:var(--shadow-lg);
+}
+.filters.is-open{transform:translateX(0)}
+.filters[hidden]{display:none!important}
+.filters__head{display:flex;align-items:center;justify-content:space-between;gap:var(--s4);
+  padding:var(--s4) var(--s5);border-bottom:1px solid var(--rule);flex:none}
+.filters__head h2{font-size:var(--t-lg);font-weight:600}
+.filters__body{overflow-y:auto;flex:1;padding:var(--s5)}
+.filters__foot{display:flex;gap:var(--s3);padding:var(--s4) var(--s5);border-top:1px solid var(--rule);flex:none}
+.filters__foot .btn{flex:1}
+@media (prefers-reduced-motion:reduce){.filters{transition:none}}
+.fgroup{border-bottom:1px solid var(--rule);min-width:0;padding-block:var(--s2)}
+.fgroup > summary{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s3);
+  min-height:52px;cursor:pointer;list-style:none;
+  font-family:var(--display);font-weight:600;font-size:var(--t-md);
+}
+.fgroup > summary::-webkit-details-marker{display:none}
+.fgroup > summary::after{content:"";width:8px;height:8px;border-right:1.5px solid var(--ink-3);
+  border-bottom:1.5px solid var(--ink-3);transform:rotate(45deg);margin-right:3px;flex:none;
+  transition:transform var(--fast) var(--ease)}
+.fgroup[open] > summary::after{transform:rotate(-135deg)}
+.fgroup > summary .picked{font-family:var(--mono);font-size:var(--t-xs);color:var(--navy);margin-left:auto;margin-right:var(--s3)}
+.fgroup__body{padding-block:var(--s2) var(--s5)}
+.ftoggles{display:grid;gap:var(--s2);padding-bottom:var(--s4);border-bottom:1px solid var(--rule);margin-bottom:var(--s2)}
 /* A legend renders inside the fieldset's top border by default, which made it
    sit on the hairline. Floating it takes it out of that special layout. */
 .fgroup legend,.fgroup .flabel{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding:0;margin-bottom:var(--s3);font-weight:500}
@@ -620,25 +661,35 @@ ul,ol{margin:0;padding:0;list-style:none}
 .fclear:hover{color:var(--ink)}
 
 /* ---------- toolbar ---------- */
-.toolbar{display:flex;align-items:center;gap:var(--s3) var(--s4);flex-wrap:wrap;padding-bottom:var(--s4);border-bottom:1px solid var(--rule);margin-bottom:var(--s5)}
-.toolbar__count{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:0}
+.toolbar{
+  position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--chrome));z-index:30;
+  display:flex;align-items:center;gap:var(--s3) var(--s5);flex-wrap:wrap;
+  padding-block:var(--s3);margin-bottom:4px;
+  background:color-mix(in srgb, var(--paper) 94%, transparent);backdrop-filter:blur(10px);
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+}
+.toolbar__count{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 0 auto}
 .toolbar__count b{color:var(--ink);font-weight:600}
-.sortwrap{margin-left:auto;display:flex;align-items:center;gap:var(--s2)}
+.filter-btn{
+  display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0;border:0;background:none;
+  cursor:pointer;font-family:var(--display);font-size:var(--t-sm);font-weight:500;color:var(--ink);
+}
+.filter-btn svg{width:15px;height:15px}
+.filter-btn:hover{color:var(--navy)}
+.filter-btn .n{font-family:var(--mono);font-size:10px;font-weight:600;background:var(--navy);color:#fff;
+  min-width:19px;height:19px;line-height:19px;text-align:center;padding:0 5px}
+.filter-btn .n[hidden]{display:none!important}
+.sortwrap{display:flex;align-items:center;gap:var(--s2)}
 .sortwrap label{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
 .sortsel{
-  height:44px;padding:0 var(--s6) 0 var(--s3);border:1.5px solid var(--rule-strong);border-radius:var(--r-md);
-  background:var(--surface);font-family:var(--display);font-size:var(--t-sm);font-weight:500;cursor:pointer;
+  height:44px;padding:0 var(--s6) 0 0;border:0;
+  background:none;font-family:var(--display);font-size:var(--t-sm);font-weight:500;cursor:pointer;
   appearance:none;
   background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
   background-position:calc(100% - 19px) 20px,calc(100% - 13px) 20px;background-size:6px 6px,6px 6px;background-repeat:no-repeat;
 }
-.sortsel:hover{border-color:var(--ink-2)}
-.filter-open{display:none}
-@media (max-width:980px){
-  .filter-open{display:inline-flex}
-  .filters{display:none}
-  .filters.is-open{display:grid;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-md);padding:var(--s5)}
-}
+.sortsel:hover{color:var(--navy)}
+.sortwrap label{display:none}
 
 /* ---------- active filter pills ---------- */
 .applied{display:flex;flex-wrap:wrap;gap:var(--s2);margin-bottom:var(--s4)}
@@ -910,3 +961,40 @@ ul,ol{margin:0;padding:0;list-style:none}
   .ledger--lg .ledger__price{font-size:28px}
   .ledger--lg{padding-left:var(--s4)}
 }
+
+/* ---------- price range, the equivalent of their Dimension sliders ---------- */
+.range{display:grid;gap:var(--s4)}
+.range__read{display:flex;justify-content:space-between;font-family:var(--mono);font-size:var(--t-sm);font-variant-numeric:tabular-nums}
+.range__track{position:relative;height:30px}
+.range__track::before{content:"";position:absolute;left:0;right:0;top:14px;height:2px;background:var(--rule)}
+.range__fill{position:absolute;top:14px;height:2px;background:var(--navy)}
+.range input[type=range]{
+  position:absolute;left:0;width:100%;margin:0;top:0;height:30px;
+  -webkit-appearance:none;appearance:none;background:none;pointer-events:none;
+}
+.range input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--paper);border:2px solid var(--navy);cursor:pointer;pointer-events:auto;margin-top:0;
+}
+.range input[type=range]::-moz-range-thumb{
+  width:18px;height:18px;border-radius:50%;background:var(--paper);
+  border:2px solid var(--navy);cursor:pointer;pointer-events:auto;
+}
+.range input[type=range]:focus-visible::-webkit-slider-thumb{outline:2.5px solid var(--local-bright);outline-offset:2px}
+
+/* ---------- an editorial cell dropped into the grid ---------- */
+.gridtile{
+  position:relative;display:flex;flex-direction:column;justify-content:flex-end;
+  min-height:100%;padding:var(--s6);overflow:hidden;text-decoration:none;color:#fff;
+  background:var(--navy);
+}
+.gridtile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.28;filter:grayscale(.5)}
+.gridtile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,16,70,.9),rgba(10,16,70,.35))}
+.gridtile > *{position:relative;z-index:1}
+.gridtile .eyebrow{color:#9FE8B4}
+.gridtile h3{font-size:var(--t-xl);font-weight:600;letter-spacing:-.03em;color:#fff;max-width:14ch}
+.gridtile p{font-size:var(--t-sm);color:#D5D9EE;margin:var(--s3) 0 var(--s5);max-width:34ch}
+.gridtile .go{font-family:var(--display);font-weight:600;font-size:var(--t-xs);letter-spacing:.14em;
+  text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;border-bottom:1.5px solid var(--local-bright);
+  padding-bottom:4px;align-self:flex-start}
+.gridtile:hover .go{gap:14px}

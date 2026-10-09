@@ -24,6 +24,7 @@
 <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 006 6L16 13l5 2v4a2 2 0 01-2.2 2A17 17 0 013 5.2 2 2 0 015 3z"/></symbol>
 <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
 <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+<symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 7h12M19 7h2M3 17h5M12 17h9"/><circle cx="17" cy="7" r="2.4"/><circle cx="10" cy="17" r="2.4"/></symbol>
 <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
 </defs></svg>
 
@@ -144,94 +145,87 @@
     </nav>
 
     <header class="pagehead">
-      <p class="eyebrow" id="cat-eyebrow">Shop the floor</p>
       <h1 id="cat-title">Mattresses</h1>
       <p class="lede" id="cat-lede"></p>
     </header>
 
-    <!-- dealer first state, used for dining -->
+    <!-- kept for a category that genuinely does not ship nationally -->
     <section class="dealer-only" id="dealer-only" hidden style="margin-block:var(--s6)">
       <div>
         <p class="eyebrow eyebrow--local">Dealer floors only</p>
-        <h2 id="do-title">Dining is on your dealer's floor</h2>
+        <h2 id="do-title">This one is on your dealer's floor</h2>
         <p class="measure" style="margin-top:var(--s3);color:var(--ink-2)">
-          Dining sets are the one thing we do not ship from a national warehouse. Tables arrive on a
-          pallet, chairs come in cartons of two, and the damage rate on a freight carrier is high enough
-          that we stopped. Your dealer buys dining for the market they know, so what is on their floor
-          is what sells where you live.
+          Some categories are bought for a market rather than shipped from a national warehouse.
+          Your dealer buys this one for the homes near you, so what is on their floor is what sells
+          where you live.
         </p>
       </div>
-      <div class="cols2">
-        <div>
-          <h3 style="font-family:var(--display);font-size:var(--t-md);margin-bottom:var(--s2)">What you will find there</h3>
-          <ul class="lead" style="display:grid;gap:10px;font-size:var(--t-sm);color:var(--ink-2)">
-            <li>Counter height and standard height sets, five to nine pieces</li>
-            <li>Solid tops in oak, acacia and painted hardwood</li>
-            <li>Benches, upholstered chairs and bar stools sold separately</li>
-            <li>Delivery and assembly by the same crew that brings a mattress</li>
-          </ul>
-        </div>
-        <div>
-          <h3 style="font-family:var(--display);font-size:var(--t-md);margin-bottom:var(--s2)">Call before you drive</h3>
-          <p style="font-size:var(--t-sm);color:var(--ink-2);margin-bottom:var(--s4)">
-            Dining turns over fast. One phone call tells you what is on the floor today and what they
-            can have in by the weekend.
-          </p>
-          <a class="btn btn--solid-local" href="dealers.html">Find your dealer</a>
-        </div>
-      </div>
+      <div><a class="btn btn--solid-local" href="dealers.html">Find your dealer</a></div>
     </section>
 
     <div class="shop" id="shop">
-
-      <form class="filters" id="filters" aria-label="Filter products" onsubmit="return false">
-        <div class="fgroup">
-          <div class="flabel" style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
-            <span>Refine</span>
-            <button type="button" class="fclear" id="clear-all">Clear all</button>
-          </div>
-          <label class="fswitch" id="stock-switch">
-            <input type="checkbox" id="f-stock">
-            <span>In stock at my dealer
-              <small id="stock-note">Set your location to use this</small>
-            </span>
-          </label>
+      <div class="toolbar">
+        <button type="button" class="filter-btn" id="filter-open" aria-expanded="false" aria-controls="filters">
+          <svg aria-hidden="true"><use href="#i-filter"></use></svg>
+          Filter
+          <span class="n" id="filter-n" hidden>0</span>
+        </button>
+        <div class="sortwrap">
+          <label for="sort">Sort</label>
+          <select class="sortsel" id="sort" aria-label="Sort products">
+            <option value="featured">Relevance</option>
+            <option value="price-asc">Price, low to high</option>
+            <option value="price-desc">Price, high to low</option>
+            <option value="rating">Best reviewed</option>
+            <option value="firm-asc">Softest first</option>
+            <option value="firm-desc">Firmest first</option>
+          </select>
         </div>
-        <div id="filter-groups"></div>
-      </form>
+        <p class="toolbar__count"><b id="count">0</b> <span id="count-word">products</span></p>
+      </div>
 
-      <div>
-        <div class="toolbar">
-          <p class="toolbar__count"><b id="count">0</b> <span id="count-word">products</span></p>
-          <button type="button" class="btn btn--ghost btn--sm filter-open" id="filter-open" aria-expanded="false" aria-controls="filters">Filters</button>
-          <div class="sortwrap">
-            <label for="sort">Sort</label>
-            <select class="sortsel" id="sort">
-              <option value="featured">Featured</option>
-              <option value="price-asc">Price, low to high</option>
-              <option value="price-desc">Price, high to low</option>
-              <option value="rating">Best reviewed</option>
-              <option value="firm-asc">Softest first</option>
-              <option value="firm-desc">Firmest first</option>
-            </select>
-          </div>
-        </div>
+      <div class="applied" id="applied"></div>
+      <div class="pgrid" id="grid"></div>
 
-        <div class="applied" id="applied"></div>
-        <div class="pgrid" id="grid"></div>
-
-        <div class="empty" id="empty" hidden>
-          <h3>Nothing matches all of those at once</h3>
-          <p>Try dropping one filter. If you are after something specific, your dealer can usually
-             order it in even when it is not on this site.</p>
-          <p style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap">
-            <button type="button" class="btn btn--ghost btn--sm" id="clear-empty">Clear filters</button>
-            <a class="btn btn--local btn--sm" href="dealers.html">Ask a dealer</a>
-          </p>
-        </div>
+      <div class="empty" id="empty" hidden>
+        <h3>Nothing matches all of those at once</h3>
+        <p>Try dropping one filter. If you are after something specific, your dealer can usually
+           order it in even when it is not on this site.</p>
+        <p style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap">
+          <button type="button" class="btn btn--ghost btn--sm" id="clear-empty">Clear filters</button>
+          <a class="btn btn--local btn--sm" href="dealers.html">Ask a dealer</a>
+        </p>
       </div>
     </div>
   </div>
+
+  <!-- filter slide over -->
+  <div class="fscrim" id="fscrim" hidden></div>
+  <form class="filters" id="filters" aria-label="Filter products" hidden onsubmit="return false">
+    <div class="filters__head">
+      <h2>Filter</h2>
+      <button type="button" class="icon-btn" id="filter-close" aria-label="Close filters">
+        <svg aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+    <div class="filters__body">
+      <div class="ftoggles">
+        <label class="fswitch" id="stock-switch">
+          <input type="checkbox" id="f-stock">
+          <span>In stock at my dealer<small id="stock-note">Set your location to use this</small></span>
+        </label>
+        <label class="fswitch">
+          <input type="checkbox" id="f-free">
+          <span>Delivered free<small>Orders over $599, set up in the room</small></span>
+        </label>
+      </div>
+      <div id="filter-groups"></div>
+    </div>
+    <div class="filters__foot">
+      <button type="button" class="btn btn--ghost btn--sm" id="clear-all">Clear all</button>
+      <button type="button" class="btn btn--online btn--sm" id="filter-done">Show <span id="done-n">0</span></button>
+    </div>
+  </form>
 </main>
 
 
@@ -323,14 +317,17 @@
 <script src="assets/js/catalog.js"></script>
 <script src="assets/js/boxdrop.js"></script>
 <script>
-/* Category page. One template for every category, chosen by the URL hash. */
+/* Category page. One template for every category, chosen by the URL hash.
+   Filters live in a slide over and apply as you tick them, so the grid keeps
+   the full width of the page. */
 (function () {
   'use strict';
   var BD = window.BoxDrop, CAT = window.BD_CATEGORIES, ALL = window.BD_CATALOG;
   var $ = function (s) { return document.querySelector(s); };
+  var FREE_OVER = 599;
 
   var VALID = Object.keys(CAT);
-  var state = { cat: 'mattresses', sort: 'featured', stock: false, f: {} };
+  var state = { cat: 'mattresses', sort: 'featured', stock: false, free: false, f: {}, lo: null, hi: null };
 
   var FIRMNESS_BANDS = [
     { name: 'Plush',  test: function (p) { return p.firmness <= 4; } },
@@ -342,48 +339,38 @@
     var h = (location.hash || '').replace('#', '').toLowerCase();
     state.cat = VALID.indexOf(h) > -1 ? h : 'mattresses';
   }
+  function inCat() { return ALL.filter(function (p) { return p.cat === state.cat; }); }
 
-  function inCat() {
-    return ALL.filter(function (p) { return p.cat === state.cat; });
+  function bounds() {
+    var items = inCat();
+    if (!items.length) return { min: 0, max: 1000 };
+    var lo = Math.min.apply(null, items.map(function (p) { return p.price; }));
+    var hi = Math.max.apply(null, items.map(function (p) { return p.price; }));
+    return { min: Math.floor(lo / 100) * 100, max: Math.ceil(hi / 100) * 100 };
   }
 
-  /* ---------- filter definitions, derived from what is actually in stock ---------- */
   function uniq(list, fn) {
     var seen = [], out = [];
-    list.forEach(function (p) {
-      var v = fn(p);
-      if (v && seen.indexOf(v) === -1) { seen.push(v); out.push(v); }
-    });
+    list.forEach(function (p) { var v = fn(p); if (v && seen.indexOf(v) === -1) { seen.push(v); out.push(v); } });
     return out.sort();
   }
 
   function groups() {
     var items = inCat(), g = [];
-    var brands = uniq(items, function (p) { return p.brand; });
-    var types  = uniq(items, function (p) { return p.type; });
-    var sizes  = [];
+    var sizes = [];
     items.forEach(function (p) {
-      (p.options ? p.options.values : []).forEach(function (v) {
-        if (sizes.indexOf(v.name) === -1) sizes.push(v.name);
-      });
+      (p.options ? p.options.values : []).forEach(function (v) { if (sizes.indexOf(v.name) === -1) sizes.push(v.name); });
     });
     var label = CAT[state.cat].optionLabel || 'Size';
-
     if (sizes.length > 1) g.push({ key: 'size', label: label, values: sizes });
     if (items.some(function (p) { return typeof p.firmness === 'number'; })) {
-      g.push({ key: 'firm', label: 'Firmness', values: FIRMNESS_BANDS.map(function (b) { return b.name; }), local: true });
+      g.push({ key: 'firm', label: 'Firmness', values: FIRMNESS_BANDS.map(function (b) { return b.name; }) });
     }
-    if (types.length > 1)  g.push({ key: 'type',  label: 'Type',  values: types });
+    var types = uniq(items, function (p) { return p.type; });
+    if (types.length > 1) g.push({ key: 'type', label: 'Type', values: types });
+    var brands = uniq(items, function (p) { return p.brand; });
     if (brands.length > 1) g.push({ key: 'brand', label: 'Brand', values: brands });
-    g.push({ key: 'price', label: 'Price', values: ['Under $800', '$800 to $1,500', '$1,500 to $2,500', 'Over $2,500'] });
     return g;
-  }
-
-  function priceOK(p, band) {
-    if (band === 'Under $800') return p.price < 800;
-    if (band === '$800 to $1,500') return p.price >= 800 && p.price < 1500;
-    if (band === '$1,500 to $2,500') return p.price >= 1500 && p.price < 2500;
-    return p.price >= 2500;
   }
 
   function matches(p) {
@@ -393,9 +380,11 @@
       var hit = FIRMNESS_BANDS.some(function (b) { return f.firm.indexOf(b.name) > -1 && typeof p.firmness === 'number' && b.test(p); });
       if (!hit) return false;
     }
-    if (f.type  && f.type.length  && f.type.indexOf(p.type) === -1) return false;
+    if (f.type && f.type.length && f.type.indexOf(p.type) === -1) return false;
     if (f.brand && f.brand.length && f.brand.indexOf(p.brand) === -1) return false;
-    if (f.price && f.price.length && !f.price.some(function (b) { return priceOK(p, b); })) return false;
+    if (state.lo != null && p.price < state.lo) return false;
+    if (state.hi != null && p.price > state.hi) return false;
+    if (state.free && p.price < FREE_OVER) return false;
     if (state.stock) {
       var d = BD.currentDealer();
       if (d && (p.stock || []).indexOf(d.id) === -1) return false;
@@ -413,40 +402,104 @@
     return out;
   }
 
+  function activeCount() {
+    var n = 0;
+    Object.keys(state.f).forEach(function (k) { n += (state.f[k] || []).length; });
+    if (state.stock) n++;
+    if (state.free) n++;
+    var b = bounds();
+    if ((state.lo != null && state.lo > b.min) || (state.hi != null && state.hi < b.max)) n++;
+    return n;
+  }
+
   /* ---------- render ---------- */
   function renderFilters() {
-    $('#filter-groups').innerHTML = groups().map(function (g) {
-      return '<fieldset class="fgroup"><legend>' + BD.esc(g.label) + '</legend><div class="fchips">' +
+    var b = bounds();
+    if (state.lo == null) state.lo = b.min;
+    if (state.hi == null) state.hi = b.max;
+
+    var html = groups().map(function (g) {
+      var picked = (state.f[g.key] || []).length;
+      return '<details class="fgroup"' + (picked ? ' open' : '') + '>' +
+        '<summary>' + BD.esc(g.label) +
+          (picked ? '<span class="picked">' + picked + '</span>' : '') + '</summary>' +
+        '<div class="fgroup__body"><div class="fchips">' +
         g.values.map(function (v) {
           var on = (state.f[g.key] || []).indexOf(v) > -1;
-          return '<label class="fchip' + (g.local ? ' fchip--local' : '') + '">' +
-            '<input type="checkbox" data-fkey="' + g.key + '" value="' + BD.esc(v) + '"' + (on ? ' checked' : '') + '>' +
-            '<span>' + BD.esc(v) + '</span></label>';
-        }).join('') + '</div></fieldset>';
+          return '<label class="fchip"><input type="checkbox" data-fkey="' + g.key + '" value="' + BD.esc(v) + '"' +
+            (on ? ' checked' : '') + '><span>' + BD.esc(v) + '</span></label>';
+        }).join('') + '</div></div></details>';
     }).join('');
+
+    html += '<details class="fgroup" open><summary>Price</summary><div class="fgroup__body">' +
+      '<div class="range">' +
+        '<div class="range__read"><span id="r-lo">' + BD.money(state.lo) + '</span>' +
+        '<span id="r-hi">' + BD.money(state.hi) + '</span></div>' +
+        '<div class="range__track"><span class="range__fill" id="r-fill"></span>' +
+          '<input type="range" id="r-min" min="' + b.min + '" max="' + b.max + '" step="50" value="' + state.lo + '" aria-label="Minimum price">' +
+          '<input type="range" id="r-max" min="' + b.min + '" max="' + b.max + '" step="50" value="' + state.hi + '" aria-label="Maximum price">' +
+        '</div>' +
+      '</div></div></details>';
+
+    $('#filter-groups').innerHTML = html;
+    paintRange();
+  }
+
+  function paintRange() {
+    var b = bounds(), fill = $('#r-fill');
+    if (!fill) return;
+    var span = Math.max(1, b.max - b.min);
+    fill.style.left = ((state.lo - b.min) / span * 100) + '%';
+    fill.style.right = ((b.max - state.hi) / span * 100) + '%';
+    $('#r-lo').textContent = BD.money(state.lo);
+    $('#r-hi').textContent = BD.money(state.hi);
   }
 
   function renderApplied() {
-    var out = [];
+    var out = [], b = bounds();
     Object.keys(state.f).forEach(function (k) {
       (state.f[k] || []).forEach(function (v) {
-        out.push('<button type="button" class="pill" data-drop="' + k + '|' + BD.esc(v) + '">' +
-          BD.esc(v) + '<svg aria-hidden="true"><use href="#i-close"></use></svg>' +
-          '<span class="vis-hidden">Remove this filter</span></button>');
+        out.push(pill(k + '|' + v, v));
       });
     });
-    if (state.stock) out.push('<button type="button" class="pill" data-drop="stock|1">At my dealer' +
-      '<svg aria-hidden="true"><use href="#i-close"></use></svg><span class="vis-hidden">Remove this filter</span></button>');
+    if (state.stock) out.push(pill('stock|1', 'At my dealer'));
+    if (state.free)  out.push(pill('free|1', 'Delivered free'));
+    if (state.lo > b.min || state.hi < b.max) out.push(pill('price|1', BD.money(state.lo) + ' to ' + BD.money(state.hi)));
     $('#applied').innerHTML = out.join('');
+  }
+  function pill(data, label) {
+    return '<button type="button" class="pill" data-drop="' + BD.esc(data) + '">' + BD.esc(label) +
+      '<svg aria-hidden="true"><use href="#i-close"></use></svg>' +
+      '<span class="vis-hidden">Remove this filter</span></button>';
+  }
+
+  /* an editorial cell in the grid, the way their lifestyle tiles sit among products */
+  function editorialTile() {
+    var d = BD.currentDealer();
+    return '<a class="gridtile" href="dealers.html">' +
+      '<img src="assets/img/s-showroom-1.jpg" alt="" aria-hidden="true" loading="lazy">' +
+      '<p class="eyebrow">Every price here has a second one</p>' +
+      '<h3>' + (d ? BD.esc(d.name) + ' prices lower' : 'Your dealer prices lower') + '</h3>' +
+      '<p>' + (d
+        ? 'You are seeing their floor price on every card. They deliver it too.'
+        : 'Set your location and every price on this page switches from a range to one dealer’s number.') +
+      '</p><span class="go">' + (d ? 'See their store' : 'Find your dealer') +
+      '<svg width="14" height="14" aria-hidden="true"><use href="#i-arrow"></use></svg></span></a>';
   }
 
   function renderGrid() {
     var list = sorted(inCat().filter(matches));
-    $('#grid').innerHTML = list.map(BD.cardHTML).join('');
+    var cells = list.map(BD.cardHTML);
+    if (cells.length >= 6) cells.splice(5, 0, editorialTile());
+    $('#grid').innerHTML = cells.join('');
     $('#count').textContent = list.length;
     $('#count-word').textContent = list.length === 1 ? 'product' : 'products';
+    $('#done-n').textContent = list.length;
     $('#empty').hidden = list.length > 0;
     $('#grid').hidden = list.length === 0;
+    var n = activeCount();
+    $('#filter-n').textContent = n;
+    $('#filter-n').hidden = n === 0;
     BD.paintLedgers();
   }
 
@@ -456,15 +509,12 @@
     $('#cat-title').textContent = c.title;
     $('#crumb-cat').textContent = c.title;
     $('#cat-lede').textContent = c.lede;
-    $('#cat-eyebrow').textContent = state.cat === 'outlet' ? 'One of each, sold once' : 'Shop the floor';
-
     var dealerOnly = !!c.dealerOnly;
     $('#dealer-only').hidden = !dealerOnly;
     $('#shop').hidden = dealerOnly;
-
     document.querySelectorAll('.nav__list a, .drawer__list a').forEach(function (a) {
-      var on = a.getAttribute('href') === 'category.html#' + state.cat;
-      if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      if (a.getAttribute('href') === 'category.html#' + state.cat) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
     });
   }
 
@@ -479,57 +529,98 @@
   function renderAll() {
     renderHead();
     if (CAT[state.cat].dealerOnly) return;
-    syncStockSwitch();
-    renderFilters();
-    renderApplied();
-    renderGrid();
+    syncStockSwitch(); renderFilters(); renderApplied(); renderGrid();
   }
+
+  function clearAll() {
+    var b = bounds();
+    state.f = {}; state.stock = false; state.free = false; state.lo = b.min; state.hi = b.max;
+    $('#f-stock').checked = false; $('#f-free').checked = false;
+    renderFilters(); renderApplied(); renderGrid();
+  }
+
+  /* ---------- the slide over ---------- */
+  var lastFocus = null;
+  function openPanel() {
+    lastFocus = document.activeElement;
+    $('#fscrim').hidden = false; $('#filters').hidden = false;
+    requestAnimationFrame(function () {
+      $('#fscrim').classList.add('is-open'); $('#filters').classList.add('is-open');
+    });
+    document.body.style.overflow = 'hidden';
+    $('#filter-open').setAttribute('aria-expanded', 'true');
+    $('#filter-close').focus();
+  }
+  function closePanel() {
+    $('#fscrim').classList.remove('is-open'); $('#filters').classList.remove('is-open');
+    $('#filter-open').setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    setTimeout(function () { $('#fscrim').hidden = true; $('#filters').hidden = true; }, 240);
+    if (lastFocus) lastFocus.focus();
+  }
+  function panelOpen() { return !$('#filters').hidden; }
 
   /* ---------- events ---------- */
   document.addEventListener('change', function (e) {
     var t = e.target;
     if (t.id === 'sort')    { state.sort = t.value; renderGrid(); return; }
     if (t.id === 'f-stock') { state.stock = t.checked; renderApplied(); renderGrid(); return; }
+    if (t.id === 'f-free')  { state.free  = t.checked; renderApplied(); renderGrid(); return; }
     if (t.dataset && t.dataset.fkey) {
       var k = t.dataset.fkey;
       state.f[k] = state.f[k] || [];
       var i = state.f[k].indexOf(t.value);
       if (t.checked && i === -1) state.f[k].push(t.value);
       if (!t.checked && i > -1) state.f[k].splice(i, 1);
+      var sum = t.closest('.fgroup') && t.closest('.fgroup').querySelector('.picked');
       renderApplied(); renderGrid();
+      if (sum) sum.textContent = state.f[k].length || '';
     }
   });
 
+  document.addEventListener('input', function (e) {
+    if (e.target.id !== 'r-min' && e.target.id !== 'r-max') return;
+    var lo = parseInt($('#r-min').value, 10), hi = parseInt($('#r-max').value, 10);
+    if (e.target.id === 'r-min' && lo > hi) { lo = hi; $('#r-min').value = lo; }
+    if (e.target.id === 'r-max' && hi < lo) { hi = lo; $('#r-max').value = hi; }
+    state.lo = lo; state.hi = hi;
+    paintRange(); renderApplied(); renderGrid();
+  });
+
   document.addEventListener('click', function (e) {
-    var pill = e.target.closest && e.target.closest('[data-drop]');
-    if (pill) {
-      var parts = pill.getAttribute('data-drop').split('|');
+    var t = e.target;
+    if (t.closest && t.closest('#filter-open')) { openPanel(); return; }
+    if (t.closest && (t.closest('#filter-close') || t.closest('#filter-done') || t.id === 'fscrim')) { closePanel(); return; }
+    if (t.id === 'clear-all' || t.id === 'clear-empty') { clearAll(); return; }
+
+    var drop = t.closest && t.closest('[data-drop]');
+    if (drop) {
+      var parts = drop.getAttribute('data-drop').split('|'), b = bounds();
       if (parts[0] === 'stock') { state.stock = false; $('#f-stock').checked = false; }
+      else if (parts[0] === 'free') { state.free = false; $('#f-free').checked = false; }
+      else if (parts[0] === 'price') { state.lo = b.min; state.hi = b.max; }
       else {
-        var arr = state.f[parts[0]] || [];
-        var j = arr.indexOf(parts[1]);
+        var arr = state.f[parts[0]] || [], j = arr.indexOf(parts[1]);
         if (j > -1) arr.splice(j, 1);
       }
       renderFilters(); renderApplied(); renderGrid();
-      return;
     }
-    if (e.target.id === 'clear-all' || e.target.id === 'clear-empty') {
-      state.f = {}; state.stock = false;
-      var sw = document.getElementById('f-stock'); if (sw) sw.checked = false;
-      renderFilters(); renderApplied(); renderGrid();
-      return;
-    }
-    if (e.target.id === 'filter-open') {
-      var fs = document.getElementById('filters');
-      var open = fs.classList.toggle('is-open');
-      e.target.setAttribute('aria-expanded', String(open));
-      e.target.textContent = open ? 'Hide filters' : 'Filters';
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && panelOpen()) closePanel();
+    if (e.key === 'Tab' && panelOpen()) {
+      var f = $('#filters').querySelectorAll('button, input, select, a[href], summary');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
 
   window.addEventListener('hashchange', function () {
-    readHash(); state.f = {}; renderAll();
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    readHash(); state.f = {}; state.lo = null; state.hi = null;
+    renderAll(); window.scrollTo({ top: 0, behavior: 'auto' });
   });
   document.addEventListener('bd:dealerchange', function () { syncStockSwitch(); renderGrid(); });
 
