@@ -1,0 +1,104 @@
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- 01 · utility bar ----------------------------------------------------- -->
+<div class="utility">
+  <div class="wrap">
+    <a class="chip-dealer" href="dealers.html" style="color:#EDEFFA">
+      <svg class="pin" aria-hidden="true"><use href="#i-pin"></use></svg>
+      <span data-nodealer-only>Your BoxDrop: <b data-dealer-city>Set your location</b></span>
+      <span data-dealer-only hidden>Your BoxDrop: <b data-dealer-name>Find your dealer</b></span>
+    </a>
+    <p class="utility__promise">Every order delivered by your local dealer</p>
+    <ul class="utility__links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#guarantees">Financing</a></li>
+      <li><a href="dealers.html">Dealer login</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- 02 · masthead -------------------------------------------------------- -->
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__row">
+      <div class="masthead__left">
+        <button class="icon-btn burger" type="button" data-drawer-open aria-expanded="false" aria-controls="drawer" aria-label="Open menu">
+          <svg aria-hidden="true"><use href="#i-menu"></use></svg>
+        </button>
+        <form class="search" role="search" action="category.html" onsubmit="return false">
+          <svg aria-hidden="true"><use href="#i-search"></use></svg>
+          <label class="vis-hidden" for="q">Search mattresses and furniture</label>
+          <input id="q" name="q" type="search" placeholder="Search queen hybrid, sectional, base" autocomplete="off">
+        </form>
+      </div>
+
+      <a class="wordmark" href="index.html" aria-label="BoxDrop home">
+        <span class="box">Box</span><span class="drop">Drop</span><span class="dot" aria-hidden="true"></span>
+      </a>
+
+      <div class="masthead__right">
+        <a class="icon-btn" href="dealers.html" aria-label="Find a dealer">
+          <svg aria-hidden="true"><use href="#i-pin"></use></svg>
+        </a>
+        <a class="icon-btn" href="#guarantees" aria-label="Your account">
+          <svg aria-hidden="true"><use href="#i-user"></use></svg>
+        </a>
+        <a class="icon-btn" href="cart.html" aria-label="Cart">
+          <svg aria-hidden="true"><use href="#i-bag"></use></svg>
+          <span class="cart-count" data-cart-count hidden>0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Product categories">
+    <div class="wrap">
+      <ul class="nav__list">
+        <li><a href="category.html#mattresses">Mattresses</a></li>
+        <li><a href="category.html#bases">Adjustable bases</a></li>
+        <li><a href="category.html#bedroom">Bedroom</a></li>
+        <li><a href="category.html#living">Living room</a></li>
+        <li><a href="category.html#dining">Dining</a></li>
+        <li><a href="category.html#outlet">Outlet</a></li>
+      </ul>
+      <a class="nav__find" href="dealers.html">
+        <svg width="14" height="14" aria-hidden="true"><use href="#i-pin"></use></svg> Find your dealer
+      </a>
+    </div>
+  </nav>
+
+  <div class="mobile-dealerbar">
+    <div class="wrap">
+      <a class="dealerbar-btn" href="dealers.html">
+        <svg aria-hidden="true"><use href="#i-pin"></use></svg>
+        <span data-nodealer-only>Set your location for local pricing</span>
+        <span data-dealer-only hidden>Your dealer: <b data-dealer-name></b></span>
+        <span class="muted">Change</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- mobile drawer -->
+<div class="drawer" id="drawer" hidden>
+  <div class="wrap">
+    <div class="drawer__head">
+      <span class="wordmark"><span class="box">Box</span><span class="drop">Drop</span><span class="dot" aria-hidden="true"></span></span>
+      <button class="icon-btn" type="button" data-drawer-close aria-label="Close menu">
+        <svg aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+    <nav class="drawer__list" aria-label="Mobile menu">
+      <a href="category.html#mattresses">Mattresses <span>148</span></a>
+      <a href="category.html#bases">Adjustable bases <span>24</span></a>
+      <a href="category.html#bedroom">Bedroom <span>96</span></a>
+      <a href="category.html#living">Living room <span>212</span></a>
+      <a href="category.html#dining">Dining <span>84</span></a>
+      <a href="category.html#outlet">Outlet <span>60</span></a>
+    </nav>
+    <div style="padding-block:22px">
+      <a class="btn btn--solid-local btn--block" href="dealers.html">Find your dealer</a>
+      <a class="btn btn--ghost btn--block" href="cart.html" style="margin-top:10px">View cart</a>
+    </div>
+  </div>
+</div>

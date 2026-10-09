@@ -1,0 +1,165 @@
+<main id="main">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="category.html#mattresses" id="crumb-cat">Mattresses</a></li>
+        <li><span aria-current="page" id="crumb-name">Product</span></li>
+      </ol>
+    </nav>
+
+    <div class="pdp">
+      <!-- gallery -->
+      <div class="gallery">
+        <div class="gallery__thumbs" id="thumbs" role="group" aria-label="Product images"></div>
+        <figure class="gallery__main" style="margin:0">
+          <img id="main-img" src="assets/img/m-reactive.jpg" alt="" width="900" height="900" fetchpriority="high">
+        </figure>
+      </div>
+
+      <!-- buy rail -->
+      <div class="rail">
+        <div>
+          <p class="rail__brand" id="p-brand"></p>
+          <h1 id="p-name"></h1>
+          <p class="rail__meta">
+            <span id="p-stars"></span>
+            <a href="#reviews" id="p-reviews"></a>
+            <span class="rail__sku"><span aria-hidden="true">·</span> <span class="num" id="p-sku"></span></span>
+          </p>
+        </div>
+
+        <div id="p-ledger"></div>
+        <p class="finance" id="p-finance"></p>
+
+        <p class="rail__blurb" id="p-blurb"></p>
+
+        <div class="optset" id="p-options"></div>
+        <div class="optset" id="p-feel" hidden></div>
+
+        <div class="buyrow">
+          <button class="btn btn--online" type="button" id="p-add" data-add>Add to cart</button>
+          <a class="btn btn--local" href="dealers.html" id="p-local">Check your dealer's price</a>
+        </div>
+
+        <form id="p-zip" data-zip-form style="display:none;gap:8px;flex-wrap:wrap;align-items:center;
+             border-left:1px solid var(--local);
+             background:var(--local-wash);padding:16px">
+          <label for="zip-pdp" style="font-size:var(--t-sm);color:var(--local);flex:1 1 100%;margin:0">
+            Enter your ZIP and this page will show what your dealer charges for it.
+          </label>
+          <input id="zip-pdp" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="25143"
+                 style="height:48px;width:120px;padding:0 14px;border:1px solid var(--local);background:var(--surface);font-family:var(--mono);letter-spacing:.1em">
+          <button class="btn btn--solid-local btn--sm" type="submit" style="min-height:48px">Show my price</button>
+          <p data-zip-error hidden style="flex-basis:100%;color:var(--stop);font-size:13px;margin:0"></p>
+        </form>
+
+        <div class="delivery" id="p-delivery"></div>
+
+        <div class="trustrows">
+          <div class="trustrow">
+            <svg aria-hidden="true"><use href="#i-truck"></use></svg>
+            <div><b>Delivered by your local dealer</b><span>A BoxDrop crew sets it up in the room and takes the old mattress away. Free over $599.</span></div>
+          </div>
+          <div class="trustrow">
+            <svg aria-hidden="true"><use href="#i-moon"></use></svg>
+            <div><b>101 night trial</b><span>If the feel is wrong, your dealer swaps it once for a different comfort level.</span></div>
+          </div>
+          <div class="trustrow">
+            <svg aria-hidden="true"><use href="#i-shield"></use></svg>
+            <div><b>10 year warranty</b><span>Non prorated. No registration card and no matching foundation required.</span></div>
+          </div>
+          <div class="trustrow">
+            <svg aria-hidden="true"><use href="#i-card"></use></svg>
+            <div><b>Financing on approved credit</b><span>0% APR for 12 months. The monthly figure above is the full price divided by twelve, with nothing added.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- construction -->
+  <section class="section section--sunk" id="construction">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Construction</p>
+          <h2 class="sec-title" id="con-title">What is actually inside it</h2>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:16px">
+        <div class="diagram" id="layer-card" hidden>
+          <h3>Every layer, to scale</h3>
+          <p class="sub" id="layer-sub"></p>
+          <div id="layer-svg"></div>
+          <div class="layers" id="layer-rows"></div>
+        </div>
+        <div class="diagram" id="height-card" hidden>
+          <h3>How high does it sit?</h3>
+          <p class="sub" id="height-sub"></p>
+          <div id="height-svg"></div>
+          <p style="font-size:var(--t-xs);color:var(--ink-3);margin:16px 0 0">
+            Heights are to scale against a standard 8 inch foundation. Knee height is taken at
+            28.5% of standing height, which is the figure furniture is designed around.
+          </p>
+        </div>
+        <div class="diagram" id="spec-card">
+          <h3>Specifications</h3>
+          <p class="sub">The numbers a tape measure cares about.</p>
+          <table class="spectable"><tbody id="spec-rows"></tbody></table>
+          <p style="margin-top:20px"><button type="button" class="btn btn--ghost btn--sm" id="copy-specs">Copy specifications</button></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- reviews -->
+  <section class="section" id="reviews">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Reviews</p>
+          <h2 class="sec-title">What owners said after 90 days</h2>
+          <p>Every review here is from somebody whose order was delivered by a BoxDrop dealer, collected
+             three months after delivery rather than three days.</p>
+        </div>
+      </div>
+      <div class="revsummary">
+        <div>
+          <p class="big num" id="rev-score">4.8</p>
+          <p id="rev-stars" style="margin:8px 0 0"></p>
+          <p class="num" id="rev-count" style="font-size:var(--t-xs);color:var(--ink-3);margin:6px 0 0"></p>
+        </div>
+        <div class="revbars" id="rev-bars"></div>
+      </div>
+      <div class="revlist" id="rev-list"></div>
+    </div>
+  </section>
+
+  <!-- related -->
+  <section class="section section--sunk">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Also on the floor</p>
+          <h2 class="sec-title">What people compare this with</h2>
+        </div>
+        <a class="link-arrow" href="category.html#mattresses" id="rel-all">See the whole category <svg width="15" height="15" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+      </div>
+      <div class="pgrid" id="related"></div>
+    </div>
+  </section>
+</main>
+
+<div class="stickybuy" id="stickybuy" aria-hidden="true">
+  <div class="wrap">
+    <div class="stickybuy__who">
+      <b id="sb-name"></b>
+      <span id="sb-price"></span>
+    </div>
+    <div class="stickybuy__acts">
+      <a class="btn btn--local" href="dealers.html" id="sb-local">Dealer price</a>
+      <button class="btn btn--online" type="button" id="sb-add" data-add>Add to cart</button>
+    </div>
+  </div>
+</div>
