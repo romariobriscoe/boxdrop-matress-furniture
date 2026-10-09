@@ -47,9 +47,9 @@
     },
     dining: {
       title: 'Dining',
-      lede: 'Dining is carried on dealer floors rather than shipped from a national warehouse.',
-      optionLabel: 'Finish',
-      dealerOnly: true
+      lede: 'Tables, chairs, stools and servers from Steve Silver. Sets ship as sets, and the crew ' +
+            'that brings your mattress assembles them in the room rather than leaving you a flat pack.',
+      optionLabel: 'Finish'
     },
     outlet: {
       title: 'Outlet',
@@ -456,6 +456,182 @@
              'of announcing that somebody needs a recliner.',
       features: ['Lies flat', 'Powered lift', 'Side pocket'],
       specs: [['Recline', 'To 180 degrees'], ['Width', '36 in'], ['Warranty', '5 years on the frame']]
+    },
+
+    /* ---------------- dining ---------------- */
+    {
+      sku: 'ss-colfax', cat: 'dining', brand: 'Steve Silver', name: 'Colfax Round Dining Set',
+      price: 1099, img: 'assets/img/dn-colfax.jpg', gallery: ['assets/img/dn-colfax.jpg', 'assets/img/dn-cayla.jpg'],
+      rating: 4.6, reviews: 143, type: 'Dining set', options: opts('Finish', ['White and chrome', 'Walnut']),
+      stock: ['d478', 'd512', 'd731'],
+      blurb: 'A round top seats five without anybody getting a table leg, which is the whole reason ' +
+             'round tables exist. Four upholstered chairs included.',
+      features: ['Five pieces', 'Seats five', 'Assembled in the room'],
+      specs: [['Includes', 'Round table and four chairs'], ['Table diameter', '45 in'], ['Height', '30 in'],
+              ['Chair', 'Upholstered seat and back'], ['Warranty', '1 year']]
+    },
+    {
+      sku: 'ss-aberdeen', cat: 'dining', brand: 'Steve Silver', name: 'Aberdeen Counter Height Dining Set',
+      price: 899, img: 'assets/img/dn-aberdeen.jpg', gallery: ['assets/img/dn-aberdeen.jpg', 'assets/img/dn-wallen.jpg'],
+      rating: 4.4, reviews: 97, type: 'Dining set', options: opts('Finish', ['Black and oak', 'Grey']),
+      stock: ['d478', 'd604'],
+      blurb: 'Counter height, so it works as a table and as somewhere to stand with a coffee. ' +
+             'Four stools tuck fully under.',
+      features: ['Counter height', 'Five pieces', 'Stools tuck under'],
+      specs: [['Includes', 'Counter table and four stools'], ['Table', '36 x 36 in'], ['Height', '36 in'], ['Warranty', '1 year']]
+    },
+    {
+      sku: 'ss-giles', cat: 'dining', brand: 'Steve Silver', name: 'Giles Oval Dining Table',
+      price: 749, img: 'assets/img/dn-giles.jpg', gallery: ['assets/img/dn-giles.jpg'],
+      rating: 4.5, reviews: 61, type: 'Table', options: opts('Finish', ['Antique white', 'Oak']),
+      stock: ['d512', 'd731'],
+      blurb: 'An oval top with a leaf, so it is a four seater most of the week and a six seater at ' +
+             'Christmas. Chairs sold separately on purpose.',
+      features: ['Extends with a leaf', 'Seats four to six', 'Chairs sold separately'],
+      specs: [['Closed', '66 x 42 in'], ['Extended', '84 x 42 in'], ['Height', '30 in'], ['Warranty', '1 year']]
+    },
+    {
+      sku: 'ss-avalon', cat: 'dining', brand: 'Steve Silver', name: 'Avalon Round Table with Lazy Susan',
+      price: 1349, img: 'assets/img/dn-avalon.jpg', gallery: ['assets/img/dn-avalon.jpg'],
+      rating: 4.7, reviews: 48, type: 'Table', options: opts('Finish', ['Espresso']),
+      stock: ['d478'],
+      blurb: 'A built in lazy susan under glass. Sounds like a gimmick until you have eaten at one ' +
+             'with six people and nobody has asked for anything to be passed.',
+      features: ['Built in lazy susan', 'Glass insert', 'Seats six'],
+      specs: [['Diameter', '54 in'], ['Height', '30 in'], ['Lazy susan', '24 in, glass'], ['Warranty', '1 year']]
+    },
+    {
+      sku: 'ss-cayla', cat: 'dining', brand: 'Steve Silver', name: 'Cayla Dining Chair, pair',
+      price: 349, img: 'assets/img/dn-cayla.jpg', gallery: ['assets/img/dn-cayla.jpg'],
+      rating: 4.3, reviews: 112, type: 'Seating', options: opts('Finish', ['Grey', 'Oak']),
+      stock: ['d478', 'd512', 'd604'],
+      blurb: 'Slat back, solid wood, sold in pairs so you can add two when the family grows.',
+      features: ['Sold in pairs', 'Solid wood', 'Arrives assembled'],
+      specs: [['Seat height', '18 in'], ['Overall height', '38 in'], ['Weight limit', '250 lb'], ['Warranty', '1 year']]
+    },
+    {
+      sku: 'ss-joanna', cat: 'dining', brand: 'Steve Silver', name: 'Joanna Dining Bench',
+      price: 299, img: 'assets/img/dn-joanna.jpg', gallery: ['assets/img/dn-joanna.jpg'],
+      rating: 4.4, reviews: 76, type: 'Seating', options: opts('Finish', ['Antique white', 'Oak']),
+      stock: ['d512', 'd890'],
+      blurb: 'A bench down one side seats three children where two chairs seated two, and it pushes ' +
+             'right under when it is not in use.',
+      features: ['Seats three', 'Tucks under the table', 'Solid wood'],
+      specs: [['Width', '48 in'], ['Seat height', '18 in'], ['Weight limit', '400 lb'], ['Warranty', '1 year']]
+    },
+    {
+      sku: 'ss-wallen', cat: 'dining', brand: 'Steve Silver', name: 'Wallen Counter Stool, pair',
+      price: 429, img: 'assets/img/dn-wallen.jpg', gallery: ['assets/img/dn-wallen.jpg'],
+      rating: 4.2, reviews: 54, type: 'Seating', options: opts('Finish', ['Oak and black', 'Grey']),
+      stock: ['d478', 'd731'],
+      blurb: 'Swivel seats with a back, which is the difference between a stool people sit on and a ' +
+             'stool people lean against for a minute.',
+      features: ['Swivel', 'Counter or bar height', 'Sold in pairs'],
+      specs: [['Seat height', '24 in counter, 30 in bar'], ['Swivel', '360 degrees'], ['Weight limit', '250 lb'], ['Warranty', '1 year']]
+    },
+    {
+      sku: 'ss-ryan', cat: 'dining', brand: 'Steve Silver', name: 'Ryan Server',
+      price: 899, img: 'assets/img/dn-ryan.jpg', gallery: ['assets/img/dn-ryan.jpg'],
+      rating: 4.5, reviews: 39, type: 'Storage', options: opts('Finish', ['Weathered oak']),
+      stock: ['d512'],
+      blurb: 'Three drawers and a cupboard, at the height you actually serve from. Most people end ' +
+             'up using it for everything except serving.',
+      features: ['Three drawers', 'Felt lined top drawer', 'Arrives assembled'],
+      specs: [['Width', '60 in'], ['Depth', '18 in'], ['Height', '36 in'], ['Warranty', '1 year']]
+    },
+    {
+      sku: 'ss-sherlock', cat: 'dining', brand: 'Steve Silver', name: 'Sherlock Server Cart',
+      price: 499, img: 'assets/img/dn-sherlock.jpg', gallery: ['assets/img/dn-sherlock.jpg'],
+      rating: 4.1, reviews: 27, type: 'Storage', options: opts('Finish', ['Black and oak']),
+      stock: ['d604'],
+      blurb: 'Open shelves on castors. Wheels out for a party, wheels back against the wall after.',
+      features: ['On castors', 'Three open shelves', 'Arrives assembled'],
+      specs: [['Width', '34 in'], ['Depth', '16 in'], ['Height', '34 in'], ['Warranty', '1 year']]
+    },
+    {
+      sku: 'ss-buffet', cat: 'dining', brand: 'Steve Silver', name: 'Lighted Buffet and China',
+      price: 1899, img: 'assets/img/dn-buffet.jpg', gallery: ['assets/img/dn-buffet.jpg'],
+      rating: 4.6, reviews: 33, type: 'Storage', options: opts('Finish', ['Cherry']),
+      stock: ['d478', 'd890'],
+      blurb: 'Two pieces, glass doors, lit from inside. The thing people inherit and then buy again ' +
+             'for themselves twenty years later.',
+      features: ['Two pieces', 'Interior lighting', 'Glass doors', 'Felt lined drawers'],
+      specs: [['Width', '66 in'], ['Depth', '18 in'], ['Height', '82 in'], ['Lighting', 'Touch dimmer'], ['Warranty', '1 year']]
+    },
+
+    /* ---------------- living room, motion upholstery ---------------- */
+    {
+      sku: 'fx-argo-sect', cat: 'living', brand: 'Flexsteel', name: 'Argo Leather Power Reclining Sectional',
+      price: 4299, img: 'assets/img/l-argo-sect.jpg', gallery: ['assets/img/l-argo-sect.jpg', 'assets/img/l-argo-rec.jpg'],
+      rating: 4.7, reviews: 86, type: 'Sectional', options: opts('Leather', ['Navy', 'Walnut']),
+      stock: ['d478', 'd731'],
+      blurb: 'Every seat reclines under power, with the headrest and lumbar on their own switches. ' +
+             'Flexsteel builds these on a steel seat frame, which is why they outlast the fabric.',
+      features: ['Power recline on every seat', 'Power headrest and lumbar', 'Steel seat frame', 'Top grain leather'],
+      specs: [['Overall width', '124 in'], ['Depth', '40 in'], ['Seat height', '20 in'],
+              ['Frame', 'Blue Steel Spring, lifetime'], ['Power', 'Three motors per seat'], ['Warranty', 'Lifetime on the frame']]
+    },
+    {
+      sku: 'fx-clive-sofa', cat: 'living', brand: 'Flexsteel', name: 'Clive Power Reclining Sofa',
+      price: 2199, img: 'assets/img/l-clive-sofa.jpg', gallery: ['assets/img/l-clive-sofa.jpg', 'assets/img/l-clive-love.jpg'],
+      rating: 4.6, reviews: 164, type: 'Sofa', options: opts('Fabric', ['Chocolate', 'Clove']),
+      stock: ['d478', 'd512', 'd604'],
+      blurb: 'A three seater where both ends recline and the middle stays put, so somebody can still ' +
+             'sit up straight and eat.',
+      features: ['Power recline both ends', 'Power headrest and lumbar', 'Steel seat frame'],
+      specs: [['Width', '87 in'], ['Depth', '40 in'], ['Seat height', '20 in'],
+              ['Frame', 'Blue Steel Spring, lifetime'], ['Warranty', 'Lifetime on the frame']]
+    },
+    {
+      sku: 'fx-clive-love', cat: 'living', brand: 'Flexsteel', name: 'Clive Power Reclining Loveseat with Console',
+      price: 1999, img: 'assets/img/l-clive-love.jpg', gallery: ['assets/img/l-clive-love.jpg'],
+      rating: 4.5, reviews: 118, type: 'Sofa', options: opts('Fabric', ['Clove', 'Chocolate']),
+      stock: ['d512', 'd890'],
+      blurb: 'Two recliners with a console between them, two cup holders and a lid that lifts. ' +
+             'The most argued over piece of furniture in any house, settled.',
+      features: ['Console with storage', 'Two cup holders', 'Power headrest and lumbar'],
+      specs: [['Width', '77 in'], ['Depth', '40 in'], ['Seat height', '20 in'], ['Warranty', 'Lifetime on the frame']]
+    },
+    {
+      sku: 'fx-zecliner', cat: 'living', brand: 'Flexsteel', name: 'Zecliner Power Lift Recliner',
+      price: 2399, img: 'assets/img/l-zecliner.jpg', gallery: ['assets/img/l-zecliner.jpg'],
+      rating: 4.8, reviews: 72, type: 'Recliner', options: opts('Fabric', ['Graphite', 'Sand', 'Fog']),
+      stock: ['d478', 'd512'],
+      blurb: 'Designed to be slept in rather than apologised for, and it lifts you out of it at the ' +
+             'end. Heat and massage on both the back and the seat.',
+      features: ['Powered lift to standing', 'Heat and massage', 'Power headrest and lumbar', 'Sleeps flat'],
+      specs: [['Width', '36 in'], ['Recline', 'To near flat'], ['Lift', 'Powered, to standing'],
+              ['Weight limit', '350 lb'], ['Warranty', 'Lifetime on the frame, 3 years on the motor']]
+    },
+    {
+      sku: 'fx-sola', cat: 'living', brand: 'Flexsteel', name: 'Sola Leather Power Recliner',
+      price: 1899, img: 'assets/img/l-sola.jpg', gallery: ['assets/img/l-sola.jpg'],
+      rating: 4.6, reviews: 58, type: 'Recliner', options: opts('Leather', ['Cream', 'Saddle']),
+      stock: ['d604', 'd731'],
+      blurb: 'A recliner that does not look like one until you use it. Heat and massage are hidden ' +
+             'in the side, not advertised on the arm.',
+      features: ['Heat and massage', 'Power headrest and lumbar', 'Top grain leather'],
+      specs: [['Width', '34 in'], ['Depth', '40 in'], ['Weight limit', '300 lb'], ['Warranty', 'Lifetime on the frame']]
+    },
+    {
+      sku: 'fx-walker', cat: 'living', brand: 'Flexsteel', name: 'Walker Leather Power Gliding Recliner',
+      price: 1699, img: 'assets/img/l-walker.jpg', gallery: ['assets/img/l-walker.jpg'],
+      rating: 4.5, reviews: 94, type: 'Recliner', options: opts('Leather', ['Chocolate', 'Black']),
+      stock: ['d478', 'd890'],
+      blurb: 'It glides as well as reclines, which matters more than it sounds if anybody in the ' +
+             'house gets a baby to sleep in it.',
+      features: ['Glides and reclines', 'Power headrest and lumbar', 'Top grain leather'],
+      specs: [['Width', '35 in'], ['Depth', '40 in'], ['Glide', 'Front to back'], ['Warranty', 'Lifetime on the frame']]
+    },
+    {
+      sku: 'fx-argo-rec', cat: 'living', brand: 'Flexsteel', name: 'Argo Leather Power Recliner',
+      price: 1549, img: 'assets/img/l-argo-rec.jpg', gallery: ['assets/img/l-argo-rec.jpg'],
+      rating: 4.4, reviews: 67, type: 'Recliner', options: opts('Leather', ['Navy', 'Walnut']),
+      stock: ['d731'],
+      blurb: 'The single chair version of the Argo sectional, for the person who wants the good seat ' +
+             'without redoing the whole room.',
+      features: ['Power recline', 'Power headrest and lumbar', 'Matches the Argo sectional'],
+      specs: [['Width', '36 in'], ['Depth', '40 in'], ['Seat height', '20 in'], ['Warranty', 'Lifetime on the frame']]
     },
 
     /* ---------------- outlet ---------------- */

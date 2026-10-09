@@ -45,7 +45,7 @@ supplies one. Every other page carries its own.
 
 - `assets/css/boxdrop.css` — the whole design system. Tokens first, light and dark.
 - `assets/js/boxdrop.js` — dealer state, the price ledger, cart, shared renderers.
-- `assets/js/catalog.js` — 42 sample products across five categories.
+- `assets/js/catalog.js` — 59 sample products across six categories.
 
 Dealer choice and cart live in `localStorage`, wrapped so they never throw.
 No frameworks, no build step beyond `build.py`.
@@ -58,9 +58,11 @@ floor price, so the resolved numbers differ by dealer.
 ## Placeholders to replace
 
 - Product photography is pulled from the brand sites BoxDrop carries
-  (Sapphire Sleep, Beautyrest, Serta, Simmons, Nectar, Versa Posh, Somnicline)
+  (Sapphire Sleep, Beautyrest, Serta, Simmons, Nectar, Versa Posh, Somnicline,
+  Steve Silver, Flexsteel)
   and is for layout only.
 - Dealer card photos are showroom vignettes standing in for real storefront
   photography, which RSS still has to collect from every dealer.
-- Dining has no homepage tile because no carried brand supplied dining imagery.
+- Dining is built from Steve Silver's catalogue; living room motion upholstery
+  is Flexsteel. Both are brands BoxDrop carries.
 - Images are JPEG and PNG. Production should serve WebP or AVIF with `srcset`.
