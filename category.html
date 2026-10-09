@@ -355,14 +355,23 @@
     return out.sort();
   }
 
-  function groups() {
-    var items = inCat(), g = [];
-    var sizes = [];
-    items.forEach(function (p) {
-      (p.options ? p.options.values : []).forEach(function (v) { if (sizes.indexOf(v.name) === -1) sizes.push(v.name); });
+  /* One filter group per option label actually present in the category.
+     Pooling them under the category's own label put bed sizes inside a
+     Finish filter, and leather colours inside a Fabric one. */
+  function optionGroups() {
+    var map = {}, order = [];
+    inCat().forEach(function (p) {
+      var o = p.options; if (!o) return;
+      if (!map[o.label]) { map[o.label] = []; order.push(o.label); }
+      o.values.forEach(function (v) { if (map[o.label].indexOf(v.name) === -1) map[o.label].push(v.name); });
     });
-    var label = CAT[state.cat].optionLabel || 'Size';
-    if (sizes.length > 1) g.push({ key: 'size', label: label, values: sizes });
+    return order
+      .map(function (l) { return { key: 'opt:' + l, label: l, values: map[l].slice().sort() }; })
+      .filter(function (g) { return g.values.length > 1; });
+  }
+
+  function groups() {
+    var items = inCat(), g = optionGroups();
     if (items.some(function (p) { return typeof p.firmness === 'number'; })) {
       g.push({ key: 'firm', label: 'Firmness', values: FIRMNESS_BANDS.map(function (b) { return b.name; }) });
     }
@@ -374,8 +383,13 @@
   }
 
   function matches(p) {
-    var f = state.f;
-    if (f.size && f.size.length && !(p.options || { values: [] }).values.some(function (v) { return f.size.indexOf(v.name) > -1; })) return false;
+    var f = state.f, optFail = false;
+    Object.keys(f).forEach(function (k) {
+      if (k.indexOf('opt:') !== 0 || !f[k].length) return;
+      var label = k.slice(4), o = p.options;
+      if (!o || o.label !== label || !o.values.some(function (v) { return f[k].indexOf(v.name) > -1; })) optFail = true;
+    });
+    if (optFail) return false;
     if (f.firm && f.firm.length) {
       var hit = FIRMNESS_BANDS.some(function (b) { return f.firm.indexOf(b.name) > -1 && typeof p.firmness === 'number' && b.test(p); });
       if (!hit) return false;
