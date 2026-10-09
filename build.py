@@ -74,7 +74,24 @@ def mark_active(chrome, key):
     return chrome
 
 
+def check_css():
+    """A + or - inside clamp()/calc() must have whitespace around it, or the
+    browser drops the whole declaration without warning. Five font sizes
+    shipped broken this way before this check existed."""
+    import re
+    css = (ROOT / 'assets' / 'css' / 'boxdrop.css').read_text()
+    bad = []
+    for i, line in enumerate(css.splitlines(), 1):
+        if re.search(r'(?:clamp|calc|min|max)\([^;]*[0-9a-z%\)][+\-][0-9.]', line):
+            bad.append(f'    line {i}: {line.strip()[:100]}')
+    if bad:
+        print('  CSS math needs whitespace around + and -:')
+        print('\n'.join(bad))
+        raise SystemExit(1)
+
+
 def build():
+    check_css()
     sprite, chrome, footer = read('_sprite.html'), read('_chrome.html'), read('_footer.html')
     for out, stem, title, nav in PAGES:
         body = read(f'{stem}.body.html')

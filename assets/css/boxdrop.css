@@ -33,6 +33,7 @@
   --rule-strong: #848C9A;
 
   /* --- the two paths --- */
+  --on-navy:     #FFFFFF;   /* text on a filled navy or green button */
   --navy:        #111D6B;   /* brand navy: the online road */
   --navy-deep:   #0A1046;
   --navy-wash:   #E7E8F2;
@@ -81,7 +82,7 @@
     --paper:#0C1026; --paper-sunk:#0C1026; --surface:#0C1026; --surface-2:#0C1026; --wash:#141A38;
     --ink:#EEEBE3; --ink-2:#AEB4CC; --ink-3:#848AA5;
     --rule:#272E54; --rule-strong:#3A4370;
-    --navy:#A9B6F2; --navy-deep:#C5CEFA; --navy-wash:#1B2250;
+    --on-navy:#0C1026; --navy:#A9B6F2; --navy-deep:#C5CEFA; --navy-wash:#1B2250;
     --local:#63D481; --local-bright:#3FCB63; --local-wash:#13341E;
     --warn:#D7A64E; --stop:#E08E7D;
     --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
@@ -94,7 +95,7 @@
   --paper:#0C1026; --paper-sunk:#0C1026; --surface:#0C1026; --surface-2:#0C1026; --wash:#141A38;
   --ink:#EEEBE3; --ink-2:#AEB4CC; --ink-3:#848AA5;
   --rule:#272E54; --rule-strong:#3A4370;
-  --navy:#A9B6F2; --navy-deep:#C5CEFA; --navy-wash:#1B2250;
+  --on-navy:#0C1026; --navy:#A9B6F2; --navy-deep:#C5CEFA; --navy-wash:#1B2250;
   --local:#63D481; --local-bright:#3FCB63; --local-wash:#13341E;
   --warn:#D7A64E; --stop:#E08E7D;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
@@ -150,7 +151,7 @@ ul,ol{margin:0;padding:0;list-style:none}
   transition:background var(--fast) var(--ease),border-color var(--fast) var(--ease),color var(--fast) var(--ease),opacity var(--fast) var(--ease);
 }
 .btn:active{opacity:.82}
-.btn--online{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn--online{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
 .btn--online:hover{background:var(--navy-deep);border-color:var(--navy-deep)}
 .btn--local{background:transparent;color:var(--local);border-color:var(--local)}
 .btn--local:hover{background:var(--local-wash)}
@@ -162,11 +163,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .btn--block{width:100%}
 .btn--sm{min-height:44px;padding:0 var(--s5);font-size:10.5px;letter-spacing:.14em}
 .btn[disabled],.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
-:root[data-theme="dark"] .btn--online,
-:root:not([data-theme="light"]) .btn--online{color:#0C1026}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .btn--online{color:#fff}}
-.btn--solid-local{color:#fff}
-:root[data-theme="dark"] .btn--solid-local{color:#0C1026}
+.btn--solid-local{color:var(--on-navy)}
 
 .link-arrow{
   font-family:var(--display);font-weight:600;font-size:var(--t-sm);
@@ -210,7 +207,7 @@ ul,ol{margin:0;padding:0;list-style:none}
   color:var(--ink-3);margin:0;max-width:46ch;
 }
 /* scales */
-.ledger--lg .ledger__price{font-size:clamp(26px,1rem+1.5vw,34px);font-weight:500}
+.ledger--lg .ledger__price{font-size:clamp(26px,1rem + 1.5vw,34px);font-weight:500}
 .ledger--lg .ledger__row{padding-block:var(--s4)}
 .ledger--lg{padding-left:var(--s5);border-left-width:1px}
 /* At card width a price range and its label cannot share a row, so stack them. */
@@ -258,7 +255,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .masthead__row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--s4);min-height:84px}
 .wordmark{
   grid-column:2;justify-self:center;text-decoration:none;color:var(--ink);
-  font-family:var(--display);font-weight:800;font-size:clamp(19px,1rem+.7vw,25px);
+  font-family:var(--display);font-weight:800;font-size:clamp(19px,1rem + .7vw,25px);
   letter-spacing:-.045em;line-height:1;display:inline-flex;align-items:baseline;gap:0;white-space:nowrap;
 }
 .wordmark .box{color:var(--ink)}
@@ -364,27 +361,60 @@ ul,ol{margin:0;padding:0;list-style:none}
 :root[data-theme="dark"] .promise__text,:root[data-theme="dark"] .promise__cta{color:#EEF0FA}
 
 /* ---------- hero ---------- */
-.hero{border-bottom:1px solid var(--rule);background:var(--paper)}
-.hero__bleed{margin:0;position:relative;width:100%;overflow:hidden;background:var(--wash)}
-/* Full bleed, but capped: the headline has to break the fold or a first time
-   visitor never reads the one sentence that explains the business. */
-.hero__bleed img{display:block;width:100%;object-fit:cover;aspect-ratio:21/9;max-height:min(46vh,480px)}
-@media (max-width:900px){.hero__bleed img{aspect-ratio:5/4;max-height:42vh}}
-.hero__grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(28px,5vw,80px);align-items:start;padding-block:clamp(36px,5vw,76px)}
+/* Immersive hero: one full bleed photograph with the type set on it.
+   Unlike the reference's empty opener, the headline and both buttons are in
+   that first frame, so a ready to buy shopper still has something to act on. */
+.hero{background:var(--paper)}
+.hero__bleed{
+  margin:0;position:relative;width:100%;overflow:hidden;background:var(--navy-deep);
+  min-height:clamp(440px,74vh,760px);display:flex;align-items:flex-end;
+}
+.hero__bleed img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero__bleed::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(105deg,rgba(8,13,58,.84) 0%,rgba(8,13,58,.62) 38%,rgba(8,13,58,.12) 72%,rgba(8,13,58,0) 100%);
+}
+.hero__over{position:relative;z-index:1;width:100%;padding-block:clamp(40px,7vw,96px)}
+@media (max-width:900px){
+  /* Sized to the room left after the utility bar, masthead, dealer bar and
+     price promise band, so the hero still ends above the fold. */
+  .hero__bleed{min-height:clamp(400px,56vh,520px)}
+  .hero__over{padding-block:var(--s6)}
+  .hero__bleed::after{background:linear-gradient(to top,rgba(8,13,58,.92) 0%,rgba(8,13,58,.64) 52%,rgba(8,13,58,.2) 100%)}
+}
+.hero__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
 .hero__copy{min-width:0}
-.hero h1{font-size:var(--t-3xl);font-weight:700;letter-spacing:-.05em;max-width:14ch}
-.hero h1 .ln2{display:block;color:var(--navy)}
-.hero__lede{margin-top:var(--s5);font-size:var(--t-lg);line-height:1.52;color:var(--ink-2);max-width:48ch}
+.hero h1{font-size:var(--t-3xl);font-weight:600;letter-spacing:-.05em;max-width:14ch;color:#fff}
+.hero h1 .ln2{display:block;color:#A9B6F2}
+.hero .eyebrow{color:#9FE8B4}
+.hero__lede{margin-top:var(--s5);font-size:var(--t-lg);line-height:1.52;color:#DCE0F2;max-width:46ch}
 .hero__cta{display:flex;gap:var(--s3);flex-wrap:wrap;margin-top:var(--s7)}
-.hero__cta .btn{flex:1 1 220px}
-.hero__note{margin-top:var(--s4);font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);letter-spacing:.04em}
-.hero__tag{background:var(--wash);padding:var(--s6);max-width:440px;border-top:1px solid var(--ink)}
+.hero__cta .btn{flex:0 1 240px}
+.hero__note{margin-top:var(--s5);font-family:var(--mono);font-size:var(--t-xs);color:#A6AED4;letter-spacing:.06em}
+.hero .btn--local{color:#fff;border-color:rgba(255,255,255,.55)}
+.hero .btn--local:hover{background:rgba(255,255,255,.12);border-color:#fff}
+.hero .btn--online{background:#fff;color:var(--navy);border-color:#fff}
+.hero .btn--online:hover{background:#E7E8F2;border-color:#E7E8F2}
+.hero__tag{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s4) var(--s7);align-items:center;
+  background:var(--paper);border-bottom:1px solid var(--rule);padding-block:var(--s5);
+}
+.hero__tag .ledger{border-left:0;padding-left:0}
+.hero__tag .ledger__row{display:flex;gap:var(--s3);align-items:baseline;padding-block:3px;border:0}
+.hero__tag .ledger__row + .ledger__row{border-top:0}
+@media (max-width:760px){.hero__tag{grid-template-columns:1fr;gap:var(--s3)}}
 .hero__tag .eyebrow{margin-bottom:6px}
 .hero__tag .name{font-family:var(--display);font-weight:600;font-size:var(--t-md);margin:0 0 var(--s4);line-height:1.3;letter-spacing:-.02em}
 @media (max-width:900px){
-  .hero__grid{grid-template-columns:1fr;gap:var(--s6);padding-block:var(--s6) var(--s7)}
-  .hero__tag{max-width:none}
-  .hero__cta .btn{flex:1 1 100%}
+  /* Side by side, not stacked: both ways to buy have to be in the first
+     frame or the hero only advertises one of them. */
+  .hero__cta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:var(--s6)}
+  .hero__cta .btn{flex:none;padding-inline:var(--s3);min-height:52px}
+  .hero__lede{margin-top:var(--s4)}
+  .hero__note{margin-top:var(--s4)}
+}
+@media (max-width:360px){
+  .hero__cta{grid-template-columns:1fr}
 }
 
 /* ---------- sections ---------- */
@@ -747,7 +777,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 .rail{min-width:0;display:grid;gap:var(--s5)}
 .rail__brand{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0}
-.rail h1{font-size:clamp(28px,1.3rem+1.7vw,42px);font-weight:700;letter-spacing:-.04em;margin-top:8px}
+.rail h1{font-size:clamp(28px,1.3rem + 1.7vw,42px);font-weight:700;letter-spacing:-.04em;margin-top:8px}
 .rail__meta{display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-2);margin-top:var(--s3)}
 .rail__meta a{color:var(--ink-2)}
 .rail__blurb{color:var(--ink-2);font-size:var(--t-md);margin:0}
@@ -998,3 +1028,42 @@ ul,ol{margin:0;padding:0;list-style:none}
   text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;border-bottom:1.5px solid var(--local-bright);
   padding-bottom:4px;align-self:flex-start}
 .gridtile:hover .go{gap:14px}
+
+/* ============================================================
+   Editorial bands: full bleed photograph, one product, the name and
+   the dual price set over the top left corner. Taken from the way the
+   reference homepage stacks its product films.
+   ============================================================ */
+.bands{display:grid;gap:4px}
+.band{
+  position:relative;display:flex;align-items:flex-start;overflow:hidden;
+  min-height:clamp(360px,44vw,560px);text-decoration:none;background:var(--navy-deep);
+}
+.band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform 1200ms var(--ease)}
+.band:hover img{transform:scale(1.03)}
+.band::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(100deg,rgba(8,13,58,.82) 0%,rgba(8,13,58,.55) 34%,rgba(8,13,58,.08) 66%,rgba(8,13,58,0) 100%)}
+.band__in{position:relative;z-index:1;width:100%;padding-block:clamp(32px,4vw,60px)}
+.band__brand{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.2em;text-transform:uppercase;
+  color:#9FE8B4;margin:0 0 var(--s3)}
+.band h3{font-size:clamp(28px,1.3rem + 2.4vw,54px);font-weight:400;letter-spacing:-.035em;color:#fff;max-width:16ch}
+.band__sub{font-size:var(--t-sm);color:#C3C9E6;margin:var(--s3) 0 0;max-width:40ch}
+.band__price{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--s2) var(--s5);margin-top:var(--s5)}
+.band__price .row{display:flex;align-items:baseline;gap:9px}
+.band__price .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.band__price .amt{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(20px,1rem + .9vw,28px);
+  letter-spacing:-.03em;font-weight:500}
+.band__price .on .lbl{color:#A6AED4}
+.band__price .on .amt{color:#fff}
+.band__price .lo .lbl{color:#8FE3A4}
+.band__price .lo .amt{color:#8FE3A4}
+.band__why{flex-basis:100%;font-family:var(--body);font-size:var(--t-xs);color:#A6AED4;margin:0}
+.band__go{margin-top:var(--s5);display:inline-flex;align-items:center;gap:9px;color:#fff;
+  font-family:var(--display);font-weight:600;font-size:var(--t-xs);letter-spacing:.16em;text-transform:uppercase;
+  border-bottom:1.5px solid var(--local-bright);padding-bottom:5px;transition:gap var(--fast) var(--ease)}
+.band:hover .band__go{gap:15px}
+@media (max-width:760px){
+  .band{min-height:clamp(420px,86vw,560px);align-items:flex-end}
+  .band::after{background:linear-gradient(to top,rgba(8,13,58,.9) 0%,rgba(8,13,58,.6) 52%,rgba(8,13,58,.15) 100%)}
+}
