@@ -49,20 +49,45 @@
     }).join('');
   }
 
-  /* The element autoplays natively, which is what muted video is allowed to
-     do and what actually works; calling play() by hand raced the first byte
-     and was rejected. All this does is stop it for anyone who has asked the
-     system for reduced motion, and resume if they change their mind. */
+  /* iOS will refuse autoplay outright under Low Power Mode, or when
+     Auto-Play Video Previews is off in Accessibility, and no combination of
+     attributes overrides that. So autoplay is attempted, and if it does not
+     take, the hero offers a play button rather than sitting on a still frame
+     pretending to be a photograph. Reduced motion gets the same button: the
+     film becomes something you choose. */
   var film = document.getElementById('hero-film');
-  if (film) {
+  var playBtn = document.getElementById('hero-play');
+
+  if (film && playBtn) {
     var still = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function sync() {
-      if (still.matches) { film.pause(); film.removeAttribute('autoplay'); return; }
+
+    function offerPlay() { playBtn.hidden = !film.paused; }
+
+    function tryPlay() {
+      if (still.matches) { film.pause(); offerPlay(); return; }
+      film.muted = true;                     /* a property, not just an attribute: iOS checks this */
       var go = film.play();
-      if (go && go.catch) go.catch(function () { /* blocked: the poster stands in */ });
+      if (go && go.then) go.then(offerPlay, offerPlay); else offerPlay();
     }
-    still.addEventListener ? still.addEventListener('change', sync) : still.addListener(sync);
-    if (still.matches) sync();
+
+    playBtn.addEventListener('click', function () {
+      film.muted = true;
+      var go = film.play();
+      if (go && go.then) go.then(offerPlay, offerPlay); else offerPlay();
+    });
+
+    film.addEventListener('playing', offerPlay);
+    film.addEventListener('pause', offerPlay);
+    film.addEventListener('canplay', tryPlay, { once: true });
+    still.addEventListener ? still.addEventListener('change', tryPlay) : still.addListener(tryPlay);
+
+    /* A first touch anywhere is a user gesture, which is often all iOS wants. */
+    document.addEventListener('touchstart', function once() {
+      document.removeEventListener('touchstart', once);
+      if (film.paused && !still.matches) tryPlay();
+    }, { passive: true });
+
+    tryPlay();
   }
 
   document.addEventListener('bd:dealerchange', paint);
