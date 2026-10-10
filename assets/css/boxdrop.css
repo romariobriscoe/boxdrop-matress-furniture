@@ -396,16 +396,33 @@ ul,ol{margin:0;padding:0;list-style:none}
 .hero .btn--local:hover{background:rgba(255,255,255,.12);border-color:#fff}
 .hero .btn--online{background:#fff;color:var(--navy);border-color:#fff}
 .hero .btn--online:hover{background:#E7E8F2;border-color:#E7E8F2}
+/* The band under the film. It was a name and a price on one thin line with
+   a hundred pixels of nothing beneath it; now it carries the bed. */
 .hero__tag{
-  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s4) var(--s7);align-items:center;
-  background:var(--paper);border-bottom:1px solid var(--rule);padding-block:var(--s5);
+  display:grid;grid-template-columns:minmax(260px,1.05fr) minmax(0,1.45fr) minmax(250px,auto);
+  gap:var(--s5) clamp(28px,4vw,64px);align-items:start;
+  background:var(--paper);border-bottom:1px solid var(--rule);padding-block:var(--s6) var(--s7);
+}
+.hero__tag-sub{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.06em;color:var(--ink-3);margin:0}
+.hero__tag-facts{list-style:none;margin:0;padding:0;display:grid;gap:var(--s4)}
+.hero__tag-facts li{display:grid;gap:3px;padding-left:var(--s4);border-left:2px solid var(--rule-strong)}
+.hero__tag-facts b{font-family:var(--display);font-size:var(--t-sm);font-weight:600;letter-spacing:-.01em}
+.hero__tag-facts span{font-size:var(--t-xs);color:var(--ink-3);line-height:1.5}
+.hero__tag-buy{display:grid;gap:var(--s4);justify-items:stretch}
+.hero__tag-buy .btn{width:100%}
+@media (max-width:1040px){
+  .hero__tag{grid-template-columns:1fr 1fr}
+  .hero__tag-facts{grid-column:1 / -1;grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:760px){
+  .hero__tag{grid-template-columns:1fr;gap:var(--s5)}
+  .hero__tag-facts{grid-template-columns:1fr}
 }
 .hero__tag .ledger{border-left:0;padding-left:0}
 .hero__tag .ledger__row{display:flex;gap:var(--s3);align-items:baseline;padding-block:3px;border:0}
 .hero__tag .ledger__row + .ledger__row{border-top:0}
-@media (max-width:760px){.hero__tag{grid-template-columns:1fr;gap:var(--s3)}}
 .hero__tag .eyebrow{margin-bottom:6px}
-.hero__tag .name{font-family:var(--display);font-weight:600;font-size:var(--t-md);margin:0 0 var(--s4);line-height:1.3;letter-spacing:-.02em}
+.hero__tag .name{font-family:var(--display);font-weight:600;font-size:var(--t-lg);margin:var(--s2) 0 6px;line-height:1.25;letter-spacing:-.025em;text-wrap:balance}
 @media (max-width:900px){
   /* Side by side, not stacked: both ways to buy have to be in the first
      frame or the hero only advertises one of them. */
