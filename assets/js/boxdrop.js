@@ -19,28 +19,8 @@
   /* ---------- sample dealer network ----------
      factor = how the dealer's floor price compares to the online price.
      Real dealers set their own; these are plausible stand-ins. */
-  var DEALERS = [
-    { id:'d478', name:'BoxDrop Nitro',          city:'Nitro, WV',        zip:25143,
-      addr:'4109 1st Avenue, Nitro, WV 25143',  phone:'(304) 555 0142', factor:0.83,
-      open:'Open until 7:00 PM', hours:'Mon to Sat 10 to 7 · Sun 12 to 5',
-      img:'assets/img/s-showroom-1.jpg', tier:'Full line dealer', miles:'4 mi' },
-    { id:'d512', name:'BoxDrop Charleston',     city:'Charleston, WV',   zip:25301,
-      addr:'1201 Washington Street E, Charleston, WV 25301', phone:'(304) 555 0188', factor:0.86,
-      open:'Open until 6:00 PM', hours:'Mon to Sat 10 to 6 · Sun closed',
-      img:'assets/img/s-showroom-2.jpg', tier:'Full line dealer', miles:'16 mi' },
-    { id:'d604', name:'BoxDrop Teays Valley',   city:'Hurricane, WV',    zip:25526,
-      addr:'3886 Teays Valley Road, Hurricane, WV 25526', phone:'(304) 555 0119', factor:0.85,
-      open:'Closes 5:00 PM', hours:'Tue to Sat 10 to 5 · Sun and Mon closed',
-      img:'assets/img/b-adjroom.jpg', tier:'Mattress and bedroom', miles:'23 mi' },
-    { id:'d731', name:'BoxDrop Huntington',     city:'Huntington, WV',   zip:25701,
-      addr:'2840 5th Avenue, Huntington, WV 25701', phone:'(304) 555 0170', factor:0.84,
-      open:'Open until 7:00 PM', hours:'Mon to Sat 10 to 7 · Sun 1 to 5',
-      img:'assets/img/b-walnut-set.jpg', tier:'Full line dealer', miles:'48 mi' },
-    { id:'d890', name:'BoxDrop Parkersburg',    city:'Parkersburg, WV',  zip:26101,
-      addr:'1710 Grand Central Avenue, Vienna, WV 26105', phone:'(304) 555 0133', factor:0.87,
-      open:'Open until 6:00 PM', hours:'Mon to Sat 10 to 6 · Sun 12 to 4',
-      img:'assets/img/b-adjroom.jpg', tier:'Mattress only', miles:'71 mi' }
-  ];
+  var DEALERS = window.BD_DEALERS || [];
+  var STATES = window.BD_STATES || {};
 
   var RANGE_LOW = 0.82, RANGE_HIGH = 0.88;
 
@@ -49,6 +29,133 @@
   }
 
   /* ---------- dealer state ---------- */
+  /* ---------- geography and opening hours ----------------------------- */
+
+  var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  /* The USPS allocates ZIP prefixes to states in blocks. That mapping is real,
+     unlike a coordinate we would have to invent, so it is what places a
+     shopper on the map and picks their state. */
+  var ZIP_BLOCKS = [
+    [10,27,'MA'],[28,29,'RI'],[30,38,'NH'],[39,49,'ME'],[50,59,'VT'],[60,69,'CT'],
+    [70,89,'NJ'],[100,149,'NY'],[150,196,'PA'],[197,199,'DE'],[200,219,'MD'],
+    [220,246,'VA'],[247,268,'WV'],[270,289,'NC'],[290,299,'SC'],[300,319,'GA'],
+    [320,349,'FL'],[350,369,'AL'],[370,385,'TN'],[386,397,'MS'],[398,399,'GA'],
+    [400,427,'KY'],[430,459,'OH'],[460,479,'IN'],[480,499,'MI'],[500,528,'IA'],
+    [530,549,'WI'],[550,567,'MN'],[570,577,'SD'],[580,588,'ND'],[590,599,'MT'],
+    [600,629,'IL'],[630,658,'MO'],[660,679,'KS'],[680,693,'NE'],[700,714,'LA'],
+    [716,729,'AR'],[730,749,'OK'],[750,799,'TX'],[800,816,'CO'],[820,831,'WY'],
+    [832,838,'ID'],[840,847,'UT'],[850,865,'AZ'],[870,884,'NM'],[885,885,'TX'],
+    [889,898,'NV'],[900,961,'CA'],[967,968,'HI'],[970,979,'OR'],[980,994,'WA'],
+    [995,999,'AK']
+  ];
+
+  function stateForZip(zip) {
+    var z = String(zip || '').replace(/[^0-9]/g, '');
+    if (z.length < 5) return null;
+    var pre = parseInt(z.slice(0, 3), 10);
+    for (var i = 0; i < ZIP_BLOCKS.length; i++) {
+      if (pre >= ZIP_BLOCKS[i][0] && pre <= ZIP_BLOCKS[i][1]) return ZIP_BLOCKS[i][2];
+    }
+    return null;
+  }
+
+  /* Rough separation between two ZIPs, used only to order a list. It is a
+     number of ZIP steps, not miles, and nothing is labelled as miles. */
+  function zipGap(a, b) {
+    var x = parseInt(String(a || '').slice(0, 5), 10);
+    var y = parseInt(String(b || '').slice(0, 5), 10);
+    if (isNaN(x) || isNaN(y)) return Infinity;
+    return Math.abs(x - y);
+  }
+
+  function clockLabel(h) {
+    var ampm = h >= 12 ? 'PM' : 'AM', n = h % 12; if (n === 0) n = 12;
+    return n + ' ' + ampm;
+  }
+
+  /* The sheet has no trading hours, so these are four prototype patterns
+     keyed off the store id. Open or shut is still worked out from the week
+     rather than stored as a sentence. */
+  var HOUR_SETS = [
+    [[12,17],[10,19],[10,19],[10,19],[10,19],[10,19],[10,19]],
+    [null,   [10,18],[10,18],[10,18],[10,18],[10,18],[10,18]],
+    [[12,17],[10,18],[10,18],[10,18],[10,20],[10,20],[10,18]],
+    [[13,17],[11,19],[11,19],[11,19],[11,19],[11,19],[10,19]]
+  ];
+  function weekOf(d) { return HOUR_SETS[(d && d.hoursSet) || 0]; }
+
+  function openState(d, now) {
+    now = now || new Date();
+    var oh = weekOf(d);
+    var day = now.getDay(), hour = now.getHours() + now.getMinutes() / 60;
+    var today = oh[day];
+    if (today && hour >= today[0] && hour < today[1]) {
+      return { open: true, text: 'Open until ' + clockLabel(today[1]) };
+    }
+    if (today && hour < today[0]) {
+      return { open: false, text: 'Opens ' + clockLabel(today[0]) + ' today' };
+    }
+    for (var i = 1; i <= 7; i++) {
+      var nd = (day + i) % 7, slot = oh[nd];
+      if (slot) {
+        return { open: false, text: 'Opens ' + clockLabel(slot[0]) +
+          (i === 1 ? ' tomorrow' : ' ' + DAYS[nd]) };
+      }
+    }
+    return { open: false, text: 'Call for hours' };
+  }
+
+  function hoursLine(d) {
+    var oh = weekOf(d), out = [], i = 0;
+    function key(s) { return s ? s[0] + '-' + s[1] : 'x'; }
+    var order = [1, 2, 3, 4, 5, 6, 0];
+    function bare(h) { return clockLabel(h).replace(' AM', '').replace(' PM', ''); }
+    while (i < order.length) {
+      var j = i;
+      while (j + 1 < order.length && key(oh[order[j + 1]]) === key(oh[order[i]])) j++;
+      var slot = oh[order[i]];
+      out.push((i === j ? DAYS[order[i]].slice(0, 3)
+                        : DAYS[order[i]].slice(0, 3) + ' to ' + DAYS[order[j]].slice(0, 3)) +
+        ' ' + (slot ? bare(slot[0]) + ' to ' + bare(slot[1]) : 'closed'));
+      i = j + 1;
+    }
+    return out.join(' \u00b7 ');
+  }
+
+  /* Showroom photographs we hold, cycled so neighbouring cards differ. */
+  var SHOTS = ['s-showroom-1.jpg','s-showroom-2.jpg','s-bedroom-wide.jpg','b-mornington.jpg',
+               'l-sectional-top.jpg','s-rest.jpg','b-adjroom.jpg','l-recliner-hero.jpg'];
+  function dealerImg(d) { return 'assets/img/' + SHOTS[(d && d.imgSet) || 0]; }
+
+  /* What a store calls itself is the only floor information the sheet gives. */
+  function dealerTier(d) {
+    var n = (d.name || '').toLowerCase();
+    if (/clearance|closeout|outlet/.test(n)) return { key:'outlet',   label:'Clearance floor' };
+    if (/furniture/.test(n))                 return { key:'full',     label:'Mattresses and furniture' };
+    if (/mattress|bed|sleep/.test(n))        return { key:'mattress', label:'Mattress specialist' };
+    return { key:'full', label:'BoxDrop dealer' };
+  }
+
+  /* No inventory feed exists, so whether a store holds a line is derived from
+     the two ids. Stable between loads, and never claimed as live stock. */
+  function hashInt(str) {
+    var h = 2166136261;
+    for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = (h * 16777619) >>> 0; }
+    return h;
+  }
+  function holdsLine(dealerId, sku) {
+    var t = dealerTier({ name: dealerNameById(dealerId) || '' });
+    var r = hashInt(dealerId + '|' + sku) % 100;
+    if (t.key === 'outlet') return r < 18;
+    if (t.key === 'mattress') return r < 55;
+    return r < 62;
+  }
+  function dealerNameById(id) {
+    for (var i = 0; i < DEALERS.length; i++) if (DEALERS[i].id === id) return DEALERS[i].name;
+    return null;
+  }
+
   function currentDealer() {
     var id = store.get('bd.dealer', null);
     if (!id) return null;
@@ -57,12 +164,15 @@
   }
 
   function nearest(zip) {
-    var n = parseInt(String(zip).slice(0, 5), 10);
-    if (isNaN(n)) return null;
-    var best = DEALERS[0], bd = Infinity;
-    for (var i = 0; i < DEALERS.length; i++) {
-      var d = Math.abs(DEALERS[i].zip - n);
-      if (d < bd) { bd = d; best = DEALERS[i]; }
+    var z = String(zip || '').replace(/[^0-9]/g, '');
+    if (z.length < 5 || !DEALERS.length) return null;
+    var st = stateForZip(z);
+    var pool = st ? DEALERS.filter(function (d) { return d.state === st; }) : [];
+    if (!pool.length) pool = DEALERS;
+    var best = pool[0], bd = Infinity;
+    for (var i = 0; i < pool.length; i++) {
+      var gap = zipGap(pool[i].zip, z);
+      if (gap < bd) { bd = gap; best = pool[i]; }
     }
     return best;
   }
@@ -100,6 +210,7 @@
       el.textContent = d ? d.city : 'Set your location';
     });
     $$('[data-dealer-name]').forEach(function (el) {
+      if (d) el.setAttribute('title', d.name);
       el.textContent = d ? d.name : 'Find your dealer';
     });
     $$('[data-dealer-only]').forEach(function (el) { el.hidden = !d; });
@@ -261,15 +372,19 @@
     return out + '</span>';
   }
 
+  function inStock(p, d) {
+    if (!d || !p) return false;
+    return holdsLine(d.id, p.sku);
+  }
+
   function stockLine(p) {
     var d = currentDealer();
-    var list = p.stock || [];
     if (d) {
-      return list.indexOf(d.id) > -1
+      return inStock(p, d)
         ? '<b>In stock</b> at ' + esc(d.name)
         : 'Order in at ' + esc(d.name) + ', about 7 days';
     }
-    return '<b>In stock</b> at ' + list.length + ' dealer' + (list.length === 1 ? '' : 's');
+    return '<b>On the floor</b> at dealers near you';
   }
 
   /* The listed price always refers to this option: the one with no uplift
@@ -319,6 +434,9 @@
   /* ---------- expose for page scripts ---------- */
   window.BoxDrop = {
     dealers: DEALERS, currentDealer: currentDealer, setDealer: setDealer, nearest: nearest,
+    states: STATES, stateForZip: stateForZip, zipGap: zipGap, openState: openState,
+    hoursLine: hoursLine, dealerImg: dealerImg, dealerTier: dealerTier, inStock: inStock,
+    weekFor: weekOf, clock: clockLabel,
     money: money, paintLedgers: paintLedgers, paintCart: paintCart, cart: cart,
     addToCart: addToCart, toast: toast, store: store, rangeLow: RANGE_LOW, rangeHigh: RANGE_HIGH,
     esc: esc, ledgerHTML: ledgerHTML, starsHTML: starsHTML, cardHTML: cardHTML,

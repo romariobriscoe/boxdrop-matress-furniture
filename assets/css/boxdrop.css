@@ -512,7 +512,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .dcard__media{position:relative;aspect-ratio:16/10;background:var(--wash);flex:none}
 .dcard__media img{width:100%;height:100%;object-fit:cover}
 /* The tier and the distance read as caption, not as stickers on the photo. */
-.dcard__badge{position:absolute;left:var(--s4);top:var(--s4);background:var(--surface);
+.dcard__badge{position:absolute;left:var(--s4);top:var(--s4);background:var(--surface);display:none;
   font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   font-weight:500;color:var(--ink-2);padding:6px 10px}
 .dcard__dist{position:absolute;right:var(--s4);top:var(--s4);background:var(--surface);color:var(--ink);
@@ -893,7 +893,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 /* ============================================================
    DEALER LOCATOR
    ============================================================ */
-.locator{background:none;border-bottom:1px solid var(--rule);padding-block:var(--s8)}
+.locator{background:none;padding-block:var(--s8) var(--s6)}
 .locator h1{font-size:var(--t-2xl);font-weight:700;letter-spacing:-.04em;max-width:17ch}
 .locator .lede{margin-top:var(--s4);max-width:58ch}
 .findform{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s6);align-items:flex-start}
@@ -924,6 +924,72 @@ ul,ol{margin:0;padding:0;list-style:none}
 .mapkey{display:flex;gap:var(--s4);flex-wrap:wrap;margin-top:var(--s3);font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3)}
 .mapkey span{display:inline-flex;align-items:center;gap:6px}
 .mapkey i{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+.dcard__tier{
+  position:absolute;left:0;right:0;bottom:0;padding:7px var(--s4);
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:#fff;background:var(--navy);text-align:center;
+}
+.dcard__tier--flagship{background:var(--navy-deep)}
+.dcard__tier--mattress{background:#4A5490}
+.dcard__page{font-size:var(--t-xs);color:var(--ink-3);text-decoration:underline;text-underline-offset:3px}
+.dcard__page:hover{color:var(--navy)}
+.mapdot{cursor:pointer}
+.mapdot circle{transition:opacity var(--fast) var(--ease)}
+.mapdot:hover circle,.mapdot:focus-visible circle{opacity:1}
+.mapdot:focus-visible{outline:2.5px solid var(--local-bright);outline-offset:2px}
+.mapdot.is-off{cursor:default}
+.dcard__tier--outlet{background:var(--ink-2)}
+.dcard__note{font-size:var(--t-sm);color:var(--ink-3);margin:0}
+.dcard__open{display:flex;flex-wrap:wrap;gap:4px var(--s3);align-items:baseline;margin:0;
+  font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);letter-spacing:.02em}
+.dcard__open .open{color:var(--local);font-weight:600}
+.dcard__open .shut{color:var(--stop);font-weight:600}
+
+/* The reason this locator exists: the dealer, not the site, sets the price. */
+.dcard__price{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:4px var(--s3);
+  border-left:2px solid var(--local);background:var(--local-wash);padding:var(--s3) var(--s4);
+}
+.dcard__price .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);flex-basis:100%}
+.dcard__price .amt{font-family:var(--mono);font-size:var(--t-lg);font-weight:600;color:var(--local);
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.dcard__price .save{font-size:var(--t-xs);color:var(--ink-2)}
+
+/* Named groups, each with its own count, after the reference's split between
+   its own stores and its resellers. */
+.dsections{display:grid;gap:var(--s8);min-width:0}
+.dsection__head{display:flex;align-items:baseline;gap:var(--s3);flex-wrap:wrap;
+  padding-bottom:var(--s3);border-bottom:1px solid var(--rule-strong);margin-bottom:var(--s5)}
+.dsection__head h2{font-size:var(--t-lg);font-weight:600;letter-spacing:-.025em}
+.dsection__n{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.dsection__head p{flex-basis:100%;font-size:var(--t-sm);color:var(--ink-3);margin:0}
+
+/* Sticky search, the one control that matters on a locator. */
+.locsearch{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--chrome));z-index:30;
+  background:color-mix(in srgb, var(--paper) 94%, transparent);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);padding-block:var(--s3)}
+.locsearch__form{display:flex;align-items:center;gap:var(--s2);position:relative}
+.locsearch__icon{position:absolute;left:var(--s4);top:19px;width:17px;height:17px;color:var(--ink-3);pointer-events:none}
+.locsearch__form input{
+  flex:1;min-width:0;height:54px;padding:0 112px 0 calc(var(--s4) + 27px);
+  border:1.5px solid var(--rule-strong);border-radius:999px;background:var(--surface);
+  font-family:var(--display);font-size:var(--t-md);color:var(--ink);
+}
+.locsearch__form input:focus-visible{outline:2.5px solid var(--local-bright);outline-offset:2px;border-color:var(--ink-2)}
+.locsearch__geo{position:absolute;right:102px;top:7px;width:40px;height:40px;display:grid;place-items:center;
+  border:0;background:none;border-radius:50%;cursor:pointer;color:var(--local)}
+.locsearch__geo svg{width:18px;height:18px}
+.locsearch__geo:hover{background:var(--local-wash)}
+.locsearch__form .btn{position:absolute;right:6px;top:6px;height:42px;border-radius:999px}
+@media (max-width:620px){
+  .locsearch__form input{padding-right:56px;font-size:var(--t-sm)}
+  .locsearch__geo{right:6px}
+  .locsearch__form .btn{position:static;top:auto;height:48px;width:100%;border-radius:var(--r-md)}
+  .locsearch__form{flex-wrap:wrap;row-gap:var(--s2)}
+  .locsearch__form input{flex:1 1 100%}
+}
 
 .dlist{display:grid;gap:var(--s4);min-width:0}
 .dlist .dcard{flex-direction:row;gap:var(--s5)}
@@ -1067,3 +1133,96 @@ ul,ol{margin:0;padding:0;list-style:none}
   .band{min-height:clamp(420px,86vw,560px);align-items:flex-end}
   .band::after{background:linear-gradient(to top,rgba(8,13,58,.9) 0%,rgba(8,13,58,.6) 52%,rgba(8,13,58,.15) 100%)}
 }
+
+/* Real dealer names run long (BoxDrop Of La Crosse Mattress & Furniture
+   Clearance Center). Chrome clips them; the locator card shows them whole. */
+[data-dealer-name]{display:inline-block;max-width:26ch;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;vertical-align:bottom}
+.util [data-dealer-name]{max-width:30ch}
+.ledger__label span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.ledger__label{min-width:0}
+.dcard__price .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:900px){[data-dealer-name]{max-width:18ch}}
+
+/* ============================================================
+   One store's page. Modelled on the way Hastens writes up a showroom:
+   the building, then address, the week's hours and what the place is,
+   side by side. Not a second storefront.
+   ============================================================ */
+.storefront{margin:0;width:100%;overflow:hidden;background:var(--wash)}
+.storefront img{display:block;width:100%;height:clamp(240px,38vw,460px);object-fit:cover}
+
+.sthead{text-align:center;padding-block:clamp(28px,4vw,52px) var(--s6);border-bottom:1px solid var(--rule)}
+.sthead .eyebrow{justify-content:center}
+.sthead h1{font-size:var(--t-2xl);font-weight:700;letter-spacing:-.04em;margin-top:var(--s3);
+  max-width:22ch;margin-inline:auto}
+.sthead__sum{margin:var(--s4) auto 0;max-width:62ch;color:var(--ink-2);font-size:var(--t-md)}
+.sthead__open{margin-top:var(--s4);font-family:var(--mono);font-size:var(--t-sm)}
+.sthead__open .open{color:var(--local);font-weight:600}
+.sthead__open .shut{color:var(--stop);font-weight:600}
+.sthead__cta{display:flex;gap:var(--s3);justify-content:center;flex-wrap:wrap;margin-top:var(--s5)}
+
+.stcols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,4vw,64px);
+  padding-block:clamp(32px,4vw,60px)}
+@media (max-width:900px){.stcols{grid-template-columns:1fr;gap:var(--s7)}}
+.stcol h2{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.16em;text-transform:uppercase;
+  font-weight:600;color:var(--ink-3);padding-bottom:var(--s3);border-bottom:1px solid var(--rule);
+  margin-bottom:var(--s4)}
+.stcol address{font-style:normal;font-size:var(--t-md);line-height:1.55;margin-bottom:var(--s3)}
+.stcol p{margin-top:var(--s3)}
+.stcol #st-info p{color:var(--ink-2);font-size:var(--t-sm);line-height:1.62;margin-top:0}
+.stcol #st-info p + p{margin-top:var(--s4)}
+.stmeta{display:grid;grid-template-columns:auto 1fr;gap:6px var(--s4);margin-top:var(--s5);
+  font-size:var(--t-sm)}
+.stmeta dt{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3)}
+.stmeta dd{margin:0}
+
+.sthours{width:100%;border-collapse:collapse;font-size:var(--t-sm)}
+.sthours th,.sthours td{text-align:left;padding:9px 0;border-bottom:1px solid var(--rule);font-weight:400}
+.sthours th{color:var(--ink-2)}
+.sthours .d{font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);white-space:nowrap;
+  padding-right:var(--s3)}
+.sthours td:last-child{font-family:var(--mono);font-size:var(--t-xs);text-align:right;white-space:nowrap}
+.sthours .is-today th,.sthours .is-today td{font-weight:600;color:var(--ink)}
+.sthours .shut{color:var(--stop)}
+
+/* Two dark panels, the way the reference pairs its Sleep Spa and reseller
+   cards. Ours carry the price and the delivery, the only two things a BoxDrop
+   store does differently. */
+.sttiles{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+@media (max-width:760px){.sttiles{grid-template-columns:1fr}}
+.sttile{position:relative;display:flex;align-items:flex-end;min-height:clamp(300px,30vw,400px);
+  overflow:hidden;text-decoration:none;background:var(--navy-deep);padding:var(--s7)}
+.sttile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.26;
+  filter:grayscale(.4);transition:transform 900ms var(--ease)}
+.sttile:hover img{transform:scale(1.04)}
+.sttile::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(8,13,58,.92),rgba(8,13,58,.45))}
+.sttile > div{position:relative;z-index:1}
+.sttile .eyebrow{color:#9FE8B4}
+.sttile h3{font-size:var(--t-xl);font-weight:600;letter-spacing:-.03em;color:#fff;margin-top:var(--s3);
+  max-width:18ch}
+.sttile p{font-size:var(--t-sm);color:#C9CEE8;margin:var(--s3) 0 var(--s5);max-width:38ch}
+.sttile .go{font-family:var(--display);font-weight:600;font-size:var(--t-xs);letter-spacing:.14em;
+  text-transform:uppercase;color:#fff;display:inline-flex;align-items:center;gap:9px;
+  border-bottom:1.5px solid var(--local-bright);padding-bottom:4px;transition:gap var(--fast) var(--ease)}
+.sttile:hover .go{gap:14px}
+
+.stfloor__note{margin-top:var(--s5);font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);
+  letter-spacing:.02em}
+.stnear{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+@media (max-width:820px){.stnear{grid-template-columns:1fr}}
+.stnear__item{display:grid;gap:5px;padding:var(--s5);background:var(--wash);text-decoration:none;
+  border-left:2px solid transparent;transition:border-color var(--fast) var(--ease)}
+.stnear__item:hover{border-left-color:var(--local)}
+.stnear__item strong{font-size:var(--t-sm);font-weight:600;color:var(--ink)}
+.stnear__item span{font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3)}
+.stnear__item .open{color:var(--local)}
+.stnear__item .shut{color:var(--ink-3)}
+
+.floorcard__price{display:flex;align-items:baseline;gap:var(--s3);margin:var(--s3) 0 0;flex-wrap:wrap}
+.floorcard__price .amt{font-family:var(--mono);font-size:var(--t-lg);font-weight:600;color:var(--local);
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.floorcard__price .was{font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);
+  text-decoration:line-through;text-decoration-thickness:1px}

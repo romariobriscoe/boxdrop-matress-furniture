@@ -50,15 +50,17 @@ PAGES = [
   ('category.html', 'category', 'Shop BoxDrop',                        'category'),
   ('product.html',  'product',  'Sleep2Win Reactive Hybrid',           'category'),
   ('dealers.html',  'dealers',  'Find your BoxDrop dealer',            'dealers'),
+  ('dealer.html',   'dealer',   'BoxDrop store',                       'dealers'),
   ('cart.html',     'cart',     'Your BoxDrop cart',                   None),
 ]
 
 EXTRA_SCRIPTS = {
   'home':     ['assets/js/catalog.js'],
   'category': ['assets/js/catalog.js'],
+  'dealers':  ['assets/js/catalog.js'],
+  'dealer':   ['assets/js/catalog.js'],
   'product':  ['assets/js/catalog.js'],
   'cart':     ['assets/js/catalog.js'],
-  'dealers':  [],
 }
 
 
@@ -97,6 +99,7 @@ def build():
         body = read(f'{stem}.body.html')
         scripts = ''.join(
             f'<script src="{s}"></script>\n' for s in EXTRA_SCRIPTS.get(stem, []))
+        scripts = '<script src="assets/js/dealers.js"></script>\n' + scripts
         scripts += '<script src="assets/js/boxdrop.js"></script>\n'
         page_js = SRC / f'{stem}.page.js'
         if page_js.exists():
