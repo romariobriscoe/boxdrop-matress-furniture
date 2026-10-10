@@ -932,6 +932,13 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 .dcard__tier--flagship{background:var(--navy-deep)}
 .dcard__tier--mattress{background:#4A5490}
+.dcard__page{font-size:var(--t-xs);color:var(--ink-3);text-decoration:underline;text-underline-offset:3px}
+.dcard__page:hover{color:var(--navy)}
+.mapdot{cursor:pointer}
+.mapdot circle{transition:opacity var(--fast) var(--ease)}
+.mapdot:hover circle,.mapdot:focus-visible circle{opacity:1}
+.mapdot:focus-visible{outline:2.5px solid var(--local-bright);outline-offset:2px}
+.mapdot.is-off{cursor:default}
 .dcard__tier--outlet{background:var(--ink-2)}
 .dcard__note{font-size:var(--t-sm);color:var(--ink-3);margin:0}
 .dcard__open{display:flex;flex-wrap:wrap;gap:4px var(--s3);align-items:baseline;margin:0;
@@ -1126,3 +1133,13 @@ ul,ol{margin:0;padding:0;list-style:none}
   .band{min-height:clamp(420px,86vw,560px);align-items:flex-end}
   .band::after{background:linear-gradient(to top,rgba(8,13,58,.9) 0%,rgba(8,13,58,.6) 52%,rgba(8,13,58,.15) 100%)}
 }
+
+/* Real dealer names run long (BoxDrop Of La Crosse Mattress & Furniture
+   Clearance Center). Chrome clips them; the locator card shows them whole. */
+[data-dealer-name]{display:inline-block;max-width:26ch;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;vertical-align:bottom}
+.util [data-dealer-name]{max-width:30ch}
+.ledger__label span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.ledger__label{min-width:0}
+.dcard__price .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:900px){[data-dealer-name]{max-width:18ch}}

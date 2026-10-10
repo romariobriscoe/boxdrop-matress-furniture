@@ -82,7 +82,7 @@
     if (state.free && p.price < FREE_OVER) return false;
     if (state.stock) {
       var d = BD.currentDealer();
-      if (d && (p.stock || []).indexOf(d.id) === -1) return false;
+      if (d && !BD.inStock(p, d)) return false;
     }
     return true;
   }

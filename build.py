@@ -97,6 +97,7 @@ def build():
         body = read(f'{stem}.body.html')
         scripts = ''.join(
             f'<script src="{s}"></script>\n' for s in EXTRA_SCRIPTS.get(stem, []))
+        scripts = '<script src="assets/js/dealers.js"></script>\n' + scripts
         scripts += '<script src="assets/js/boxdrop.js"></script>\n'
         page_js = SRC / f'{stem}.page.js'
         if page_js.exists():
