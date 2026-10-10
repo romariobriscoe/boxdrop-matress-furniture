@@ -7,7 +7,7 @@
   var $ = function (s) { return document.querySelector(s); };
   var REF = 'sap-grandbay';          /* one mattress every floor is priced against */
 
-  var state = { q: '', st: 'all', tier: 'all' };
+  var state = { q: '', st: 'all', tier: 'all', mapOpen: false };
 
   function all() { return BD.dealers; }
 
@@ -106,32 +106,30 @@
         '<span class="dcard__tier dcard__tier--' + tier.key + '">' + BD.esc(tier.label) + '</span>' +
       '</div>' +
       '<div class="dcard__body">' +
-        (isMine ? '<span class="dcard__mine"><svg width="12" height="12" aria-hidden="true"><use href="#i-pin"></use></svg> Your dealer</span>' : '') +
+        (isMine ? '<span class="dcard__mine"><svg width="12" height="12" aria-hidden="true"><use href="#i-pin"></use></svg> Your store</span>' : '') +
         '<h3>' + BD.esc(d.name) + '</h3>' +
         '<address class="dcard__addr">' + BD.esc(d.addr) + '</address>' +
-        '<p class="dcard__open">' +
-          '<b class="' + (open.open ? 'open' : 'shut') + '">' + BD.esc(open.text) + '</b>' +
-          '<span>' + BD.hoursLine(d) + '</span>' +
-        '</p>' +
-        (price ? '<div class="dcard__price">' +
-          '<span class="lbl">Their price, ' + BD.esc(ref.name) + ' queen</span>' +
-          '<span class="amt num">' + BD.money(price) + '</span>' +
-          '<span class="save">' + BD.money(ref.price - price) + ' under this site</span>' +
-        '</div>' : '') +
-        '<div class="dcard__acts">' +
-          (d.phone
-            ? '<a class="phone-link" href="tel:' + d.phone.replace(/[^0-9]/g, '') + '">' + BD.esc(d.phone) + '</a>'
-            : '<span class="phone-link" aria-disabled="true">No number listed</span>') +
-          (isMine
-            ? '<span class="btn btn--local btn--sm" aria-disabled="true">Showing their prices</span>'
-            : '<button type="button" class="btn btn--solid-local btn--sm" data-pick="' + BD.esc(d.id) + '">See their prices</button>') +
-        '</div>' +
-        '<a class="dcard__page" href="dealer.html#' + BD.esc(d.id) + '">About this store</a>' +
+        '<p class="dcard__open"><b class="' + (open.open ? 'open' : 'shut') + '">' +
+          BD.esc(open.text) + '</b></p>' +
+        (price ? '<p class="dcard__price"><span class="amt num">' + BD.money(price) + '</span>' +
+          '<span class="was num">' + BD.money(ref.price) + ' online</span></p>' : '') +
+        '<a class="btn btn--online btn--sm dcard__visit" href="dealer.html#' + BD.esc(d.id) + '">Visit local page</a>' +
+        (d.phone
+          ? '<a class="phone-link" href="tel:' + d.phone.replace(/[^0-9]/g, '') + '">' + BD.esc(d.phone) + '</a>'
+          : '<span class="phone-link" aria-disabled="true">No number listed</span>') +
       '</div></article>';
   }
 
   /* Named groups with their own counts, the way the reference locator splits
      its stores from its resellers. Here the natural split is the state. */
+  function setMap(open) {
+    state.mapOpen = open;
+    $('#mapwrap').hidden = !open;
+    $('#view-map').setAttribute('aria-expanded', String(open));
+    $('#view-map-label').textContent = open ? 'Hide map' : 'View map';
+    try { BD.store.set('bd.locmap', open ? '1' : '0'); } catch (e) {}
+  }
+
   function render() {
     var list = visible();
     var byState = {};
@@ -201,6 +199,7 @@
       state.st = dot.getAttribute('data-state');
       $('#state-sel').value = state.st;
       render();
+      setMap(false);
       var sec = $('#state-' + state.st);
       if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
@@ -210,6 +209,7 @@
       $('#zip-loc').focus();
       return;
     }
+    if (t.closest && t.closest('#view-map')) { setMap(!state.mapOpen); return; }
     if (t.id === 'loc-clear') {
       state.q = ''; state.st = 'all'; state.tier = 'all';
       $('#zip-loc').value = ''; $('#state-sel').value = 'all'; $('#tier').value = 'all';
@@ -237,5 +237,6 @@
   document.addEventListener('bd:dealerchange', function () { state.q = ''; render(); });
 
   fillStateSelect();
+  setMap(BD.store.get('bd.locmap', '0') === '1');
   render();
 })();

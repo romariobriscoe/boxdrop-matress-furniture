@@ -517,7 +517,6 @@ ul,ol{margin:0;padding:0;list-style:none}
   font-weight:500;color:var(--ink-2);padding:6px 10px}
 .dcard__dist{position:absolute;right:var(--s4);top:var(--s4);background:var(--surface);color:var(--ink);
   font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.12em;padding:6px 10px}
-.dcard__body{padding:var(--s4) 0 0;display:flex;flex-direction:column;gap:var(--s3);flex:1}
 .dcard h3{font-size:var(--t-lg);letter-spacing:-.025em;font-weight:600}
 .dcard__addr{font-size:var(--t-sm);color:var(--ink-2);margin:0;font-style:normal}
 .dcard__rows{display:grid;gap:7px;font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-2);letter-spacing:.02em}
@@ -908,6 +907,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .locbar__count{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin:0}
 .locbar__count b{color:var(--ink)}
 .segment{display:inline-flex;border:1.5px solid var(--rule-strong);border-radius:var(--r-md);overflow:hidden;margin-left:auto}
+.segment button:focus-visible{outline:2.5px solid var(--local-bright);outline-offset:-3px}
 .segment button{
   min-height:42px;padding:0 var(--s4);border:0;background:var(--surface);cursor:pointer;
   font-family:var(--display);font-size:var(--t-xs);font-weight:600;color:var(--ink-2);
@@ -916,8 +916,6 @@ ul,ol{margin:0;padding:0;list-style:none}
 .segment button[aria-pressed="true"]{background:var(--navy);color:#fff}
 :root[data-theme="dark"] .segment button[aria-pressed="true"]{color:#0C1026}
 
-.locgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.82fr);gap:clamp(24px,3vw,44px);padding-block:var(--s6) var(--s9);align-items:start}
-@media (max-width:1040px){.locgrid{grid-template-columns:1fr}}
 .mapwrap{position:sticky;top:calc(env(safe-area-inset-top,0px) + 150px);background:var(--wash);padding:var(--s5);min-width:0}
 @media (max-width:1040px){.mapwrap{position:static;top:auto;order:-1}}
 .mapwrap svg{display:block;width:100%;height:auto;background:#FFFFFF}
@@ -941,21 +939,9 @@ ul,ol{margin:0;padding:0;list-style:none}
 .mapdot.is-off{cursor:default}
 .dcard__tier--outlet{background:var(--ink-2)}
 .dcard__note{font-size:var(--t-sm);color:var(--ink-3);margin:0}
-.dcard__open{display:flex;flex-wrap:wrap;gap:4px var(--s3);align-items:baseline;margin:0;
-  font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);letter-spacing:.02em}
 .dcard__open .open{color:var(--local);font-weight:600}
 .dcard__open .shut{color:var(--stop);font-weight:600}
 
-/* The reason this locator exists: the dealer, not the site, sets the price. */
-.dcard__price{
-  display:flex;flex-wrap:wrap;align-items:baseline;gap:4px var(--s3);
-  border-left:2px solid var(--local);background:var(--local-wash);padding:var(--s3) var(--s4);
-}
-.dcard__price .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--ink-3);flex-basis:100%}
-.dcard__price .amt{font-family:var(--mono);font-size:var(--t-lg);font-weight:600;color:var(--local);
-  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.dcard__price .save{font-size:var(--t-xs);color:var(--ink-2)}
 
 /* Named groups, each with its own count, after the reference's split between
    its own stores and its resellers. */
@@ -992,15 +978,10 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 
 .dlist{display:grid;gap:var(--s4);min-width:0}
-.dlist .dcard{flex-direction:row;gap:var(--s5)}
-.dlist .dcard__media{width:210px;aspect-ratio:auto;flex:none}
 /* side by side the photo is too narrow for a chip at each corner, so stack them */
-.dlist .dcard__dist{right:auto;left:var(--s4);top:calc(var(--s4) + 30px)}
 .dlist .dcard__body{padding-top:var(--s2)}
 @media (max-width:620px){
-  .dlist .dcard{flex-direction:column}
-  .dlist .dcard__media{width:auto;aspect-ratio:16/10}
-}
+    }
 .dcard.is-mine{border-top-color:var(--local);border-top-width:2px}
 .dcard__mine{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--local);display:inline-flex;align-items:center;gap:5px}
 
@@ -1226,3 +1207,75 @@ ul,ol{margin:0;padding:0;list-style:none}
   letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .floorcard__price .was{font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);
   text-decoration:line-through;text-decoration-thickness:1px}
+
+/* ============================================================
+   Store locator, on the Hastens model: everything centred, the map behind a
+   View map disclosure rather than pinned beside the list, and stores as a
+   three across grid of upright cards.
+   ============================================================ */
+.locator{text-align:center;padding-block:clamp(36px,5vw,72px) var(--s6)}
+.locator h1{font-size:var(--t-2xl);font-weight:700;letter-spacing:-.04em;max-width:20ch;margin-inline:auto}
+.locator .lede{margin:var(--s5) auto 0;max-width:60ch}
+
+.locsearch{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--chrome));z-index:30;
+  background:color-mix(in srgb, var(--paper) 94%, transparent);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);padding-block:var(--s3)}
+.locsearch__form{display:flex;align-items:center;gap:var(--s2);position:relative;
+  max-width:640px;margin-inline:auto}
+
+.locstores{text-align:center;font-family:var(--display);font-size:var(--t-lg);font-weight:600;
+  letter-spacing:-.02em;margin:clamp(28px,4vw,52px) 0 var(--s4)}
+
+/* View map | 252 stores */
+.locbar{display:flex;align-items:center;justify-content:center;gap:var(--s4);flex-wrap:wrap;margin-bottom:var(--s5)}
+.locbar__sep{width:1px;height:18px;background:var(--rule-strong)}
+.locbar__count{font-family:var(--body);font-size:var(--t-sm);color:var(--ink-2);margin:0;
+  text-transform:none;letter-spacing:0}
+.locbar__count b{font-weight:600;color:var(--ink)}
+.viewmap{display:inline-flex;align-items:center;gap:9px;min-height:40px;padding:0;border:0;background:none;
+  cursor:pointer;font-family:var(--body);font-size:var(--t-sm);color:var(--ink)}
+.viewmap svg{width:19px;height:19px;color:var(--navy)}
+.viewmap:hover{color:var(--navy)}
+.viewmap:focus-visible{outline:2.5px solid var(--local-bright);outline-offset:3px}
+
+.locfilters{display:flex;align-items:center;justify-content:center;gap:var(--s3) var(--s5);
+  flex-wrap:wrap;padding-bottom:var(--s6);border-bottom:1px solid var(--rule)}
+.locfilters__near{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-3);margin:0}
+
+.mapwrap{background:var(--wash);padding:var(--s5);margin-block:var(--s6);position:static}
+.mapwrap[hidden]{display:none!important}
+.mapwrap svg{display:block;width:100%;height:auto;max-width:760px;margin-inline:auto;background:none}
+
+/* Section per state, centred heading with its own count. */
+.dsections{display:grid;gap:clamp(36px,5vw,72px);padding-block:var(--s7) var(--s9)}
+.dsection__head{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;
+  border-bottom:0;margin-bottom:var(--s6)}
+.dsection__head h2{font-size:var(--t-lg);font-weight:600;letter-spacing:-.02em}
+.dsection__n{font-family:var(--body);font-size:var(--t-sm);color:var(--ink-2);letter-spacing:0;text-transform:none}
+.dsection__head p{font-size:var(--t-sm);color:var(--ink-3);margin:0}
+
+.dlist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
+@media (max-width:980px){.dlist{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.dlist{grid-template-columns:1fr}}
+
+.dcard{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--rule);
+  border-top:1px solid var(--rule);padding-top:0;min-width:0;overflow:hidden}
+.dcard.is-mine{border-color:var(--local);box-shadow:inset 0 0 0 1px var(--local)}
+.dcard__media{position:relative;aspect-ratio:4/3;background:var(--wash);flex:none}
+.dcard__body{display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:var(--s3);padding:var(--s6) var(--s5) var(--s6);flex:1}
+.dcard h3{font-size:var(--t-md);font-weight:600;letter-spacing:-.02em;margin:0}
+.dcard__addr{font-size:var(--t-sm);color:var(--ink-3);font-style:normal;margin:0;max-width:30ch}
+.dcard__open{margin:0;font-family:var(--mono);font-size:var(--t-xs)}
+.dcard__open .open{color:var(--local);font-weight:600}
+.dcard__open .shut{color:var(--ink-2);font-weight:600}
+.dcard__price{display:flex;align-items:baseline;justify-content:center;gap:var(--s3);margin:0;flex-wrap:wrap}
+.dcard__price .amt{font-family:var(--mono);font-size:var(--t-lg);font-weight:600;color:var(--local);
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.dcard__price .was{font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);
+  text-decoration:line-through;text-decoration-thickness:1px}
+.dcard__visit{margin-top:auto;border-radius:999px;min-width:190px}
+.dcard .phone-link{font-size:var(--t-xs)}
+.dcard__mine{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--local);font-weight:600}

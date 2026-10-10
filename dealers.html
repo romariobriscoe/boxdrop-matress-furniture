@@ -25,6 +25,7 @@
 <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
 <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
 <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 7h12M19 7h2M3 17h5M12 17h9"/><circle cx="17" cy="7" r="2.4"/><circle cx="10" cy="17" r="2.4"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4Z"/><path d="M9 4v13M15 6.5v13"/></symbol>
 <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
 </defs></svg>
 
@@ -138,12 +139,10 @@
 <main id="main">
   <section class="locator">
     <div class="wrap">
-      <p class="eyebrow eyebrow--local">252 stores, every one locally owned</p>
-      <h1>Find the BoxDrop that will deliver yours</h1>
+      <h1>Find BoxDrop stores in the United States</h1>
       <p class="lede">
         252 stores in 44 states, and not every one trades under the BoxDrop name. Each sets its own
-        floor price, carries what sells in its market and drives the van that turns up at your
-        house. Pick yours and every price on this site becomes theirs.
+        floor price and drives the van that turns up at your house.
       </p>
     </div>
   </section>
@@ -154,21 +153,31 @@
         <label class="vis-hidden" for="zip-loc">Search by ZIP code, city or store name</label>
         <svg class="locsearch__icon" aria-hidden="true"><use href="#i-search"></use></svg>
         <input id="zip-loc" name="zip" type="text" autocomplete="postal-code"
-               placeholder="Search by ZIP code, city or store name">
+               placeholder="Search by store name, state, city or ZIP">
         <button type="button" class="locsearch__geo" id="use-loc" title="Use my location">
           <svg aria-hidden="true"><use href="#i-pin"></use></svg>
           <span class="vis-hidden">Use my location</span>
         </button>
         <button class="btn btn--online btn--sm" type="submit">Search</button>
       </form>
-      <p data-zip-error hidden style="color:var(--stop);font-size:14px;margin-top:10px"></p>
+      <p data-zip-error hidden style="color:var(--stop);font-size:14px;margin-top:10px;text-align:center"></p>
     </div>
   </div>
 
   <div class="wrap">
+    <p class="locstores" id="loc-heading">BoxDrop stores</p>
+
     <div class="locbar">
-      <p class="locbar__count"><b id="loc-count">252</b> <span id="loc-word">stores</span> <span id="loc-near"></span></p>
-      <div class="sortwrap" style="margin-left:0">
+      <button type="button" class="viewmap" id="view-map" aria-expanded="false" aria-controls="mapwrap">
+        <svg aria-hidden="true"><use href="#i-map"></use></svg>
+        <span id="view-map-label">View map</span>
+      </button>
+      <span class="locbar__sep" aria-hidden="true"></span>
+      <p class="locbar__count"><b id="loc-count">252</b> <span id="loc-word">stores</span></p>
+    </div>
+
+    <div class="locfilters">
+      <div class="sortwrap">
         <label for="state-sel">State</label>
         <select class="sortsel" id="state-sel"><option value="all">Every state</option></select>
       </div>
@@ -181,24 +190,19 @@
           <option value="outlet">Clearance floors</option>
         </select>
       </div>
-      <div class="segment" role="group" aria-label="View as map or list">
-        <button type="button" id="view-both" aria-pressed="true">Map and list</button>
-        <button type="button" id="view-list" aria-pressed="false">List only</button>
+      <p class="locfilters__near" id="loc-near"></p>
+    </div>
+
+    <div class="mapwrap" id="mapwrap" hidden>
+      <div id="map"></div>
+      <div class="mapkey">
+        <span><i style="background:var(--local-bright)"></i> Your state</span>
+        <span><i style="background:var(--navy)"></i> Has stores</span>
+        <span>Bubbles sized by store count. Pick one to filter.</span>
       </div>
     </div>
 
-    <div class="locgrid" id="locgrid">
-      <div class="dsections" id="dsections"></div>
-
-      <div class="mapwrap" id="mapwrap">
-        <div id="map"></div>
-        <div class="mapkey">
-          <span><i style="background:var(--local-bright)"></i> Your state</span>
-          <span><i style="background:var(--navy)"></i> Has stores</span>
-          <span>Bubbles sized by store count. Pick one to filter.</span>
-        </div>
-      </div>
-    </div>
+    <div class="dsections" id="dsections"></div>
   </div>
 
   <section class="section section--sunk" style="border-top:1px solid var(--rule)">
@@ -329,7 +333,7 @@
   var $ = function (s) { return document.querySelector(s); };
   var REF = 'sap-grandbay';          /* one mattress every floor is priced against */
 
-  var state = { q: '', st: 'all', tier: 'all' };
+  var state = { q: '', st: 'all', tier: 'all', mapOpen: false };
 
   function all() { return BD.dealers; }
 
@@ -428,32 +432,30 @@
         '<span class="dcard__tier dcard__tier--' + tier.key + '">' + BD.esc(tier.label) + '</span>' +
       '</div>' +
       '<div class="dcard__body">' +
-        (isMine ? '<span class="dcard__mine"><svg width="12" height="12" aria-hidden="true"><use href="#i-pin"></use></svg> Your dealer</span>' : '') +
+        (isMine ? '<span class="dcard__mine"><svg width="12" height="12" aria-hidden="true"><use href="#i-pin"></use></svg> Your store</span>' : '') +
         '<h3>' + BD.esc(d.name) + '</h3>' +
         '<address class="dcard__addr">' + BD.esc(d.addr) + '</address>' +
-        '<p class="dcard__open">' +
-          '<b class="' + (open.open ? 'open' : 'shut') + '">' + BD.esc(open.text) + '</b>' +
-          '<span>' + BD.hoursLine(d) + '</span>' +
-        '</p>' +
-        (price ? '<div class="dcard__price">' +
-          '<span class="lbl">Their price, ' + BD.esc(ref.name) + ' queen</span>' +
-          '<span class="amt num">' + BD.money(price) + '</span>' +
-          '<span class="save">' + BD.money(ref.price - price) + ' under this site</span>' +
-        '</div>' : '') +
-        '<div class="dcard__acts">' +
-          (d.phone
-            ? '<a class="phone-link" href="tel:' + d.phone.replace(/[^0-9]/g, '') + '">' + BD.esc(d.phone) + '</a>'
-            : '<span class="phone-link" aria-disabled="true">No number listed</span>') +
-          (isMine
-            ? '<span class="btn btn--local btn--sm" aria-disabled="true">Showing their prices</span>'
-            : '<button type="button" class="btn btn--solid-local btn--sm" data-pick="' + BD.esc(d.id) + '">See their prices</button>') +
-        '</div>' +
-        '<a class="dcard__page" href="dealer.html#' + BD.esc(d.id) + '">About this store</a>' +
+        '<p class="dcard__open"><b class="' + (open.open ? 'open' : 'shut') + '">' +
+          BD.esc(open.text) + '</b></p>' +
+        (price ? '<p class="dcard__price"><span class="amt num">' + BD.money(price) + '</span>' +
+          '<span class="was num">' + BD.money(ref.price) + ' online</span></p>' : '') +
+        '<a class="btn btn--online btn--sm dcard__visit" href="dealer.html#' + BD.esc(d.id) + '">Visit local page</a>' +
+        (d.phone
+          ? '<a class="phone-link" href="tel:' + d.phone.replace(/[^0-9]/g, '') + '">' + BD.esc(d.phone) + '</a>'
+          : '<span class="phone-link" aria-disabled="true">No number listed</span>') +
       '</div></article>';
   }
 
   /* Named groups with their own counts, the way the reference locator splits
      its stores from its resellers. Here the natural split is the state. */
+  function setMap(open) {
+    state.mapOpen = open;
+    $('#mapwrap').hidden = !open;
+    $('#view-map').setAttribute('aria-expanded', String(open));
+    $('#view-map-label').textContent = open ? 'Hide map' : 'View map';
+    try { BD.store.set('bd.locmap', open ? '1' : '0'); } catch (e) {}
+  }
+
   function render() {
     var list = visible();
     var byState = {};
@@ -523,6 +525,7 @@
       state.st = dot.getAttribute('data-state');
       $('#state-sel').value = state.st;
       render();
+      setMap(false);
       var sec = $('#state-' + state.st);
       if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
@@ -532,6 +535,7 @@
       $('#zip-loc').focus();
       return;
     }
+    if (t.closest && t.closest('#view-map')) { setMap(!state.mapOpen); return; }
     if (t.id === 'loc-clear') {
       state.q = ''; state.st = 'all'; state.tier = 'all';
       $('#zip-loc').value = ''; $('#state-sel').value = 'all'; $('#tier').value = 'all';
@@ -559,6 +563,7 @@
   document.addEventListener('bd:dealerchange', function () { state.q = ''; render(); });
 
   fillStateSelect();
+  setMap(BD.store.get('bd.locmap', '0') === '1');
   render();
 })();
 </script>
