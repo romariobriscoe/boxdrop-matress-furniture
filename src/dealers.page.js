@@ -21,22 +21,31 @@
      so the brand token is collapsed on each side before comparing. */
   function brandFold(s) { return s.toLowerCase().replace(/\bbox\s+drop\b/g, 'boxdrop'); }
 
+  /* A five digit ZIP in the box is a proximity question, not a filter: it
+     orders every store by how near its ZIP is, rather than cutting the list
+     down to one state. */
+  function searchZip() {
+    var q = state.q.trim();
+    return /^\d{5}$/.test(q) ? q : null;
+  }
+
+  function sortZip() { return searchZip() || BD.zip(); }
+
   function matches(d) {
     if (state.st !== 'all' && d.state !== state.st) return false;
     if (state.tier !== 'all' && BD.dealerTier(d).key !== state.tier) return false;
     var q = brandFold(state.q.trim());
-    if (!q) return true;
-    if (/^\d{5}$/.test(q)) return d.zip === q || d.state === BD.stateForZip(q);
+    if (!q || searchZip()) return true;
     var full = BD.states[d.state] ? BD.states[d.state].name : d.state;
     return brandFold(d.name + ' ' + d.city + ' ' + d.state + ' ' + full + ' ' + d.addr).indexOf(q) > -1;
   }
 
   function visible() {
-    var z = BD.zip();
+    var z = sortZip();
     return all().filter(matches).sort(function (a, b) {
       if (z) {
-        var ga = BD.zipGap(a.zip, z), gb = BD.zipGap(b.zip, z);
-        if (ga !== gb) return ga - gb;
+        var r = BD.compareRank(BD.zipRank(a, z), BD.zipRank(b, z));
+        if (r) return r;
       }
       if (a.state !== b.state) return a.state.localeCompare(b.state);
       return a.city.localeCompare(b.city);
@@ -44,45 +53,56 @@
   }
 
   /* ---------- the national map --------------------------------------------
-     The sheet carries no store coordinates, so this plots one bubble per
-     state at the state's own centre, sized by how many stores are really
-     there. It is a count map, and says so. */
+     A state tile grid rather than a projection. There are no store
+     coordinates in the source and no boundary data here, so a scatter of
+     bubbles had nothing behind it to read against and most states went
+     unlabelled. A grid is openly schematic, labels every state, never
+     overlaps, and still shows where the network is thin. */
+
+  /* col, row. Eleven columns west to east, eight rows north to south. */
+  var GRID = {
+    AK:[0,0], ME:[10,0],
+    VT:[9,1], NH:[10,1],
+    WA:[0,2], ID:[1,2], MT:[2,2], ND:[3,2], MN:[4,2], WI:[5,2], MI:[6,2], NY:[8,2], RI:[9,2], MA:[10,2],
+    OR:[0,3], NV:[1,3], WY:[2,3], SD:[3,3], IA:[4,3], IL:[5,3], IN:[6,3], OH:[7,3], PA:[8,3], NJ:[9,3], CT:[10,3],
+    CA:[0,4], UT:[1,4], CO:[2,4], NE:[3,4], MO:[4,4], KY:[5,4], WV:[6,4], VA:[7,4], MD:[8,4], DE:[9,4],
+    AZ:[1,5], NM:[2,5], KS:[3,5], AR:[4,5], TN:[5,5], NC:[6,5], SC:[7,5], DC:[8,5],
+    OK:[3,6], LA:[4,6], MS:[5,6], AL:[6,6], GA:[7,6],
+    HI:[0,7], TX:[3,7], FL:[8,7]
+  };
 
   function mapSVG(list) {
-    var W = 420, H = 265, pad = 16;
-    var S = BD.states, keys = Object.keys(S);
-    var lats = keys.map(function (k) { return S[k].lat; });
-    var lngs = keys.map(function (k) { return S[k].lng; });
-    var minLat = Math.min.apply(null, lats), maxLat = Math.max.apply(null, lats);
-    var minLng = Math.min.apply(null, lngs), maxLng = Math.max.apply(null, lngs);
-    var k0 = Math.cos((minLat + maxLat) / 2 * Math.PI / 180);
-    var sx = (W - pad * 2) / ((maxLng - minLng) * k0), sy = (H - pad * 2) / (maxLat - minLat);
-    var sc = Math.min(sx, sy);
-    var offX = (W - (maxLng - minLng) * k0 * sc) / 2, offY = (H - (maxLat - minLat) * sc) / 2;
-    function at(st) {
-      return { x: offX + (S[st].lng - minLng) * k0 * sc, y: offY + (maxLat - S[st].lat) * sc };
-    }
-
+    var T = 40, GAP = 5, PAD = 4;
+    var W = 11 * (T + GAP) - GAP + PAD * 2;
+    var H = 8 * (T + GAP) - GAP + PAD * 2;
     var total = counts(), shown = {};
     list.forEach(function (d) { shown[d.state] = (shown[d.state] || 0) + 1; });
     var mine = BD.currentDealer();
-    var out = ['<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="A map of the lower 48 ' +
-      'with one bubble per state, sized by how many BoxDrop stores it has. ' + all().length +
-      ' stores in ' + Object.keys(total).length + ' states.">'];
 
-    Object.keys(total).sort(function (a, b) { return total[b] - total[a]; }).forEach(function (st) {
-      var p = at(st), n = shown[st] || 0;
-      var r = 4 + Math.sqrt(total[st]) * 2.6;
+    var out = ['<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="A grid of the fifty ' +
+      'states, one tile each, showing how many BoxDrop stores are in each. ' + all().length +
+      ' stores across ' + Object.keys(total).length + ' states.">'];
+
+    Object.keys(GRID).forEach(function (st) {
+      var g = GRID[st];
+      var x = PAD + g[0] * (T + GAP), y = PAD + g[1] * (T + GAP);
+      var n = total[st] || 0;
+      var inResults = (shown[st] || 0) > 0;
       var isMine = mine && mine.state === st;
-      var live = n > 0;
-      out.push('<g class="mapdot' + (live ? '' : ' is-off') + '" data-state="' + st + '" tabindex="0" role="button">');
-      out.push('<title>' + BD.esc(S[st].name) + ': ' + total[st] + ' store' + (total[st] === 1 ? '' : 's') + '</title>');
-      if (isMine) out.push('<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="' + (r + 7).toFixed(1) + '" fill="#2DB84B" opacity=".18"/>');
-      out.push('<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="' + r.toFixed(1) + '" ' +
-        'fill="' + (isMine ? '#2DB84B' : live ? '#111D6B' : '#D3D8EC') + '" opacity="' + (live ? .88 : 1) + '"/>');
-      if (total[st] >= 7 || isMine) {
-        out.push('<text x="' + p.x.toFixed(1) + '" y="' + (p.y + 3.2).toFixed(1) + '" text-anchor="middle" ' +
-          'font-family="IBM Plex Mono, monospace" font-size="8.5" font-weight="600" fill="#FFFFFF">' + total[st] + '</text>');
+      var has = n > 0;
+      var fill = isMine ? '#2DB84B' : has ? (inResults ? '#111D6B' : '#A8B0D8') : '#EDEFF6';
+      var ink = has ? '#FFFFFF' : '#A7ADC4';
+      var nm = BD.states[st] ? BD.states[st].name : st;
+
+      out.push('<g class="mapdot' + (has ? '' : ' is-off') + '" data-state="' + st + '"' +
+        (has ? ' tabindex="0" role="button"' : '') + '>');
+      out.push('<title>' + BD.esc(nm) + ': ' + (has ? n + ' store' + (n === 1 ? '' : 's') : 'no stores yet') + '</title>');
+      out.push('<rect x="' + x + '" y="' + y + '" width="' + T + '" height="' + T + '" rx="3" fill="' + fill + '"/>');
+      out.push('<text x="' + (x + T / 2) + '" y="' + (y + 17) + '" text-anchor="middle" ' +
+        'font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" fill="' + ink + '">' + st + '</text>');
+      if (has) {
+        out.push('<text x="' + (x + T / 2) + '" y="' + (y + 31) + '" text-anchor="middle" ' +
+          'font-family="IBM Plex Mono, monospace" font-size="11" fill="' + ink + '" opacity=".82">' + n + '</text>');
       }
       out.push('</g>');
     });
@@ -130,8 +150,36 @@
     try { BD.store.set('bd.locmap', open ? '1' : '0'); } catch (e) {}
   }
 
+  /* In proximity mode the list is one run ordered by ZIP, so state headings
+     would hide the very ordering that was asked for. */
+  function renderNearest(list, zip) {
+    var near = list.slice(0, 9), rest = list.slice(9);
+    function block(title, note, items, id) {
+      if (!items.length) return '';
+      return '<section class="dsection"' + (id ? ' id="' + id + '"' : '') + '>' +
+        '<header class="dsection__head"><h2>' + BD.esc(title) + '</h2>' +
+        '<span class="dsection__n">' + items.length + ' ' + (items.length === 1 ? 'store' : 'stores') + '</span>' +
+        (note ? '<p>' + BD.esc(note) + '</p>' : '') + '</header>' +
+        '<div class="dlist">' + items.map(cardHTML).join('') + '</div></section>';
+    }
+    return block('Closest to ' + zip, 'Ordered by how near each store\u2019s ZIP is to yours.', near, 'nearest') +
+           block('The rest of the network', null, rest);
+  }
+
   function render() {
     var list = visible();
+    var zq = searchZip();
+    if (zq) {
+      $('#dsections').innerHTML = list.length
+        ? renderNearest(list, zq)
+        : '<div class="empty"><h3>No stores match that</h3><p>Clear the floor or state filter and try again.</p>' +
+          '<p style="margin-top:20px"><button type="button" class="btn btn--ghost btn--sm" id="loc-clear">Clear search</button></p></div>';
+      $('#map').innerHTML = mapSVG(list);
+      $('#loc-count').textContent = list.length;
+      $('#loc-word').textContent = list.length === 1 ? 'store' : 'stores';
+      $('#loc-near').textContent = 'nearest ' + zq + ' first';
+      return;
+    }
     var byState = {};
     list.forEach(function (d) { (byState[d.state] = byState[d.state] || []).push(d); });
     var order = Object.keys(byState);
@@ -234,7 +282,11 @@
     render();
   });
 
-  document.addEventListener('bd:dealerchange', function () { state.q = ''; render(); });
+  document.addEventListener('bd:dealerchange', function () {
+    var box = $('#zip-loc');
+    state.q = box && /^\d{5}$/.test(box.value.trim()) ? box.value.trim() : '';
+    render();
+  });
 
   fillStateSelect();
   setMap(BD.store.get('bd.locmap', '0') === '1');

@@ -13,6 +13,7 @@ platform wraps it. Every other page carries its own.
 
     python3 build.py
 """
+import sys
 import pathlib
 
 ROOT = pathlib.Path(__file__).parent
@@ -25,7 +26,7 @@ FONTS = (
   'family=Schibsted+Grotesk:wght@400;500;600;700;800&'
   'family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&'
   'family=IBM+Plex+Mono:wght@400;500;600&display=swap">\n'
-  '<link rel="stylesheet" href="assets/css/boxdrop.css">'
+  '<link rel="stylesheet" href="__CSS__">'
 )
 
 SAFE_AREA = ('<style>:root{padding-top:env(safe-area-inset-top,0px);'
@@ -92,20 +93,36 @@ def check_css():
         raise SystemExit(1)
 
 
+DEV = '--dev' in sys.argv
+
+
+def stamp(path):
+    """Append the file's mtime so a browser cannot serve a stale asset.
+
+    Local only. The published build keeps bare paths, because the artifact
+    host serves files by exact published path and a query string there is
+    not worth the risk. Stale assets in the preview pane cost three
+    debugging detours before this existed."""
+    if not DEV:
+        return path
+    f = ROOT / path
+    return f'{path}?v={int(f.stat().st_mtime)}' if f.exists() else path
+
+
 def build():
     check_css()
     sprite, chrome, footer = read('_sprite.html'), read('_chrome.html'), read('_footer.html')
     for out, stem, title, nav in PAGES:
         body = read(f'{stem}.body.html')
         scripts = ''.join(
-            f'<script src="{s}"></script>\n' for s in EXTRA_SCRIPTS.get(stem, []))
-        scripts = '<script src="assets/js/dealers.js"></script>\n' + scripts
-        scripts += '<script src="assets/js/boxdrop.js"></script>\n'
+            f'<script src="{stamp(s)}"></script>\n' for s in EXTRA_SCRIPTS.get(stem, []))
+        scripts = f'<script src="{stamp("assets/js/dealers.js")}"></script>\n' + scripts
+        scripts += f'<script src="{stamp("assets/js/boxdrop.js")}"></script>\n'
         page_js = SRC / f'{stem}.page.js'
         if page_js.exists():
             scripts += '<script>\n' + page_js.read_text().rstrip() + '\n</script>\n'
 
-        head = f'<title>{title}</title>\n{FONTS}'
+        head = f'<title>{title}</title>\n' + FONTS.replace('__CSS__', stamp('assets/css/boxdrop.css'))
         content = (f'{sprite}\n\n{mark_active(chrome, nav)}\n\n{body}\n\n{footer}\n\n{scripts}')
 
         if out == 'index.html':          # the Artifact platform supplies the skeleton

@@ -146,20 +146,23 @@
 <!-- 04 · hero ------------------------------------------------------------ -->
 <section class="hero">
   <figure class="hero__bleed">
-    <img src="assets/img/hero-bedroom.jpg" width="1800" height="1200"
-         alt="A charcoal quilted pillowtop mattress on an upholstered frame in a daylit bedroom with a wood floor and a palm beside the window."
-         fetchpriority="high" decoding="async">
+    <video id="hero-film" class="hero__film"
+           poster="assets/img/s2w-hero-poster.jpg"
+           autoplay muted loop playsinline preload="auto"
+           aria-label="A slow pass across the quilted surface of the Sleep2Win Reactive Hybrid.">
+      <source src="assets/video/sleep2win-hero.mp4" type="video/mp4">
+    </video>
     <div class="hero__over">
       <div class="wrap">
         <div class="hero__copy">
-          <p class="eyebrow">Mattresses and furniture · 252 stores · 44 states</p>
+          <p class="eyebrow">Sleep2Win by Sapphire Sleep · New for 2026</p>
           <h1>The same bed.<span class="ln2">Two ways to buy it.</span></h1>
           <p class="hero__lede">
             Order here and your local BoxDrop dealer brings it to your door. Walk into that
             same dealer's showroom and they will beat this price.
           </p>
           <div class="hero__cta">
-            <a class="btn btn--online" href="category.html#mattresses">Shop mattresses</a>
+            <a class="btn btn--online" href="product.html#s2w-reactive-hybrid">See the Sleep2Win</a>
             <a class="btn btn--local" href="dealers.html">Find your dealer</a>
           </div>
           <p class="hero__note">Free delivery over $599 · 101 night trial · Financing from $29 a month</p>
@@ -171,17 +174,19 @@
   <div class="wrap">
     <aside class="hero__tag">
       <div>
-        <p class="eyebrow eyebrow--local" style="margin-bottom:6px">Shown above</p>
-        <p class="name" style="margin:0">Sapphire Sleep Immense Luxury Firm Pillow Top, Queen</p>
+        <p class="eyebrow eyebrow--local" style="margin-bottom:6px">The bed in the film</p>
+        <p class="name" style="margin:0">
+          <a href="product.html#s2w-reactive-hybrid">Sleep2Win Reactive Hybrid 15 inch, Queen</a>
+        </p>
       </div>
-      <div class="ledger ledger--sm" data-online="1199">
+      <div class="ledger ledger--sm" data-online="1899">
         <div class="ledger__row ledger__row--online">
           <span class="ledger__label"><span>Online</span></span>
-          <span class="ledger__price num">$1,199</span>
+          <span class="ledger__price num">$1,899</span>
         </div>
         <div class="ledger__row ledger__row--local">
           <span class="ledger__label"><span>Your local dealer</span></span>
-          <span class="ledger__price num">$983 to $1,055</span>
+          <span class="ledger__price num">$1,557 to $1,671</span>
           <p class="ledger__why"></p>
         </div>
       </div>
@@ -591,6 +596,22 @@
             '<svg width="14" height="14" aria-hidden="true"><use href="#i-arrow"></use></svg></span>' +
         '</div></div></a>';
     }).join('');
+  }
+
+  /* The element autoplays natively, which is what muted video is allowed to
+     do and what actually works; calling play() by hand raced the first byte
+     and was rejected. All this does is stop it for anyone who has asked the
+     system for reduced motion, and resume if they change their mind. */
+  var film = document.getElementById('hero-film');
+  if (film) {
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function sync() {
+      if (still.matches) { film.pause(); film.removeAttribute('autoplay'); return; }
+      var go = film.play();
+      if (go && go.catch) go.catch(function () { /* blocked: the poster stands in */ });
+    }
+    still.addEventListener ? still.addEventListener('change', sync) : still.addListener(sync);
+    if (still.matches) sync();
   }
 
   document.addEventListener('bd:dealerchange', paint);
