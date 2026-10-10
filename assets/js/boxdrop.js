@@ -20,26 +20,94 @@
      factor = how the dealer's floor price compares to the online price.
      Real dealers set their own; these are plausible stand-ins. */
   var DEALERS = [
-    { id:'d478', name:'BoxDrop Nitro',          city:'Nitro, WV',        zip:25143,
-      addr:'4109 1st Avenue, Nitro, WV 25143',  phone:'(304) 555 0142', factor:0.83,
-      open:'Open until 7:00 PM', hours:'Mon to Sat 10 to 7 · Sun 12 to 5',
-      img:'assets/img/s-showroom-1.jpg', tier:'Full line dealer', miles:'4 mi' },
-    { id:'d512', name:'BoxDrop Charleston',     city:'Charleston, WV',   zip:25301,
+    { id:'d478', name:'BoxDrop Nitro', city:'Nitro', state:'WV', zip:25143,
+      addr:'4109 1st Avenue, Nitro, WV 25143', phone:'(304) 555 0142', factor:0.83,
+      lat:38.415, lng:-81.843, oh:[[12,17],[10,19],[10,19],[10,19],[10,19],[10,19],[10,19]],
+      img:'assets/img/s-showroom-1.jpg', tier:'Flagship floor', tierKey:'flagship', tierNote:'Every line on the floor, including pieces most stores only order in.' },
+    { id:'d512', name:'BoxDrop Charleston', city:'Charleston', state:'WV', zip:25301,
       addr:'1201 Washington Street E, Charleston, WV 25301', phone:'(304) 555 0188', factor:0.86,
-      open:'Open until 6:00 PM', hours:'Mon to Sat 10 to 6 · Sun closed',
-      img:'assets/img/s-showroom-2.jpg', tier:'Full line dealer', miles:'16 mi' },
-    { id:'d604', name:'BoxDrop Teays Valley',   city:'Hurricane, WV',    zip:25526,
+      lat:38.35, lng:-81.633, oh:[null,[10,18],[10,18],[10,18],[10,18],[10,18],[10,18]],
+      img:'assets/img/s-showroom-2.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
+    { id:'d604', name:'BoxDrop Teays Valley', city:'Hurricane', state:'WV', zip:25526,
       addr:'3886 Teays Valley Road, Hurricane, WV 25526', phone:'(304) 555 0119', factor:0.85,
-      open:'Closes 5:00 PM', hours:'Tue to Sat 10 to 5 · Sun and Mon closed',
-      img:'assets/img/b-adjroom.jpg', tier:'Mattress and bedroom', miles:'23 mi' },
-    { id:'d731', name:'BoxDrop Huntington',     city:'Huntington, WV',   zip:25701,
-      addr:'2840 5th Avenue, Huntington, WV 25701', phone:'(304) 555 0170', factor:0.84,
-      open:'Open until 7:00 PM', hours:'Mon to Sat 10 to 7 · Sun 1 to 5',
-      img:'assets/img/b-walnut-set.jpg', tier:'Full line dealer', miles:'48 mi' },
-    { id:'d890', name:'BoxDrop Parkersburg',    city:'Parkersburg, WV',  zip:26101,
-      addr:'1710 Grand Central Avenue, Vienna, WV 26105', phone:'(304) 555 0133', factor:0.87,
-      open:'Open until 6:00 PM', hours:'Mon to Sat 10 to 6 · Sun 12 to 4',
-      img:'assets/img/b-adjroom.jpg', tier:'Mattress only', miles:'71 mi' }
+      lat:38.433, lng:-82.025, oh:[[12,17],[10,18],[10,18],[10,18],[10,20],[10,20],[10,18]],
+      img:'assets/img/s-bedroom-wide.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
+    { id:'d731', name:'BoxDrop Huntington', city:'Huntington', state:'WV', zip:25701,
+      addr:'2851 5th Avenue, Huntington, WV 25701', phone:'(304) 555 0164', factor:0.84,
+      lat:38.419, lng:-82.445, oh:[[13,17],[11,19],[11,19],[11,19],[11,19],[11,19],[10,19]],
+      img:'assets/img/b-mornington.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
+    { id:'d890', name:'BoxDrop Parkersburg', city:'Parkersburg', state:'WV', zip:26101,
+      addr:'1300 Grand Central Avenue, Parkersburg, WV 26101', phone:'(304) 555 0173', factor:0.87,
+      lat:39.267, lng:-81.562, oh:[[12,17],[10,19],[10,19],[10,19],[10,19],[10,19],[10,19]],
+      img:'assets/img/l-sectional-top.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
+    { id:'d216', name:'BoxDrop Beckley', city:'Beckley', state:'WV', zip:25801,
+      addr:'1620 Harper Road, Beckley, WV 25801', phone:'(304) 555 0206', factor:0.85,
+      lat:37.778, lng:-81.188, oh:[null,[10,18],[10,18],[10,18],[10,18],[10,18],[10,18]],
+      img:'assets/img/s-rest.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
+    { id:'d233', name:'BoxDrop Morgantown', city:'Morgantown', state:'WV', zip:26505,
+      addr:'1075 Van Voorhis Road, Morgantown, WV 26505', phone:'(304) 555 0231', factor:0.88,
+      lat:39.629, lng:-79.956, oh:[[12,17],[10,18],[10,18],[10,18],[10,20],[10,20],[10,18]],
+      img:'assets/img/b-adjroom.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
+    { id:'d247', name:'BoxDrop Martinsburg', city:'Martinsburg', state:'WV', zip:25401,
+      addr:'801 Foxcroft Avenue, Martinsburg, WV 25401', phone:'(304) 555 0247', factor:0.89,
+      lat:39.456, lng:-77.964, oh:[[13,17],[11,19],[11,19],[11,19],[11,19],[11,19],[10,19]],
+      img:'assets/img/l-recliner-hero.jpg', tier:'Mattress and base', tierKey:'mattress', tierNote:'Sleep only. Furniture comes in on order, usually inside a week.' },
+    { id:'d259', name:'BoxDrop Clarksburg', city:'Clarksburg', state:'WV', zip:26301,
+      addr:'412 Emily Drive, Clarksburg, WV 26301', phone:'(304) 555 0259', factor:0.86,
+      lat:39.28, lng:-80.344, oh:[[12,17],[10,19],[10,19],[10,19],[10,19],[10,19],[10,19]],
+      img:'assets/img/s-showroom-1.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
+    { id:'d268', name:'BoxDrop Wheeling', city:'Wheeling', state:'WV', zip:26003,
+      addr:'40 Twentyninth Street, Wheeling, WV 26003', phone:'(304) 555 0268', factor:0.87,
+      lat:40.064, lng:-80.721, oh:[null,[10,18],[10,18],[10,18],[10,18],[10,18],[10,18]],
+      img:'assets/img/s-showroom-2.jpg', tier:'Mattress and base', tierKey:'mattress', tierNote:'Sleep only. Furniture comes in on order, usually inside a week.' },
+    { id:'d311', name:'BoxDrop Portsmouth', city:'Portsmouth', state:'OH', zip:45662,
+      addr:'1202 Gallia Street, Portsmouth, OH 45662', phone:'(740) 555 0311', factor:0.84,
+      lat:38.731, lng:-82.998, oh:[[12,17],[10,18],[10,18],[10,18],[10,20],[10,20],[10,18]],
+      img:'assets/img/s-bedroom-wide.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
+    { id:'d324', name:'BoxDrop Chillicothe', city:'Chillicothe', state:'OH', zip:45601,
+      addr:'1270 N Bridge Street, Chillicothe, OH 45601', phone:'(740) 555 0324', factor:0.86,
+      lat:39.333, lng:-82.983, oh:[[13,17],[11,19],[11,19],[11,19],[11,19],[11,19],[10,19]],
+      img:'assets/img/b-mornington.jpg', tier:'Mattress and base', tierKey:'mattress', tierNote:'Sleep only. Furniture comes in on order, usually inside a week.' },
+    { id:'d338', name:'BoxDrop Athens', city:'Athens', state:'OH', zip:45701,
+      addr:'985 E State Street, Athens, OH 45701', phone:'(740) 555 0338', factor:0.85,
+      lat:39.329, lng:-82.101, oh:[[12,17],[10,19],[10,19],[10,19],[10,19],[10,19],[10,19]],
+      img:'assets/img/l-sectional-top.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
+    { id:'d349', name:'BoxDrop Marietta', city:'Marietta', state:'OH', zip:45750,
+      addr:'109 Acme Street, Marietta, OH 45750', phone:'(740) 555 0349', factor:0.86,
+      lat:39.415, lng:-81.455, oh:[null,[10,18],[10,18],[10,18],[10,18],[10,18],[10,18]],
+      img:'assets/img/s-rest.jpg', tier:'Mattress and base', tierKey:'mattress', tierNote:'Sleep only. Furniture comes in on order, usually inside a week.' },
+    { id:'d357', name:'BoxDrop Grove City', city:'Grove City', state:'OH', zip:43123,
+      addr:'2130 Stringtown Road, Grove City, OH 43123', phone:'(614) 555 0357', factor:0.88,
+      lat:39.881, lng:-83.093, oh:[[12,17],[10,18],[10,18],[10,18],[10,20],[10,20],[10,18]],
+      img:'assets/img/b-adjroom.jpg', tier:'Flagship floor', tierKey:'flagship', tierNote:'Every line on the floor, including pieces most stores only order in.' },
+    { id:'d366', name:'BoxDrop Cambridge', city:'Cambridge', state:'OH', zip:43725,
+      addr:'2428 Southgate Parkway, Cambridge, OH 43725', phone:'(740) 555 0366', factor:0.85,
+      lat:40.031, lng:-81.588, oh:[[13,17],[11,19],[11,19],[11,19],[11,19],[11,19],[10,19]],
+      img:'assets/img/l-recliner-hero.jpg', tier:'Clearance floor', tierKey:'outlet', tierNote:'One off pieces and floor models. What is there is what there is.' },
+    { id:'d412', name:'BoxDrop Ashland', city:'Ashland', state:'KY', zip:41101,
+      addr:'1515 Greenup Avenue, Ashland, KY 41101', phone:'(606) 555 0412', factor:0.83,
+      lat:38.478, lng:-82.638, oh:[[12,17],[10,19],[10,19],[10,19],[10,19],[10,19],[10,19]],
+      img:'assets/img/s-showroom-1.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
+    { id:'d428', name:'BoxDrop Pikeville', city:'Pikeville', state:'KY', zip:41501,
+      addr:'254 Hambley Boulevard, Pikeville, KY 41501', phone:'(606) 555 0428', factor:0.82,
+      lat:37.479, lng:-82.519, oh:[null,[10,18],[10,18],[10,18],[10,18],[10,18],[10,18]],
+      img:'assets/img/s-showroom-2.jpg', tier:'Mattress and base', tierKey:'mattress', tierNote:'Sleep only. Furniture comes in on order, usually inside a week.' },
+    { id:'d433', name:'BoxDrop Lexington', city:'Lexington', state:'KY', zip:40502,
+      addr:'3090 Richmond Road, Lexington, KY 40502', phone:'(859) 555 0433', factor:0.87,
+      lat:38.015, lng:-84.472, oh:[[12,17],[10,18],[10,18],[10,18],[10,20],[10,20],[10,18]],
+      img:'assets/img/s-bedroom-wide.jpg', tier:'Flagship floor', tierKey:'flagship', tierNote:'Every line on the floor, including pieces most stores only order in.' },
+    { id:'d441', name:'BoxDrop Louisa', city:'Louisa', state:'KY', zip:41230,
+      addr:'125 S Lake Drive, Louisa, KY 41230', phone:'(606) 555 0441', factor:0.81,
+      lat:38.114, lng:-82.603, oh:[[13,17],[11,19],[11,19],[11,19],[11,19],[11,19],[10,19]],
+      img:'assets/img/b-mornington.jpg', tier:'Clearance floor', tierKey:'outlet', tierNote:'One off pieces and floor models. What is there is what there is.' },
+    { id:'d517', name:'BoxDrop Bristol', city:'Bristol', state:'VA', zip:24201,
+      addr:'1521 Euclid Avenue, Bristol, VA 24201', phone:'(276) 555 0517', factor:0.84,
+      lat:36.596, lng:-82.188, oh:[[12,17],[10,19],[10,19],[10,19],[10,19],[10,19],[10,19]],
+      img:'assets/img/l-sectional-top.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
+    { id:'d528', name:'BoxDrop Roanoke', city:'Roanoke', state:'VA', zip:24012,
+      addr:'3433 Orange Avenue NE, Roanoke, VA 24012', phone:'(540) 555 0528', factor:0.86,
+      lat:37.3, lng:-79.918, oh:[null,[10,18],[10,18],[10,18],[10,18],[10,18],[10,18]],
+      img:'assets/img/s-rest.jpg', tier:'Full line dealer', tierKey:'full', tierNote:'Mattresses, bases and furniture, all out on the floor to lie on.' },
   ];
 
   var RANGE_LOW = 0.82, RANGE_HIGH = 0.88;
@@ -49,6 +117,79 @@
   }
 
   /* ---------- dealer state ---------- */
+  /* ---------- geography and opening hours ----------------------------- */
+
+  var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  /* ZIP centroids we actually know: the stores themselves. For any other ZIP
+     we borrow the coordinates of the numerically closest one, which is rough
+     but ordered the same way ZIPs are, and good enough to sort a list by. */
+  function zipPoint(zip) {
+    var n = parseInt(zip, 10);
+    if (!n || isNaN(n)) return null;
+    var best = null, bd = Infinity;
+    for (var i = 0; i < DEALERS.length; i++) {
+      var gap = Math.abs(DEALERS[i].zip - n);
+      if (gap < bd) { bd = gap; best = DEALERS[i]; }
+    }
+    return best ? { lat: best.lat, lng: best.lng, exact: bd === 0 } : null;
+  }
+
+  function milesBetween(a, b) {
+    if (!a || !b) return null;
+    var R = 3958.8, rad = Math.PI / 180;
+    var dLat = (b.lat - a.lat) * rad, dLng = (b.lng - a.lng) * rad;
+    var la = a.lat * rad, lb = b.lat * rad;
+    var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.sin(dLng / 2) * Math.sin(dLng / 2) * Math.cos(la) * Math.cos(lb);
+    return Math.round(2 * R * Math.asin(Math.min(1, Math.sqrt(h))));
+  }
+
+  function clockLabel(h) {
+    var ampm = h >= 12 ? 'PM' : 'AM', n = h % 12; if (n === 0) n = 12;
+    return n + ' ' + ampm;
+  }
+
+  /* Open or shut right now, worked out from the week rather than stored as a
+     sentence, so the card never claims a store is open on a day it is not. */
+  function openState(d, now) {
+    now = now || new Date();
+    var day = now.getDay(), hour = now.getHours() + now.getMinutes() / 60;
+    var today = d.oh && d.oh[day];
+    if (today && hour >= today[0] && hour < today[1]) {
+      return { open: true, text: 'Open until ' + clockLabel(today[1]) };
+    }
+    if (today && hour < today[0]) {
+      return { open: false, text: 'Opens ' + clockLabel(today[0]) + ' today' };
+    }
+    for (var i = 1; i <= 7; i++) {
+      var nd = (day + i) % 7, slot = d.oh && d.oh[nd];
+      if (slot) {
+        return { open: false, text: 'Opens ' + clockLabel(slot[0]) +
+          (i === 1 ? ' tomorrow' : ' ' + DAYS[nd]) };
+      }
+    }
+    return { open: false, text: 'Call for hours' };
+  }
+
+  function hoursLine(d) {
+    if (!d.oh) return '';
+    var out = [], i = 0;
+    function key(s) { return s ? s[0] + '-' + s[1] : 'x'; }
+    var order = [1, 2, 3, 4, 5, 6, 0];           /* Monday first, the way a door sign reads */
+    while (i < order.length) {
+      var j = i;
+      while (j + 1 < order.length && key(d.oh[order[j + 1]]) === key(d.oh[order[i]])) j++;
+      var slot = d.oh[order[i]];
+      var span = i === j ? DAYS[order[i]].slice(0, 3)
+                         : DAYS[order[i]].slice(0, 3) + ' to ' + DAYS[order[j]].slice(0, 3);
+      out.push(span + ' ' + (slot ? clockLabel(slot[0]).replace(' AM', '').replace(' PM', '') +
+        ' to ' + clockLabel(slot[1]).replace(' AM', '').replace(' PM', '') : 'closed'));
+      i = j + 1;
+    }
+    return out.join(' · ');
+  }
+
   function currentDealer() {
     var id = store.get('bd.dealer', null);
     if (!id) return null;
@@ -319,6 +460,7 @@
   /* ---------- expose for page scripts ---------- */
   window.BoxDrop = {
     dealers: DEALERS, currentDealer: currentDealer, setDealer: setDealer, nearest: nearest,
+    zipPoint: zipPoint, milesBetween: milesBetween, openState: openState, hoursLine: hoursLine,
     money: money, paintLedgers: paintLedgers, paintCart: paintCart, cart: cart,
     addToCart: addToCart, toast: toast, store: store, rangeLow: RANGE_LOW, rangeHigh: RANGE_HIGH,
     esc: esc, ledgerHTML: ledgerHTML, starsHTML: starsHTML, cardHTML: cardHTML,

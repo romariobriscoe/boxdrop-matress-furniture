@@ -512,7 +512,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .dcard__media{position:relative;aspect-ratio:16/10;background:var(--wash);flex:none}
 .dcard__media img{width:100%;height:100%;object-fit:cover}
 /* The tier and the distance read as caption, not as stickers on the photo. */
-.dcard__badge{position:absolute;left:var(--s4);top:var(--s4);background:var(--surface);
+.dcard__badge{position:absolute;left:var(--s4);top:var(--s4);background:var(--surface);display:none;
   font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   font-weight:500;color:var(--ink-2);padding:6px 10px}
 .dcard__dist{position:absolute;right:var(--s4);top:var(--s4);background:var(--surface);color:var(--ink);
@@ -893,7 +893,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 /* ============================================================
    DEALER LOCATOR
    ============================================================ */
-.locator{background:none;border-bottom:1px solid var(--rule);padding-block:var(--s8)}
+.locator{background:none;padding-block:var(--s8) var(--s6)}
 .locator h1{font-size:var(--t-2xl);font-weight:700;letter-spacing:-.04em;max-width:17ch}
 .locator .lede{margin-top:var(--s4);max-width:58ch}
 .findform{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s6);align-items:flex-start}
@@ -924,6 +924,65 @@ ul,ol{margin:0;padding:0;list-style:none}
 .mapkey{display:flex;gap:var(--s4);flex-wrap:wrap;margin-top:var(--s3);font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3)}
 .mapkey span{display:inline-flex;align-items:center;gap:6px}
 .mapkey i{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+.dcard__tier{
+  position:absolute;left:0;right:0;bottom:0;padding:7px var(--s4);
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:#fff;background:var(--navy);text-align:center;
+}
+.dcard__tier--flagship{background:var(--navy-deep)}
+.dcard__tier--mattress{background:#4A5490}
+.dcard__tier--outlet{background:var(--ink-2)}
+.dcard__note{font-size:var(--t-sm);color:var(--ink-3);margin:0}
+.dcard__open{display:flex;flex-wrap:wrap;gap:4px var(--s3);align-items:baseline;margin:0;
+  font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);letter-spacing:.02em}
+.dcard__open .open{color:var(--local);font-weight:600}
+.dcard__open .shut{color:var(--stop);font-weight:600}
+
+/* The reason this locator exists: the dealer, not the site, sets the price. */
+.dcard__price{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:4px var(--s3);
+  border-left:2px solid var(--local);background:var(--local-wash);padding:var(--s3) var(--s4);
+}
+.dcard__price .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);flex-basis:100%}
+.dcard__price .amt{font-family:var(--mono);font-size:var(--t-lg);font-weight:600;color:var(--local);
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.dcard__price .save{font-size:var(--t-xs);color:var(--ink-2)}
+
+/* Named groups, each with its own count, after the reference's split between
+   its own stores and its resellers. */
+.dsections{display:grid;gap:var(--s8);min-width:0}
+.dsection__head{display:flex;align-items:baseline;gap:var(--s3);flex-wrap:wrap;
+  padding-bottom:var(--s3);border-bottom:1px solid var(--rule-strong);margin-bottom:var(--s5)}
+.dsection__head h2{font-size:var(--t-lg);font-weight:600;letter-spacing:-.025em}
+.dsection__n{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.dsection__head p{flex-basis:100%;font-size:var(--t-sm);color:var(--ink-3);margin:0}
+
+/* Sticky search, the one control that matters on a locator. */
+.locsearch{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--chrome));z-index:30;
+  background:color-mix(in srgb, var(--paper) 94%, transparent);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);padding-block:var(--s3)}
+.locsearch__form{display:flex;align-items:center;gap:var(--s2);position:relative}
+.locsearch__icon{position:absolute;left:var(--s4);top:19px;width:17px;height:17px;color:var(--ink-3);pointer-events:none}
+.locsearch__form input{
+  flex:1;min-width:0;height:54px;padding:0 112px 0 calc(var(--s4) + 27px);
+  border:1.5px solid var(--rule-strong);border-radius:999px;background:var(--surface);
+  font-family:var(--display);font-size:var(--t-md);color:var(--ink);
+}
+.locsearch__form input:focus-visible{outline:2.5px solid var(--local-bright);outline-offset:2px;border-color:var(--ink-2)}
+.locsearch__geo{position:absolute;right:102px;top:7px;width:40px;height:40px;display:grid;place-items:center;
+  border:0;background:none;border-radius:50%;cursor:pointer;color:var(--local)}
+.locsearch__geo svg{width:18px;height:18px}
+.locsearch__geo:hover{background:var(--local-wash)}
+.locsearch__form .btn{position:absolute;right:6px;top:6px;height:42px;border-radius:999px}
+@media (max-width:620px){
+  .locsearch__form input{padding-right:56px;font-size:var(--t-sm)}
+  .locsearch__geo{right:6px}
+  .locsearch__form .btn{position:static;top:auto;height:48px;width:100%;border-radius:var(--r-md)}
+  .locsearch__form{flex-wrap:wrap;row-gap:var(--s2)}
+  .locsearch__form input{flex:1 1 100%}
+}
 
 .dlist{display:grid;gap:var(--s4);min-width:0}
 .dlist .dcard{flex-direction:row;gap:var(--s5)}

@@ -7,29 +7,46 @@
         Your dealer sets their own floor price, carries what sells in your market and drives the van
         that turns up at your house. Pick yours and every price on this site becomes theirs.
       </p>
-      <form class="findform" data-zip-form id="find">
-        <label class="vis-hidden" for="zip-loc">ZIP code</label>
-        <input id="zip-loc" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="ZIP code">
-        <button class="btn btn--online" type="submit">Search</button>
-        <button class="btn btn--ghost" type="button" id="use-loc">Use my location</button>
-      </form>
-      <p data-zip-error hidden style="color:var(--stop);font-size:14px;margin-top:12px"></p>
-      <p style="font-family:var(--mono);font-size:var(--t-xs);color:var(--ink-3);margin-top:14px">
-        Sample network for this prototype. Try 25143, 25301, 25526, 25701 or 26101.
-      </p>
     </div>
   </section>
 
+  <div class="locsearch" id="locsearch">
+    <div class="wrap">
+      <form class="locsearch__form" data-zip-form id="find" role="search">
+        <label class="vis-hidden" for="zip-loc">Search by ZIP code, city or store name</label>
+        <svg class="locsearch__icon" aria-hidden="true"><use href="#i-search"></use></svg>
+        <input id="zip-loc" name="zip" type="text" autocomplete="postal-code"
+               placeholder="Search by ZIP code, city or store name">
+        <button type="button" class="locsearch__geo" id="use-loc" title="Use my location">
+          <svg aria-hidden="true"><use href="#i-pin"></use></svg>
+          <span class="vis-hidden">Use my location</span>
+        </button>
+        <button class="btn btn--online btn--sm" type="submit">Search</button>
+      </form>
+      <p data-zip-error hidden style="color:var(--stop);font-size:14px;margin-top:10px"></p>
+    </div>
+  </div>
+
   <div class="wrap">
     <div class="locbar">
-      <p class="locbar__count"><b id="loc-count">5</b> dealers <span id="loc-near"></span></p>
+      <p class="locbar__count"><b id="loc-count">22</b> <span id="loc-word">stores</span> <span id="loc-near"></span></p>
       <div class="sortwrap" style="margin-left:0">
         <label for="radius">Within</label>
         <select class="sortsel" id="radius">
           <option value="25">25 miles</option>
           <option value="50">50 miles</option>
-          <option value="100" selected>100 miles</option>
-          <option value="9999">Any distance</option>
+          <option value="100">100 miles</option>
+          <option value="9999" selected>Any distance</option>
+        </select>
+      </div>
+      <div class="sortwrap">
+        <label for="tier">Showing</label>
+        <select class="sortsel" id="tier">
+          <option value="all">Every store</option>
+          <option value="flagship">Flagship floors</option>
+          <option value="full">Full line dealers</option>
+          <option value="mattress">Mattress and base</option>
+          <option value="outlet">Clearance floors</option>
         </select>
       </div>
       <div class="segment" role="group" aria-label="View as map or list">
@@ -39,14 +56,15 @@
     </div>
 
     <div class="locgrid" id="locgrid">
-      <div class="dlist" id="dlist"></div>
+      <div class="dsections" id="dsections"></div>
 
       <div class="mapwrap" id="mapwrap">
         <div id="map"></div>
         <div class="mapkey">
           <span><i style="background:var(--local-bright)"></i> Your dealer</span>
-          <span><i style="background:var(--navy)"></i> Other BoxDrop stores</span>
-          <span>Schematic, not to scale</span>
+          <span><i style="background:var(--navy)"></i> In your results</span>
+          <span><i style="background:#C2C8E4"></i> Filtered out</span>
+          <span>Positions are real, roads are not</span>
         </div>
       </div>
     </div>
