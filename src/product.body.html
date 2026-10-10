@@ -80,7 +80,23 @@
   </div>
 
   <!-- construction -->
-  <section class="section section--sunk" id="construction">
+  <section class="filmblock" id="filmblock" hidden aria-labelledby="film-h">
+  <div class="wrap">
+    <p class="eyebrow" id="film-eyebrow"></p>
+    <h2 id="film-h"></h2>
+  </div>
+  <figure class="filmblock__stage">
+    <video id="feature-film" preload="none" playsinline
+           aria-describedby="film-meta"></video>
+    <button type="button" class="filmblock__play" id="film-play">
+      <span class="filmblock__disc" aria-hidden="true"></span>
+      <span class="filmblock__cta">Watch the film</span>
+      <span class="filmblock__meta" id="film-meta"></span>
+    </button>
+  </figure>
+</section>
+
+<section class="section section--sunk" id="construction">
     <div class="wrap">
       <div class="section__head">
         <div>

@@ -139,6 +139,32 @@
     }
   }
 
+  /* The long film is a different thing from the gallery loop: 39 seconds
+     with sound, so it never autoplays and it gets a block of its own. */
+  function renderFeature() {
+    var f = product.feature, sec = $('#filmblock');
+    if (!sec) return;
+    if (!f) { sec.hidden = true; return; }
+    sec.hidden = false;
+    $('#film-eyebrow').textContent = f.eyebrow;
+    $('#film-h').textContent = f.line;
+    $('#film-meta').textContent = f.length + ' · sound on';
+    var v = $('#feature-film');
+    v.poster = f.poster;
+    v.setAttribute('aria-label', f.eyebrow + ': ' + f.line);
+    if (v.getAttribute('src') !== f.src) { v.removeAttribute('src'); v.dataset.src = f.src; }
+  }
+
+  function startFeature() {
+    var v = $('#feature-film'), sec = $('#filmblock');
+    if (!v) return;
+    if (!v.getAttribute('src') && v.dataset.src) v.src = v.dataset.src;
+    v.controls = true;
+    sec.classList.add('is-playing');
+    var go = v.play();
+    if (go && go.catch) go.catch(function () { /* left paused with controls */ });
+  }
+
   /* The film is one more view in the gallery, so it swaps with the stills
      rather than sitting apart from them. */
   function showFilm(on) {
@@ -293,7 +319,7 @@
       b.setAttribute('data-size', option ? option.name : '');
     });
 
-    renderGallery(); renderOptions(); renderPrice(); renderDelivery();
+    renderGallery(); renderFeature(); renderOptions(); renderPrice(); renderDelivery();
     renderConstruction(); renderReviews(); renderRelated();
   }
 
@@ -308,6 +334,7 @@
       $('#main-img').src = t.getAttribute('data-img');
       return;
     }
+    if (e.target.closest && e.target.closest('#film-play')) { startFeature(); return; }
     if (e.target.id === 'copy-specs') {
       var text = product.brand + ' ' + product.name + '\n' +
         (product.specs || []).map(function (r) { return r[0] + ': ' + r[1]; }).join('\n');

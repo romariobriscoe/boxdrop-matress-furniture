@@ -126,7 +126,17 @@ def build():
         if page_js.exists():
             scripts += '<script>\n' + page_js.read_text().rstrip() + '\n</script>\n'
 
-        head = f'<title>{title}</title>\n' + FONTS.replace('__CSS__', stamp('assets/css/boxdrop.css'))
+        # index.html ships as a fragment for the Artifact host, which supplies
+        # the skeleton. Served raw anywhere else (GitHub Pages) that left it
+        # with no viewport meta, so phones fell back to a ~980px layout
+        # viewport and rendered the desktop design shrunk: full nav, three up
+        # grids, 10px text, no breakpoint ever firing. The two tags below are
+        # the minimum that fixes that, and harmlessly duplicate the host's.
+        head = ''
+        if out == 'index.html':
+            head += ('<meta charset="utf-8">\n'
+                     '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n')
+        head += f'<title>{title}</title>\n' + FONTS.replace('__CSS__', stamp('assets/css/boxdrop.css'))
         content = (f'{sprite}\n\n{mark_active(chrome, nav)}\n\n{body}\n\n{footer}\n\n{scripts}')
 
         if out == 'index.html':          # the Artifact platform supplies the skeleton

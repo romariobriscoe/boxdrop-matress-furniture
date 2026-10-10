@@ -69,7 +69,9 @@
     /* ---------------- mattresses ---------------- */
     {
       sku: 's2w-reactive-hybrid',
-      film: { src: 'assets/video/sleep2win-hero.mp4', poster: 'assets/img/s2w-hero-poster.jpg' }, cat: 'mattresses', brand: 'Sleep2Win by Sapphire Sleep',
+      film: { src: 'assets/video/sleep2win-hero.mp4', poster: 'assets/img/s2w-hero-poster.jpg' },
+      feature: { src: 'assets/video/sleep2win-film.mp4', poster: 'assets/img/s2w-film-poster.jpg',
+        eyebrow: 'The film', line: 'Recovery is part of the game.', length: '0:39' }, cat: 'mattresses', brand: 'Sleep2Win by Sapphire Sleep',
       name: 'Reactive Hybrid 15 inch', price: 1899, img: 'assets/img/m-reactive.jpg',
       gallery: ['assets/img/m-reactive.jpg', 'assets/img/d-surface-quilt.jpg', 'assets/img/d-surface-hybrid.jpg', 'assets/img/d-coil.jpg'],
       rating: 4.8, reviews: 64, type: 'Hybrid', firmness: 6, height: 15, flag: 'New for 2026',
