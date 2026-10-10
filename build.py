@@ -26,7 +26,11 @@ FONTS = (
   'family=Schibsted+Grotesk:wght@400;500;600;700;800&'
   'family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&'
   'family=IBM+Plex+Mono:wght@400;500;600&display=swap">\n'
-  '<link rel="stylesheet" href="__CSS__">'
+  '<link rel="stylesheet" href="__CSS__">\n'
+  '<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">\n'
+  '<link rel="alternate icon" href="assets/favicon-32.png" sizes="32x32">\n'
+  '<link rel="apple-touch-icon" href="assets/favicon-180.png">\n'
+  '<meta name="theme-color" content="#111D6B">'
 )
 
 SAFE_AREA = ('<style>:root{padding-top:env(safe-area-inset-top,0px);'
