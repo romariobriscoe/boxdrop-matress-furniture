@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BoxDrop store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/boxdrop.css">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+<symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.6.8-4.9 4.6 1.3 6.8L12 17.3 6.1 20.5l1.3-6.8L2.5 9.1l6.6-.8z"/></symbol>
+<symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h11v9H2zM13 10h4.5l3.5 3.5V16h-8z"/><circle cx="6.5" cy="18.5" r="1.8"/><circle cx="17" cy="18.5" r="1.8"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6z"/><path d="M9.3 12l1.9 2 3.5-4"/></symbol>
+<symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19M6 15h4"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 006 6L16 13l5 2v4a2 2 0 01-2.2 2A17 17 0 013 5.2 2 2 0 015 3z"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+<symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 7h12M19 7h2M3 17h5M12 17h9"/><circle cx="17" cy="7" r="2.4"/><circle cx="10" cy="17" r="2.4"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+</defs></svg>
+
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- 01 · utility bar ----------------------------------------------------- -->
+<div class="utility">
+  <div class="wrap">
+    <a class="chip-dealer" href="dealers.html" style="color:#EDEFFA">
+      <svg class="pin" aria-hidden="true"><use href="#i-pin"></use></svg>
+      <span data-nodealer-only>Your BoxDrop: <b data-dealer-city>Set your location</b></span>
+      <span data-dealer-only hidden>Your BoxDrop: <b data-dealer-name>Find your dealer</b></span>
+    </a>
+    <p class="utility__promise">Every order delivered by your local dealer</p>
+    <ul class="utility__links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#guarantees">Financing</a></li>
+      <li><a href="dealers.html">Dealer login</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- 02 · masthead -------------------------------------------------------- -->
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__row">
+      <div class="masthead__left">
+        <button class="icon-btn burger" type="button" data-drawer-open aria-expanded="false" aria-controls="drawer" aria-label="Open menu">
+          <svg aria-hidden="true"><use href="#i-menu"></use></svg>
+        </button>
+        <form class="search" role="search" action="category.html" onsubmit="return false">
+          <svg aria-hidden="true"><use href="#i-search"></use></svg>
+          <label class="vis-hidden" for="q">Search mattresses and furniture</label>
+          <input id="q" name="q" type="search" placeholder="Search queen hybrid, sectional, base" autocomplete="off">
+        </form>
+      </div>
+
+      <a class="wordmark" href="index.html" aria-label="BoxDrop home">
+        <span class="box">Box</span><span class="drop">Drop</span><span class="dot" aria-hidden="true"></span>
+      </a>
+
+      <div class="masthead__right">
+        <a class="icon-btn" href="dealers.html" aria-label="Find a dealer">
+          <svg aria-hidden="true"><use href="#i-pin"></use></svg>
+        </a>
+        <a class="icon-btn" href="#guarantees" aria-label="Your account">
+          <svg aria-hidden="true"><use href="#i-user"></use></svg>
+        </a>
+        <a class="icon-btn" href="cart.html" aria-label="Cart">
+          <svg aria-hidden="true"><use href="#i-bag"></use></svg>
+          <span class="cart-count" data-cart-count hidden>0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Product categories">
+    <div class="wrap">
+      <ul class="nav__list">
+        <li><a href="category.html#mattresses">Mattresses</a></li>
+        <li><a href="category.html#bases">Adjustable bases</a></li>
+        <li><a href="category.html#bedroom">Bedroom</a></li>
+        <li><a href="category.html#living">Living room</a></li>
+        <li><a href="category.html#dining">Dining</a></li>
+        <li><a href="category.html#outlet">Outlet</a></li>
+      </ul>
+      <a class="nav__find" href="dealers.html" aria-current="page">
+        <svg width="14" height="14" aria-hidden="true"><use href="#i-pin"></use></svg> Find your dealer
+      </a>
+    </div>
+  </nav>
+
+  <div class="mobile-dealerbar">
+    <div class="wrap">
+      <a class="dealerbar-btn" href="dealers.html">
+        <svg aria-hidden="true"><use href="#i-pin"></use></svg>
+        <span data-nodealer-only>Set your location for local pricing</span>
+        <span data-dealer-only hidden>Your dealer: <b data-dealer-name></b></span>
+        <span class="muted">Change</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- mobile drawer -->
+<div class="drawer" id="drawer" hidden>
+  <div class="wrap">
+    <div class="drawer__head">
+      <span class="wordmark"><span class="box">Box</span><span class="drop">Drop</span><span class="dot" aria-hidden="true"></span></span>
+      <button class="icon-btn" type="button" data-drawer-close aria-label="Close menu">
+        <svg aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+    <nav class="drawer__list" aria-label="Mobile menu">
+      <a href="category.html#mattresses">Mattresses <span>148</span></a>
+      <a href="category.html#bases">Adjustable bases <span>24</span></a>
+      <a href="category.html#bedroom">Bedroom <span>96</span></a>
+      <a href="category.html#living">Living room <span>212</span></a>
+      <a href="category.html#dining">Dining <span>84</span></a>
+      <a href="category.html#outlet">Outlet <span>60</span></a>
+    </nav>
+    <div style="padding-block:22px">
+      <a class="btn btn--solid-local btn--block" href="dealers.html">Find your dealer</a>
+      <a class="btn btn--ghost btn--block" href="cart.html" style="margin-top:10px">View cart</a>
+    </div>
+  </div>
+</div>
+
+
+<main id="main">
+  <nav class="crumbs wrap" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="dealers.html">Find a store</a></li>
+      <li><span aria-current="page" id="crumb-name">Store</span></li>
+    </ol>
+  </nav>
+
+  <figure class="storefront">
+    <img id="st-photo" src="assets/img/s-showroom-1.jpg" alt="" decoding="async">
+  </figure>
+
+  <header class="sthead">
+    <div class="wrap">
+      <p class="eyebrow eyebrow--local" id="st-where">Locally owned</p>
+      <h1 id="st-name">Store</h1>
+      <p class="sthead__sum" id="st-sum"></p>
+      <p class="sthead__open" id="st-open"></p>
+      <div class="sthead__cta" id="st-cta"></div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="stcols">
+      <section class="stcol" aria-labelledby="h-contact">
+        <h2 id="h-contact">Address</h2>
+        <address id="st-addr"></address>
+        <p><a id="st-dir" class="link-arrow" href="#" target="_blank" rel="noopener noreferrer">
+          Get directions <svg width="13" height="13" aria-hidden="true"><use href="#i-arrow"></use></svg></a></p>
+        <dl class="stmeta">
+          <dt>Phone</dt><dd id="st-phone"></dd>
+          <dt>Owned by</dt><dd>An independent BoxDrop dealer</dd>
+        </dl>
+        <p id="st-own"></p>
+      </section>
+
+      <section class="stcol" aria-labelledby="h-hours">
+        <h2 id="h-hours">Opening hours</h2>
+        <table class="sthours"><tbody id="st-hours"></tbody></table>
+      </section>
+
+      <section class="stcol" aria-labelledby="h-info">
+        <h2 id="h-info">This store</h2>
+        <div id="st-info"></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="sttiles" id="st-tiles"></div>
+
+  <section class="section" aria-labelledby="h-floor">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Walked in today</p>
+          <h2 class="sec-title" id="h-floor">On this floor right now</h2>
+        </div>
+        <a class="link-arrow" href="category.html#mattresses">Everything we sell
+          <svg width="15" height="15" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+      </div>
+      <div class="pgrid" id="st-floor"></div>
+      <p class="stfloor__note" id="st-floor-note"></p>
+    </div>
+  </section>
+
+  <section class="section section--sunk" style="border-top:1px solid var(--rule)">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Same state</p>
+          <h2 class="sec-title" id="st-near-h">Other stores nearby</h2>
+        </div>
+        <a class="link-arrow" href="dealers.html">All 252 stores
+          <svg width="15" height="15" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+      </div>
+      <div class="stnear" id="st-near"></div>
+    </div>
+  </section>
+</main>
+
+
+<!-- 11 · footer ---------------------------------------------------------- -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div>
+        <span class="wordmark" style="color:#fff"><span class="box" style="color:#fff">Box</span><span class="drop" style="color:#A9B6F2">Drop</span><span class="dot" aria-hidden="true"></span></span>
+        <p style="margin-top:14px;font-size:14px;max-width:34ch;color:#B9C0E2">
+          252 independently owned mattress and furniture stores. One national catalogue.
+          A division of Retail Service Systems.
+        </p>
+        <h4 style="margin-top:26px">Find your dealer</h4>
+        <form class="footer__zip" data-zip-form data-zip-goto="dealers.html">
+          <label class="vis-hidden" for="zip-foot">ZIP code</label>
+          <input id="zip-foot" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="ZIP code">
+          <button class="btn btn--solid-local btn--sm" type="submit" style="min-height:48px">Go</button>
+        </form>
+        <p data-zip-error hidden style="color:#F0B3A6;font-size:13px;margin-top:8px"></p>
+      </div>
+
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="category.html#mattresses">Mattresses</a></li>
+          <li><a href="category.html#bases">Adjustable bases</a></li>
+          <li><a href="category.html#bedroom">Bedroom</a></li>
+          <li><a href="category.html#living">Living room</a></li>
+          <li><a href="category.html#dining">Dining</a></li>
+          <li><a href="category.html#outlet">Outlet</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Buying</h4>
+        <ul>
+          <li><a href="#how">Why there are two prices</a></li>
+          <li><a href="#guarantees">Delivery and setup</a></li>
+          <li><a href="#guarantees">Financing</a></li>
+          <li><a href="#guarantees">101 night trial</a></li>
+          <li><a href="#guarantees">Warranty</a></li>
+          <li><a href="cart.html">Your cart</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="dealers.html">Find a dealer</a></li>
+          <li><a href="dealers.html">Own a BoxDrop</a></li>
+          <li><a href="dealers.html">Dealer login</a></li>
+          <li><a href="#how">About RSS</a></li>
+          <li><a href="#guarantees">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__states">
+      <h4>Dealers by state</h4>
+      <ul>
+        <li><a href="dealers.html">Alabama</a></li><li><a href="dealers.html">Arkansas</a></li>
+        <li><a href="dealers.html">Florida</a></li><li><a href="dealers.html">Georgia</a></li>
+        <li><a href="dealers.html">Illinois</a></li><li><a href="dealers.html">Indiana</a></li>
+        <li><a href="dealers.html">Iowa</a></li><li><a href="dealers.html">Kansas</a></li>
+        <li><a href="dealers.html">Kentucky</a></li><li><a href="dealers.html">Louisiana</a></li>
+        <li><a href="dealers.html">Michigan</a></li><li><a href="dealers.html">Minnesota</a></li>
+        <li><a href="dealers.html">Mississippi</a></li><li><a href="dealers.html">Missouri</a></li>
+        <li><a href="dealers.html">North Carolina</a></li><li><a href="dealers.html">Ohio</a></li>
+        <li><a href="dealers.html">Oklahoma</a></li><li><a href="dealers.html">Pennsylvania</a></li>
+        <li><a href="dealers.html">South Carolina</a></li><li><a href="dealers.html">Tennessee</a></li>
+        <li><a href="dealers.html">Texas</a></li><li><a href="dealers.html">Virginia</a></li>
+        <li><a href="dealers.html">West Virginia</a></li><li><a href="dealers.html">Wisconsin</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__legal">
+      <p>
+        Prototype built for internal review. Products, prices, dealers, reviews and hours are
+        realistic samples, not live data. Product photography is placeholder imagery from the
+        brands BoxDrop carries and is for layout only.
+      </p>
+      <p>© 2026 Retail Service Systems</p>
+    </div>
+  </div>
+</footer>
+
+
+<script src="assets/js/dealers.js"></script>
+<script src="assets/js/catalog.js"></script>
+<script src="assets/js/boxdrop.js"></script>
+<script>
+/* One store's own page, after the way Hastens writes up a showroom: the shop
+   itself rather than a second storefront. Address, the week's hours, what the
+   place is, and a short strip of what is on that floor. */
+(function () {
+  'use strict';
+  var BD = window.BoxDrop;
+  var $ = function (s) { return document.querySelector(s); };
+  var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function pick() {
+    var id = (location.hash || '').replace('#', '');
+    return BD.dealers.filter(function (d) { return d.id === id; })[0] || BD.currentDealer() || BD.dealers[0];
+  }
+
+  /* Written from what the sheet actually gives us, so it differs store to
+     store without pretending to be the owner's own words. */
+  function blurb(d, tier) {
+    var st = BD.states[d.state] ? BD.states[d.state].name : d.state;
+    var own = !/^boxdrop/i.test(d.name)
+      ? 'It keeps its own name over the door rather than BoxDrop\'s, which is what independently owned means here. '
+      : '';
+    var floor = {
+      outlet:   'This is a clearance floor. What is on it is what there is, and it turns over quickly, so it is worth a call before you drive.',
+      mattress: 'It is a sleep floor: mattresses and bases out to lie on, with furniture ordered in, usually inside a week.',
+      full:     'Mattresses, bases and furniture are all out on the floor, so you can lie on the thing before you buy it.'
+    }[tier.key] || 'Mattresses and bases are out on the floor to lie on.';
+    return '<p>' + BD.esc(d.name) + ' is one of 252 BoxDrop stores, and one of ' +
+      stateCount(d.state) + ' in ' + BD.esc(st) + '. ' + BD.esc(own) + BD.esc(floor) + '</p>' +
+      '<p>Because the store owns its own stock and drives its own van, it sets its own floor price. ' +
+      'That is why the number you see here is lower than the one on the rest of this site, and why ' +
+      'the same two people who load the van carry it up your stairs.</p>';
+  }
+
+  function stateCount(st) {
+    return BD.dealers.filter(function (d) { return d.state === st; }).length;
+  }
+
+  function hoursTable(d) {
+    var now = new Date(), today = now.getDay();
+    var rows = [];
+    for (var i = 0; i < 7; i++) {
+      var day = (today + i) % 7;
+      var date = new Date(now.getTime() + i * 86400000);
+      var slot = BD.weekFor(d)[day];
+      rows.push('<tr' + (i === 0 ? ' class="is-today"' : '') + '>' +
+        '<th scope="row">' + (i === 0 ? 'Today' : DAYS[day]) + '</th>' +
+        '<td class="d">' + MON[date.getMonth()] + ' ' + date.getDate() + '</td>' +
+        '<td class="' + (slot ? '' : 'shut') + '">' +
+          (slot ? BD.clock(slot[0]) + ' to ' + BD.clock(slot[1]) : 'Closed') + '</td></tr>');
+    }
+    return rows.join('');
+  }
+
+  function tiles(d, tier) {
+    var ref = BD.bySku('sap-grandbay');
+    var pct = Math.round((1 - d.factor) * 100);
+    var mine = BD.currentDealer();
+    var isMine = mine && mine.id === d.id;
+    return '<a class="sttile" href="dealers.html">' +
+        '<img src="assets/img/s-showroom-2.jpg" alt="" aria-hidden="true" loading="lazy">' +
+        '<div><p class="eyebrow">Their floor price</p>' +
+        '<h3>About ' + pct + '% under this website</h3>' +
+        '<p>' + (ref ? 'The ' + BD.esc(ref.name) + ' is ' + BD.money(ref.price) + ' online and ' +
+          BD.money(Math.round(ref.price * d.factor)) + ' on this floor.' : '') + '</p>' +
+        '<span class="go">' + (isMine ? 'This is your store' : 'Compare other stores') +
+        '<svg width="14" height="14" aria-hidden="true"><use href="#i-arrow"></use></svg></span></div></a>' +
+      '<a class="sttile" href="index.html#how">' +
+        '<img src="assets/img/s-rest.jpg" alt="" aria-hidden="true" loading="lazy">' +
+        '<div><p class="eyebrow">' + BD.esc(tier.label) + '</p>' +
+        '<h3>They deliver it themselves</h3>' +
+        '<p>No freight carrier. The crew from this store brings it in, sets it up in the room you ' +
+        'choose and takes the old mattress away.</p>' +
+        '<span class="go">How the two prices work' +
+        '<svg width="14" height="14" aria-hidden="true"><use href="#i-arrow"></use></svg></span></div></a>';
+  }
+
+  /* This strip belongs to the store whose page this is, not to whoever the
+     visitor has picked, so it carries that store's own price and never the
+     shared two price ledger. */
+  function floorCard(p, d) {
+    var base = BD.baseOption(p);
+    return '<a class="pcard floorcard" href="product.html#' + BD.esc(p.sku) + '">' +
+      '<div class="pcard__media">' +
+        '<img src="' + BD.esc(p.img) + '" alt="' + BD.esc(p.brand + ' ' + p.name) + '" loading="lazy" decoding="async">' +
+      '</div>' +
+      '<div class="pcard__body">' +
+        '<p class="pcard__opts">On the floor' + (base ? '<span class="dot" aria-hidden="true">\u00b7</span>' +
+          '<span class="rate">' + BD.esc(base.name) + '</span>' : '') + '</p>' +
+        '<span class="pcard__rule" aria-hidden="true"></span>' +
+        '<span class="pcard__brand">' + BD.esc(p.brand) + (p.type ? ' \u00b7 ' + BD.esc(p.type) : '') + '</span>' +
+        '<h3 class="pcard__name">' + BD.esc(p.name) + '</h3>' +
+        '<p class="floorcard__price"><span class="amt num">' + BD.money(Math.round(p.price * d.factor)) + '</span>' +
+          '<span class="was num">' + BD.money(p.price) + ' online</span></p>' +
+      '</div></a>';
+  }
+
+  function floor(d) {
+    var held = (window.BD_CATALOG || []).filter(function (p) { return BD.inStock(p, d); });
+    var show = held.slice(0, 4);
+    $('#st-floor').innerHTML = show.map(function (p) { return floorCard(p, d); }).join('');
+    $('#st-floor-note').textContent = held.length
+      ? held.length + ' of the ' + window.BD_CATALOG.length + ' lines on this site are on this floor today. ' +
+        'Anything else they can usually bring in inside a week.'
+      : 'Nothing of ours is on this floor today. They order in, usually inside a week.';
+  }
+
+  function near(d) {
+    var others = BD.dealers.filter(function (x) { return x.state === d.state && x.id !== d.id; }).slice(0, 6);
+    $('#st-near-h').textContent = others.length
+      ? 'Other stores in ' + (BD.states[d.state] ? BD.states[d.state].name : d.state)
+      : 'The rest of the network';
+    $('#st-near').innerHTML = others.length
+      ? others.map(function (o) {
+          var os = BD.openState(o);
+          return '<a class="stnear__item" href="dealer.html#' + BD.esc(o.id) + '">' +
+            '<strong>' + BD.esc(o.name) + '</strong>' +
+            '<span>' + BD.esc(o.city) + ', ' + BD.esc(o.state) + '</span>' +
+            '<span class="' + (os.open ? 'open' : 'shut') + '">' + BD.esc(os.text) + '</span></a>';
+        }).join('')
+      : '<p class="measure">This is the only BoxDrop in the state so far.</p>';
+  }
+
+  function render() {
+    var d = pick();
+    if (!d) return;
+    var tier = BD.dealerTier(d);
+    var open = BD.openState(d);
+    var st = BD.states[d.state] ? BD.states[d.state].name : d.state;
+
+    document.title = d.name + ' · BoxDrop';
+    $('#crumb-name').textContent = d.name;
+    $('#st-name').textContent = d.name;
+    $('#st-where').textContent = d.city + ', ' + st + ' · ' + tier.label;
+    $('#st-sum').textContent = d.name + ' in ' + d.city + ': mattresses and furniture from an ' +
+      'independently owned store that sets its own price and makes its own deliveries.';
+    $('#st-open').innerHTML = '<b class="' + (open.open ? 'open' : 'shut') + '">' + BD.esc(open.text) + '</b>';
+    $('#st-photo').src = BD.dealerImg(d);
+    $('#st-photo').alt = 'The showroom floor at ' + d.name + '.';
+    $('#st-addr').textContent = d.addr;
+    $('#st-dir').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(d.addr);
+    $('#st-phone').innerHTML = d.phone
+      ? '<a class="phone-link" href="tel:' + d.phone.replace(/[^0-9]/g, '') + '">' + BD.esc(d.phone) + '</a>'
+      : 'Not listed';
+    $('#st-own').innerHTML = d.url
+      ? '<a class="link-arrow" href="' + BD.esc(d.url) + '" target="_blank" rel="noopener noreferrer">' +
+        'Their own store page <svg width="13" height="13" aria-hidden="true"><use href="#i-arrow"></use></svg></a>'
+      : '';
+    $('#st-hours').innerHTML = hoursTable(d);
+    $('#st-info').innerHTML = blurb(d, tier);
+    $('#st-tiles').innerHTML = tiles(d, tier);
+
+    var mine = BD.currentDealer();
+    $('#st-cta').innerHTML = (mine && mine.id === d.id)
+      ? '<span class="btn btn--local" aria-disabled="true">This is your store</span>' +
+        '<a class="btn btn--online" href="category.html#mattresses">Shop their prices</a>'
+      : '<button type="button" class="btn btn--solid-local" data-pick="' + BD.esc(d.id) + '">Make this my store</button>' +
+        '<a class="btn btn--ghost" href="dealers.html">Find another</a>';
+
+    floor(d);
+    near(d);
+  }
+
+  document.addEventListener('click', function (e) {
+    var pickBtn = e.target.closest && e.target.closest('[data-pick]');
+    if (!pickBtn) return;
+    var d = BD.dealers.filter(function (x) { return x.id === pickBtn.getAttribute('data-pick'); })[0];
+    if (d) {
+      if (d.zip) BD.store.set('bd.zip', String(d.zip));
+      BD.setDealer(d);
+    }
+  });
+
+  window.addEventListener('hashchange', function () { render(); window.scrollTo({ top: 0 }); });
+  document.addEventListener('bd:dealerchange', render);
+  render();
+})();
+</script>
+</body>
+</html>

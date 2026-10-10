@@ -448,7 +448,7 @@
             ? '<span class="btn btn--local btn--sm" aria-disabled="true">Showing their prices</span>'
             : '<button type="button" class="btn btn--solid-local btn--sm" data-pick="' + BD.esc(d.id) + '">See their prices</button>') +
         '</div>' +
-        (d.url ? '<a class="dcard__page" href="' + BD.esc(d.url) + '" rel="noopener">Their own store page</a>' : '') +
+        '<a class="dcard__page" href="dealer.html#' + BD.esc(d.id) + '">About this store</a>' +
       '</div></article>';
   }
 

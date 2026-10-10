@@ -436,6 +436,7 @@
     dealers: DEALERS, currentDealer: currentDealer, setDealer: setDealer, nearest: nearest,
     states: STATES, stateForZip: stateForZip, zipGap: zipGap, openState: openState,
     hoursLine: hoursLine, dealerImg: dealerImg, dealerTier: dealerTier, inStock: inStock,
+    weekFor: weekOf, clock: clockLabel,
     money: money, paintLedgers: paintLedgers, paintCart: paintCart, cart: cart,
     addToCart: addToCart, toast: toast, store: store, rangeLow: RANGE_LOW, rangeHigh: RANGE_HIGH,
     esc: esc, ledgerHTML: ledgerHTML, starsHTML: starsHTML, cardHTML: cardHTML,

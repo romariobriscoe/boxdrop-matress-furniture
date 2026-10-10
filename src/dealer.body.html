@@ -1,0 +1,80 @@
+<main id="main">
+  <nav class="crumbs wrap" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="dealers.html">Find a store</a></li>
+      <li><span aria-current="page" id="crumb-name">Store</span></li>
+    </ol>
+  </nav>
+
+  <figure class="storefront">
+    <img id="st-photo" src="assets/img/s-showroom-1.jpg" alt="" decoding="async">
+  </figure>
+
+  <header class="sthead">
+    <div class="wrap">
+      <p class="eyebrow eyebrow--local" id="st-where">Locally owned</p>
+      <h1 id="st-name">Store</h1>
+      <p class="sthead__sum" id="st-sum"></p>
+      <p class="sthead__open" id="st-open"></p>
+      <div class="sthead__cta" id="st-cta"></div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="stcols">
+      <section class="stcol" aria-labelledby="h-contact">
+        <h2 id="h-contact">Address</h2>
+        <address id="st-addr"></address>
+        <p><a id="st-dir" class="link-arrow" href="#" target="_blank" rel="noopener noreferrer">
+          Get directions <svg width="13" height="13" aria-hidden="true"><use href="#i-arrow"></use></svg></a></p>
+        <dl class="stmeta">
+          <dt>Phone</dt><dd id="st-phone"></dd>
+          <dt>Owned by</dt><dd>An independent BoxDrop dealer</dd>
+        </dl>
+        <p id="st-own"></p>
+      </section>
+
+      <section class="stcol" aria-labelledby="h-hours">
+        <h2 id="h-hours">Opening hours</h2>
+        <table class="sthours"><tbody id="st-hours"></tbody></table>
+      </section>
+
+      <section class="stcol" aria-labelledby="h-info">
+        <h2 id="h-info">This store</h2>
+        <div id="st-info"></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="sttiles" id="st-tiles"></div>
+
+  <section class="section" aria-labelledby="h-floor">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Walked in today</p>
+          <h2 class="sec-title" id="h-floor">On this floor right now</h2>
+        </div>
+        <a class="link-arrow" href="category.html#mattresses">Everything we sell
+          <svg width="15" height="15" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+      </div>
+      <div class="pgrid" id="st-floor"></div>
+      <p class="stfloor__note" id="st-floor-note"></p>
+    </div>
+  </section>
+
+  <section class="section section--sunk" style="border-top:1px solid var(--rule)">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Same state</p>
+          <h2 class="sec-title" id="st-near-h">Other stores nearby</h2>
+        </div>
+        <a class="link-arrow" href="dealers.html">All 252 stores
+          <svg width="15" height="15" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+      </div>
+      <div class="stnear" id="st-near"></div>
+    </div>
+  </section>
+</main>

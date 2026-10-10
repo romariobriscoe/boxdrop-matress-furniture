@@ -50,6 +50,7 @@ PAGES = [
   ('category.html', 'category', 'Shop BoxDrop',                        'category'),
   ('product.html',  'product',  'Sleep2Win Reactive Hybrid',           'category'),
   ('dealers.html',  'dealers',  'Find your BoxDrop dealer',            'dealers'),
+  ('dealer.html',   'dealer',   'BoxDrop store',                       'dealers'),
   ('cart.html',     'cart',     'Your BoxDrop cart',                   None),
 ]
 
@@ -57,6 +58,7 @@ EXTRA_SCRIPTS = {
   'home':     ['assets/js/catalog.js'],
   'category': ['assets/js/catalog.js'],
   'dealers':  ['assets/js/catalog.js'],
+  'dealer':   ['assets/js/catalog.js'],
   'product':  ['assets/js/catalog.js'],
   'cart':     ['assets/js/catalog.js'],
 }
