@@ -232,7 +232,11 @@ ul,ol{margin:0;padding:0;list-style:none}
 .utility__links{display:flex;gap:var(--s5);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase}
 .utility__links a{color:#EDEFFA;text-decoration:none;padding-block:10px;border-bottom:1px solid transparent}
 .utility__links a:hover{border-color:var(--local-bright)}
-@media (max-width:720px){.utility__promise,.utility__links{display:none}.utility .wrap{justify-content:center}}
+/* Below 720 the utility bar has already dropped its promise line and its
+   links, leaving only "Your BoxDrop: set your location" directly above a
+   dealer bar that says the same thing and gives you a button for it. Two
+   bars, one message, about fifty pixels of a phone screen. */
+@media (max-width:720px){.utility{display:none}}
 
 /* ---------- dealer chip ---------- */
 .chip-dealer{
@@ -377,11 +381,29 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 .hero__over{position:relative;z-index:1;width:100%;padding-block:clamp(40px,7vw,96px)}
 @media (max-width:900px){
-  /* Sized to the room left after the utility bar, masthead, dealer bar and
-     price promise band, so the hero still ends above the fold. */
-  .hero__bleed{min-height:clamp(400px,56vh,520px)}
-  .hero__over{padding-block:var(--s6)}
-  .hero__bleed::after{background:linear-gradient(to top,rgba(8,13,58,.92) 0%,rgba(8,13,58,.64) 52%,rgba(8,13,58,.2) 100%)}
+  /* On a phone the copy filled the frame and you never saw the bed, which
+     is a poor trade when the bed is the thing being sold. So the hero stops
+     being an overlay and becomes two stacked bands: the film on top, with
+     nothing over it but the play control, and the words underneath on the
+     same navy. You see it, then you read it. */
+  .hero__bleed{min-height:0;display:block}
+  .hero__film,.hero__bleed > img{
+    position:relative;inset:auto;height:var(--hero-film-h);width:100%;object-fit:cover;display:block;
+  }
+  .hero__bleed::after{
+    inset:auto 0 0 0;height:84px;top:calc(var(--hero-film-h) - 84px);
+    background:linear-gradient(to bottom,rgba(8,13,58,0),rgba(8,13,58,1));
+  }
+  .hero__play{inset:0 0 auto 0;height:var(--hero-film-h)}
+  .hero__over{position:relative;z-index:1;background:rgb(8,13,58);padding-block:0 var(--s6);margin-top:-1px}
+}
+@media (max-width:760px){
+  :root{--hero-film-h:clamp(200px,30vh,280px)}
+  /* The band right above already explains the lower floor price at length,
+     so on a phone the hero does not say it a second time. */
+  .hero__lede-more{display:none}
+  .promise__text{font-size:var(--t-sm)}
+  .promise{padding-block:var(--s4)}
 }
 .hero__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
 .hero__copy{min-width:0}
