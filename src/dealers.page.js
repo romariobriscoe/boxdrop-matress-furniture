@@ -17,14 +17,18 @@
     return c;
   }
 
+  /* Store names spell the brand one way now, but shoppers type it both ways,
+     so the brand token is collapsed on each side before comparing. */
+  function brandFold(s) { return s.toLowerCase().replace(/\bbox\s+drop\b/g, 'boxdrop'); }
+
   function matches(d) {
     if (state.st !== 'all' && d.state !== state.st) return false;
     if (state.tier !== 'all' && BD.dealerTier(d).key !== state.tier) return false;
-    var q = state.q.trim().toLowerCase();
+    var q = brandFold(state.q.trim());
     if (!q) return true;
     if (/^\d{5}$/.test(q)) return d.zip === q || d.state === BD.stateForZip(q);
     var full = BD.states[d.state] ? BD.states[d.state].name : d.state;
-    return (d.name + ' ' + d.city + ' ' + d.state + ' ' + full + ' ' + d.addr).toLowerCase().indexOf(q) > -1;
+    return brandFold(d.name + ' ' + d.city + ' ' + d.state + ' ' + full + ' ' + d.addr).indexOf(q) > -1;
   }
 
   function visible() {
