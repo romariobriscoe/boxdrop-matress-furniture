@@ -61,12 +61,55 @@
   }
 
   /* Rough separation between two ZIPs, used only to order a list. It is a
-     number of ZIP steps, not miles, and nothing is labelled as miles. */
+     sort key, not miles, and nothing is ever labelled as miles.
+
+     The first three digits are a real postal region, so they carry far more
+     geography than the last two and are weighted to dominate. Straight
+     numeric distance got this wrong in a way you can see: from 37663
+     Kingsport it put 37716 Clinton (gap 53, about 90 miles) ahead of 37604
+     Johnson City (gap 59, about 25 miles). Same region first fixes it. */
   function zipGap(a, b) {
     var x = parseInt(String(a || '').slice(0, 5), 10);
     var y = parseInt(String(b || '').slice(0, 5), 10);
     if (isNaN(x) || isNaN(y)) return Infinity;
-    return Math.abs(x - y);
+    var region = Math.abs(Math.floor(x / 100) - Math.floor(y / 100));
+    return region * 100000 + Math.abs(x - y);
+  }
+
+  /* Distance between two state centres, which are real coordinates, used to
+     order states once the shopper's own state is exhausted. */
+  function stateMiles(a, b) {
+    var A = STATES[a], B = STATES[b];
+    if (!A || !B) return 9999;
+    var R = 3958.8, rad = Math.PI / 180;
+    var dLat = (B.lat - A.lat) * rad, dLng = (B.lng - A.lng) * rad;
+    var la = A.lat * rad, lb = B.lat * rad;
+    var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.sin(dLng / 2) * Math.sin(dLng / 2) * Math.cos(la) * Math.cos(lb);
+    return Math.round(2 * R * Math.asin(Math.min(1, Math.sqrt(h))));
+  }
+
+  /* How near a store is to a ZIP, as a sortable list, best first.
+
+     ZIP arithmetic alone cannot answer this. Weighting the postal region
+     fixed 37663, where plain distance put Clinton ahead of Johnson City, but
+     broke 90210, where it put Sparks, Nevada ahead of El Cajon. So the
+     shopper's own state comes first, decided by the USPS prefix blocks; then
+     other states in order of how far their centres are; then ZIP within a
+     state, region first. Every part of that is real data. */
+  function zipRank(dealer, zip) {
+    var home = stateForZip(zip);
+    var same = home && dealer.state === home;
+    return [
+      same ? 0 : 1,
+      same ? 0 : (home ? stateMiles(home, dealer.state) : 0),
+      zipGap(dealer.zip, zip)
+    ];
+  }
+
+  function compareRank(a, b) {
+    for (var i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i] - b[i];
+    return 0;
   }
 
   function clockLabel(h) {
@@ -435,6 +478,7 @@
   window.BoxDrop = {
     dealers: DEALERS, currentDealer: currentDealer, setDealer: setDealer, nearest: nearest,
     states: STATES, stateForZip: stateForZip, zipGap: zipGap, openState: openState,
+    zipRank: zipRank, compareRank: compareRank, stateMiles: stateMiles,
     hoursLine: hoursLine, dealerImg: dealerImg, dealerTier: dealerTier, inStock: inStock,
     weekFor: weekOf, clock: clockLabel,
     money: money, paintLedgers: paintLedgers, paintCart: paintCart, cart: cart,

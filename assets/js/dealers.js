@@ -14,7 +14,9 @@
 (function () {
   'use strict';
 
-  /* Approximate geographic centre of each state, for the national map. */
+  /* Approximate geographic centre of each state, kept as reference data.
+     The locator draws a labelled state grid instead, because a scatter
+     plotted from these had no outline behind it to read against. */
   window.BD_STATES = {
     AL:{name:'Alabama',lat:32.8,lng:-86.8},
     AR:{name:'Arkansas',lat:34.9,lng:-92.4},

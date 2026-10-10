@@ -3,6 +3,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/css/boxdrop.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
+<meta name="theme-color" content="#111D6B">
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
 <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></symbol>
@@ -18,6 +22,7 @@
 <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
 <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
 <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 7h12M19 7h2M3 17h5M12 17h9"/><circle cx="17" cy="7" r="2.4"/><circle cx="10" cy="17" r="2.4"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4Z"/><path d="M9 4v13M15 6.5v13"/></symbol>
 <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
 </defs></svg>
 
@@ -145,20 +150,23 @@
 <!-- 04 · hero ------------------------------------------------------------ -->
 <section class="hero">
   <figure class="hero__bleed">
-    <img src="assets/img/hero-bedroom.jpg" width="1800" height="1200"
-         alt="A charcoal quilted pillowtop mattress on an upholstered frame in a daylit bedroom with a wood floor and a palm beside the window."
-         fetchpriority="high" decoding="async">
+    <video id="hero-film" class="hero__film"
+           poster="assets/img/s2w-hero-poster.jpg"
+           autoplay muted loop playsinline preload="auto"
+           aria-label="A slow pass across the quilted surface of the Sleep2Win Reactive Hybrid.">
+      <source src="assets/video/sleep2win-hero.mp4" type="video/mp4">
+    </video>
     <div class="hero__over">
       <div class="wrap">
         <div class="hero__copy">
-          <p class="eyebrow">Mattresses and furniture · 252 stores · 44 states</p>
+          <p class="eyebrow">Sleep2Win by Sapphire Sleep · New for 2026</p>
           <h1>The same bed.<span class="ln2">Two ways to buy it.</span></h1>
           <p class="hero__lede">
             Order here and your local BoxDrop dealer brings it to your door. Walk into that
             same dealer's showroom and they will beat this price.
           </p>
           <div class="hero__cta">
-            <a class="btn btn--online" href="category.html#mattresses">Shop mattresses</a>
+            <a class="btn btn--online" href="product.html#s2w-reactive-hybrid">See the Sleep2Win</a>
             <a class="btn btn--local" href="dealers.html">Find your dealer</a>
           </div>
           <p class="hero__note">Free delivery over $599 · 101 night trial · Financing from $29 a month</p>
@@ -169,20 +177,31 @@
 
   <div class="wrap">
     <aside class="hero__tag">
-      <div>
-        <p class="eyebrow eyebrow--local" style="margin-bottom:6px">Shown above</p>
-        <p class="name" style="margin:0">Sapphire Sleep Immense Luxury Firm Pillow Top, Queen</p>
+      <div class="hero__tag-id">
+        <p class="eyebrow eyebrow--local">The bed in the film</p>
+        <p class="name"><a href="product.html#s2w-reactive-hybrid">Sleep2Win Reactive Hybrid 15 inch</a></p>
+        <p class="hero__tag-sub">Sleep2Win by Sapphire Sleep · New for 2026</p>
       </div>
-      <div class="ledger ledger--sm" data-online="1199">
-        <div class="ledger__row ledger__row--online">
-          <span class="ledger__label"><span>Online</span></span>
-          <span class="ledger__price num">$1,199</span>
+
+      <ul class="hero__tag-facts">
+        <li><b>Two firmnesses, one bed</b><span>Unzip the cover and set each side to medium firm or medium plush</span></li>
+        <li><b>15 inch hybrid</b><span>Pocketed coils under a 5 inch comfort top you can lift out</span></li>
+        <li><b>101 nights to decide</b><span>Free delivery over $599, set up in the room, old mattress taken away</span></li>
+      </ul>
+
+      <div class="hero__tag-buy">
+        <div class="ledger ledger--sm" data-online="1899">
+          <div class="ledger__row ledger__row--online">
+            <span class="ledger__label"><span>Online</span></span>
+            <span class="ledger__price num">$1,899</span>
+          </div>
+          <div class="ledger__row ledger__row--local">
+            <span class="ledger__label"><span>Your local dealer</span></span>
+            <span class="ledger__price num">$1,557 to $1,671</span>
+            <p class="ledger__why"></p>
+          </div>
         </div>
-        <div class="ledger__row ledger__row--local">
-          <span class="ledger__label"><span>Your local dealer</span></span>
-          <span class="ledger__price num">$983 to $1,055</span>
-          <p class="ledger__why"></p>
-        </div>
+        <a class="btn btn--solid-local btn--sm" href="product.html#s2w-reactive-hybrid">See the Sleep2Win</a>
       </div>
     </aside>
   </div>
@@ -590,6 +609,22 @@
             '<svg width="14" height="14" aria-hidden="true"><use href="#i-arrow"></use></svg></span>' +
         '</div></div></a>';
     }).join('');
+  }
+
+  /* The element autoplays natively, which is what muted video is allowed to
+     do and what actually works; calling play() by hand raced the first byte
+     and was rejected. All this does is stop it for anyone who has asked the
+     system for reduced motion, and resume if they change their mind. */
+  var film = document.getElementById('hero-film');
+  if (film) {
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function sync() {
+      if (still.matches) { film.pause(); film.removeAttribute('autoplay'); return; }
+      var go = film.play();
+      if (go && go.catch) go.catch(function () { /* blocked: the poster stands in */ });
+    }
+    still.addEventListener ? still.addEventListener('change', sync) : still.addListener(sync);
+    if (still.matches) sync();
   }
 
   document.addEventListener('bd:dealerchange', paint);

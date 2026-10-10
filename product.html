@@ -8,6 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/css/boxdrop.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
+<meta name="theme-color" content="#111D6B">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 </head>
 <body>
@@ -25,6 +29,7 @@
 <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
 <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
 <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 7h12M19 7h2M3 17h5M12 17h9"/><circle cx="17" cy="7" r="2.4"/><circle cx="10" cy="17" r="2.4"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4Z"/><path d="M9 4v13M15 6.5v13"/></symbol>
 <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
 </defs></svg>
 
@@ -151,6 +156,7 @@
         <div class="gallery__thumbs" id="thumbs" role="group" aria-label="Product images"></div>
         <figure class="gallery__main" style="margin:0">
           <img id="main-img" src="assets/img/m-reactive.jpg" alt="" width="900" height="900" fetchpriority="high">
+          <video id="main-film" hidden muted loop playsinline controls preload="none"></video>
         </figure>
       </div>
 
@@ -507,14 +513,41 @@
   /* ---------- render ---------- */
   function renderGallery() {
     var imgs = product.gallery && product.gallery.length ? product.gallery : [product.img];
-    $('#thumbs').innerHTML = imgs.map(function (src, i) {
-      return '<button type="button" class="thumb" aria-pressed="' + (i === 0) + '" data-img="' + BD.esc(src) + '">' +
+    var film = product.film;
+    var thumbs = imgs.map(function (src, i) {
+      return '<button type="button" class="thumb" aria-pressed="' + (!film && i === 0) + '" data-img="' + BD.esc(src) + '">' +
         '<img src="' + BD.esc(src) + '" alt="View ' + (i + 1) + ' of ' + BD.esc(product.name) + '" loading="lazy">' +
         '</button>';
-    }).join('');
-    var m = $('#main-img');
-    m.src = imgs[0];
+    });
+    if (film) {
+      thumbs.unshift('<button type="button" class="thumb thumb--film" aria-pressed="true" data-film="1">' +
+        '<img src="' + BD.esc(film.poster) + '" alt="Play the film of ' + BD.esc(product.name) + '" loading="lazy">' +
+        '<span class="thumb__play" aria-hidden="true"></span></button>');
+    }
+    $('#thumbs').innerHTML = thumbs.join('');
+
+    var m = $('#main-img'), v = $('#main-film');
     m.alt = product.brand + ' ' + product.name + ', main product view';
+    m.src = imgs[0];
+    if (film) {
+      v.src = film.src; v.poster = film.poster;
+      v.setAttribute('aria-label', 'A slow pass across the surface of the ' + product.name + '.');
+      showFilm(true);
+    } else if (v) {
+      v.removeAttribute('src'); v.hidden = true; m.hidden = false;
+    }
+  }
+
+  /* The film is one more view in the gallery, so it swaps with the stills
+     rather than sitting apart from them. */
+  function showFilm(on) {
+    var m = $('#main-img'), v = $('#main-film');
+    if (!v || !v.getAttribute('src')) return;
+    v.hidden = !on; m.hidden = on;
+    if (!on) { v.pause(); return; }
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var go = v.play(); if (go && go.catch) go.catch(function () {});
+    }
   }
 
   function renderOptions() {
@@ -669,6 +702,8 @@
     if (t) {
       document.querySelectorAll('.thumb').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
       t.setAttribute('aria-pressed', 'true');
+      if (t.hasAttribute('data-film')) { showFilm(true); return; }
+      showFilm(false);
       $('#main-img').src = t.getAttribute('data-img');
       return;
     }

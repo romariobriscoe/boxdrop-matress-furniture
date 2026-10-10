@@ -49,6 +49,22 @@
     }).join('');
   }
 
+  /* The element autoplays natively, which is what muted video is allowed to
+     do and what actually works; calling play() by hand raced the first byte
+     and was rejected. All this does is stop it for anyone who has asked the
+     system for reduced motion, and resume if they change their mind. */
+  var film = document.getElementById('hero-film');
+  if (film) {
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function sync() {
+      if (still.matches) { film.pause(); film.removeAttribute('autoplay'); return; }
+      var go = film.play();
+      if (go && go.catch) go.catch(function () { /* blocked: the poster stands in */ });
+    }
+    still.addEventListener ? still.addEventListener('change', sync) : still.addListener(sync);
+    if (still.matches) sync();
+  }
+
   document.addEventListener('bd:dealerchange', paint);
   paint();
 })();
