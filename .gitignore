@@ -1,2 +1,8 @@
 _preview.html
 .DS_Store
+
+# Corporate exports carry dealer owners' names, emails and internal coach
+# assignments. GitHub Pages serves this whole repository, so they must not be
+# committed. Keep them outside the repo and point dealers_from_xlsx.py at them.
+exported_users*.xlsx
+docs/private/

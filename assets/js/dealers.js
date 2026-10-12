@@ -1,22 +1,19 @@
-/* BoxDrop store network.
-   Source: BoxDrop Direct store locator (boxdropdirect.com/pages/store-locator),
-   pulled 2026-10-10 and supplied as BoxDrop_US_Locations.xlsx. 252 stores in
-   44 states. Store name, city, state, street address, ZIP, phone and location
-   page are taken from that sheet verbatim, including the dealers who do not
-   trade under the BoxDrop name. The single edit: the brand token inside a
-   store name is normalised to BoxDrop, because the sheet spells it four ways
-   (Boxdrop 37, Box Drop 3, BOXDROP 1). Names with no brand token in them are
-   left exactly as supplied.
+/* BoxDrop store network. GENERATED — do not edit by hand.
+   Run: python3 dealers_from_xlsx.py   (source: BoxDrop_US_Locations.xlsx)
+
+   252 stores in 44 states. Store name, city, state, street address, ZIP,
+   phone and location page come from that sheet. The one edit: the brand
+   token inside a store name is normalised to BoxDrop, because the sheet
+   spells it several ways. Names with no brand token are left as supplied.
 
    The sheet carries no coordinates, no opening hours and no pricing, so this
-   file does not invent per store coordinates. hoursSet, imgSet and factor are
-   generated from the store id: stable between loads, and prototype data. */
+   file invents no per store coordinates. factor, hoursSet and imgSet are
+   derived from the store id: stable across re-imports, and prototype data.
+   The state centres below are for the locator's map, which plots one tile
+   per state rather than a pin per store. */
 (function () {
   'use strict';
 
-  /* Approximate geographic centre of each state, kept as reference data.
-     The locator draws a labelled state grid instead, because a scatter
-     plotted from these had no outline behind it to read against. */
   window.BD_STATES = {
     AL:{name:'Alabama',lat:32.8,lng:-86.8},
     AR:{name:'Arkansas',lat:34.9,lng:-92.4},
