@@ -1294,12 +1294,23 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 .mapwrap{background:var(--wash);padding:var(--s5);margin-block:var(--s6);position:static}
 .mapwrap[hidden]{display:none!important}
-.mapwrap svg{display:block;width:100%;height:auto;max-width:560px;margin-inline:auto;background:none}
-.mapwrap .mapdot rect{transition:opacity var(--fast) var(--ease)}
-.mapwrap .mapdot:hover rect,.mapwrap .mapdot:focus-visible rect{opacity:.82}
-.mapwrap .mapdot.is-off{cursor:default}
-.mapwrap .mapdot.is-off:hover rect{opacity:1}
+.mapwrap svg{display:block;width:100%;height:auto;max-width:760px;margin-inline:auto;background:none}
+.mapst{stroke:var(--paper);stroke-width:1.1;stroke-linejoin:round;cursor:pointer;
+  transition:fill var(--fast) var(--ease)}
+.mapst:hover{fill:var(--local-bright)!important}
+.mapst:focus-visible{outline:2.5px solid var(--local-bright);outline-offset:2px}
+.mapst.is-off{cursor:default}
+.mapst.is-off:hover{fill:#EDEFF6!important}
 .mapkey{justify-content:center}
+/* On a phone the map is 314px wide, so a count set for the desktop renders
+   at about 5px. The shading still reads as coverage, and the per state
+   figures are in the list directly below, so the numbers come off rather
+   than sit there as noise. Small states are too narrow to tap at this size
+   either way: the state menu above the map is the precise control. */
+@media (max-width:620px){
+  #map text{display:none}
+  .mapst{stroke-width:1.6}
+}
 
 /* Section per state, centred heading with its own count. */
 .dsections{display:grid;gap:clamp(36px,5vw,72px);padding-block:var(--s7) var(--s9)}
