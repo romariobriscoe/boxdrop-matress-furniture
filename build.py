@@ -62,7 +62,7 @@ PAGES = [
 EXTRA_SCRIPTS = {
   'home':     ['assets/js/catalog.js'],
   'category': ['assets/js/catalog.js'],
-  'dealers':  ['assets/js/catalog.js'],
+  'dealers':  ['assets/js/usmap.js', 'assets/js/catalog.js'],
   'dealer':   ['assets/js/catalog.js'],
   'product':  ['assets/js/catalog.js'],
   'cart':     ['assets/js/catalog.js'],
