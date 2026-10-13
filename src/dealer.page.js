@@ -25,7 +25,7 @@
       mattress: 'It is a sleep floor: mattresses and bases out to lie on, with furniture ordered in, usually inside a week.',
       full:     'Mattresses, bases and furniture are all out on the floor, so you can lie on the thing before you buy it.'
     }[tier.key] || 'Mattresses and bases are out on the floor to lie on.';
-    return '<p>' + BD.esc(d.name) + ' is one of 252 BoxDrop stores, and one of ' +
+    return '<p>' + BD.esc(d.name) + ' is one of ' + BD.dealers.length + ' BoxDrop stores, and one of ' +
       stateCount(d.state) + ' in ' + BD.esc(st) + '. ' + BD.esc(own) + BD.esc(floor) + '</p>' +
       '<p>Because the store owns its own stock and drives its own van, it sets its own floor price. ' +
       'That is why the number you see here is lower than the one on the rest of this site, and why ' +

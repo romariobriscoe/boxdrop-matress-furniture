@@ -1,4 +1,5 @@
-/* Dealer locator. 252 stores in 44 states, from the BoxDrop Direct network.
+/* Dealer locator. The whole BoxDrop network, counted from the data rather
+   than written down, so the copy cannot drift from the store list.
    A BoxDrop dealer sets their own price, so every card carries their number
    rather than the site's. */
 (function () {
@@ -204,7 +205,8 @@
           '</section>';
         }).join('')
       : '<div class="empty"><h3>No stores match that</h3>' +
-        '<p>Try a state, a town or a five digit ZIP. BoxDrop has 252 stores but not one in every county yet.</p>' +
+        '<p>Try a state, a town or a five digit ZIP. BoxDrop has ' + all().length +
+        ' stores but not one in every county yet.</p>' +
         '<p style="margin-top:20px"><button type="button" class="btn btn--ghost btn--sm" id="loc-clear">Clear search</button></p></div>';
 
     $('#map').innerHTML = mapSVG(list);

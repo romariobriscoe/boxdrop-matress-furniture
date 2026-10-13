@@ -1,19 +1,26 @@
 #!/usr/bin/env python3
-"""Regenerate assets/js/dealers.js from the spreadsheet in docs/.
+"""Regenerate assets/js/dealers.js from the sheets in docs/.
 
-    python3 dealers_from_xlsx.py          # uses docs/BoxDrop_US_Locations.xlsx
-    python3 dealers_from_xlsx.py other.xlsx
+    python3 dealers_from_xlsx.py
 
-Drop a newer export over the file in docs/, run this, then run build.py.
+Two sources, because neither alone is enough:
 
-Expected columns, by header name on the first row of the first sheet:
-    State · City · Store Name · Street Address · ZIP · Phone · Website / Location Page
+  docs/private/exported_users.xlsx   the corporate export. Authoritative for
+      which stores exist and for their addresses, phones and ZIPs. Carries
+      dealer owners' names, their emails and internal coach assignments, so it
+      is gitignored and none of those columns are ever written out.
 
-Three fields are NOT in the sheet and are derived from the store id instead:
-factor (the dealer's floor price multiplier), hoursSet and imgSet. Deriving
-them from the id rather than at random means a store keeps the same price and
-the same opening pattern across re-imports, so swapping the sheet does not
-quietly reshuffle every price on the site.
+  docs/BoxDrop_US_Locations.xlsx     the public store locator. Authoritative
+      for the name each store actually trades under, which the corporate
+      export does not hold in any usable column.
+
+Stores are joined on city and state. A store with no match keeps a name
+derived from its city. Three rows are dropped: two with no street address
+that are not stores, and one test record.
+
+factor, hoursSet and imgSet are not in either sheet and are derived from the
+store id, so a store keeps the same floor price and opening hours across
+re-imports rather than being reshuffled.
 """
 import hashlib
 import pathlib
@@ -37,6 +44,7 @@ CENTRE = {
  'OH':(40.3,-82.8),'OK':(35.6,-97.5),'OR':(43.9,-120.6),'PA':(40.9,-77.8),'RI':(41.7,-71.6),
  'SC':(33.9,-80.9),'SD':(44.4,-100.2),'TN':(35.8,-86.4),'TX':(31.5,-99.3),'UT':(39.3,-111.7),
  'VA':(37.5,-78.9),'WA':(47.4,-120.5),'WI':(44.6,-89.7),'WV':(38.6,-80.6),
+ 'NJ':(40.1,-74.7),
 }
 NAME = {
  'AL':'Alabama','AR':'Arkansas','AZ':'Arizona','CA':'California','CO':'Colorado','CT':'Connecticut',
@@ -46,7 +54,7 @@ NAME = {
  'ND':'North Dakota','NE':'Nebraska','NH':'New Hampshire','NM':'New Mexico','NV':'Nevada',
  'NY':'New York','OH':'Ohio','OK':'Oklahoma','OR':'Oregon','PA':'Pennsylvania','RI':'Rhode Island',
  'SC':'South Carolina','SD':'South Dakota','TN':'Tennessee','TX':'Texas','UT':'Utah','VA':'Virginia',
- 'WA':'Washington','WI':'Wisconsin','WV':'West Virginia',
+ 'WA':'Washington','WI':'Wisconsin','WV':'West Virginia','NJ':'New Jersey',
 }
 
 
@@ -100,29 +108,73 @@ def h(*parts):
     return int(hashlib.sha256('|'.join(parts).encode()).hexdigest()[:8], 16)
 
 
-def main():
-    src = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / 'docs' / 'BoxDrop_US_Locations.xlsx'
-    if not src.exists():
-        sys.exit(f'No spreadsheet at {src}')
+def norm_city(c):
+    """Corporate writes some cities in capitals."""
+    c = c.strip()
+    return c.title() if c.isupper() else c
 
-    header, data = rows(src)
-    col = {k: pick(header, k) for k in ('state', 'city', 'store name', 'street', 'zip', 'phone', 'website')}
+
+def join_key(city, state):
+    return (re.sub(r'[^a-z]', '', city.lower()), state.strip().upper())
+
+
+def public_names(path):
+    """Trading names from the public locator, keyed by city and state."""
+    if not path.exists():
+        return {}
+    header, data = rows(path)
+    c_state = pick(header, 'state')
+    c_city = pick(header, 'city')
+    c_name = pick(header, 'store name')
+    c_url = pick(header, 'website', 'location page')
+    out = {}
+    for r in data:
+        name = r.get(c_name, '').strip()
+        if name:
+            out.setdefault(join_key(r.get(c_city, ''), r.get(c_state, '')),
+                           (name, r.get(c_url, '').strip() if c_url else ''))
+    return out
+
+
+def main():
+    corp = ROOT / 'docs' / 'private' / 'exported_users.xlsx'
+    if not corp.exists():
+        sys.exit(f'No corporate export at {corp}\n'
+                 'Drop it there (the folder is gitignored) and run again.')
+
+    names = public_names(ROOT / 'docs' / 'BoxDrop_US_Locations.xlsx')
+    header, data = rows(corp)
+    col = {k: pick(header, k) for k in ('location', 'address', 'city', 'state', 'zip', 'phone')}
     missing = [k for k, v in col.items() if v is None]
     if missing:
-        sys.exit(f'Columns not found in {src.name}: {", ".join(missing)}\nHeaders seen: {list(header)}')
+        sys.exit(f'Columns not found: {", ".join(missing)}\nHeaders seen: {list(header)}')
 
-    seen, out, skipped = {}, [], 0
+    seen, out = {}, []
+    dropped, matched, derived = [], 0, 0
     for r in data:
-        name = r.get(col['store name'], '')
-        st = r.get(col['state'], '')
-        city = r.get(col['city'], '')
-        if not name or not st or not city:
-            skipped += 1
+        city = norm_city(r.get(col['city'], ''))
+        st = r.get(col['state'], '').strip().upper()
+        street = r.get(col['address'], '').strip()
+        loc = r.get(col['location'], '').strip()
+
+        if not street:                       # the two rows that are not stores
+            dropped.append(loc or city)
             continue
-        street = r.get(col['street'], '')
-        zp = re.sub(r'[^0-9]', '', r.get(col['zip'], ''))[:5]
-        phone = r.get(col['phone'], '')
-        url = r.get(col['website'], '')
+        if st not in CENTRE:                 # the test record sits in state 'ST'
+            dropped.append(f'{loc or city} [state {st!r}]')
+            continue
+
+        # Excel drops the leading zero on New England and NJ ZIPs.
+        zp = re.sub(r'[^0-9]', '', r.get(col['zip'], ''))
+        zp = zp.zfill(5) if 0 < len(zp) <= 5 else zp[:5]
+
+        hit = names.get(join_key(city, st))
+        if hit:
+            name, url = hit
+            matched += 1
+        else:
+            name, url = f'BoxDrop {city}', ''
+            derived += 1
 
         base = (st + '-' + re.sub(r'[^a-z0-9]+', '-', city.lower())).strip('-')
         seen[base] = seen.get(base, 0) + 1
@@ -134,29 +186,25 @@ def main():
             "    addr:'%s', phone:'%s', url:'%s', factor:%.2f, hoursSet:%d, imgSet:%d }," % (
                 esc(did), esc(brand(name)), esc(city), st,
                 ("'%s'" % zp) if zp else 'null',
-                esc(addr), esc(phone), esc(url),
+                esc(addr), esc(r.get(col['phone'], '').strip()), esc(url),
                 0.81 + (h(did, 'f') % 9) / 100.0, h(did, 'h') % 4, h(did, 'i') % 8))
 
     states = sorted({l.split("state:'")[1].split("'")[0] for l in out})
-    unknown = [s for s in states if s not in CENTRE]
-    if unknown:
-        print(f'  ! no map centre for: {", ".join(unknown)} — add them to CENTRE in this script')
-
     centres = ',\n'.join("    %s:{name:'%s',lat:%s,lng:%s}" % (k, NAME[k], v[0], v[1])
-                         for k, v in sorted(CENTRE.items()))
-    js = """/* BoxDrop store network. GENERATED — do not edit by hand.
-   Run: python3 dealers_from_xlsx.py   (source: %s)
+                          for k, v in sorted(CENTRE.items()) if k in states)
+    js = """/* BoxDrop store network. GENERATED - do not edit by hand.
+   Run: python3 dealers_from_xlsx.py
 
-   %d stores in %d states. Store name, city, state, street address, ZIP,
-   phone and location page come from that sheet. The one edit: the brand
-   token inside a store name is normalised to BoxDrop, because the sheet
-   spells it several ways. Names with no brand token are left as supplied.
+   %d stores in %d states. Which stores exist, and their addresses, phones
+   and ZIPs, come from the corporate export. The name each one trades under
+   comes from the public store locator, joined on city and state; %d matched
+   and %d fall back to their city. Nothing from the corporate export's Name,
+   Email or Coach columns is written here: those are dealer owners and staff.
 
-   The sheet carries no coordinates, no opening hours and no pricing, so this
-   file invents no per store coordinates. factor, hoursSet and imgSet are
-   derived from the store id: stable across re-imports, and prototype data.
-   The state centres below are for the locator's map, which plots one tile
-   per state rather than a pin per store. */
+   Neither sheet holds coordinates, opening hours or pricing, so no per store
+   coordinates are invented. factor, hoursSet and imgSet are derived from the
+   store id: stable across re-imports, and prototype data. The state centres
+   below serve the locator's map, which plots one tile per state. */
 (function () {
   'use strict';
 
@@ -168,12 +216,15 @@ def main():
 %s
   ];
 })();
-""" % (src.name, len(out), len(states), centres, '\n'.join(out))
+""" % (len(out), len(states), matched, derived, centres, '\n'.join(out))
 
     dest = ROOT / 'assets' / 'js' / 'dealers.js'
     dest.write_text(js)
-    print(f'  {dest.relative_to(ROOT)}  {len(out)} stores, {len(states)} states'
-          + (f', {skipped} rows skipped' if skipped else ''))
+    print(f'  {dest.relative_to(ROOT)}')
+    print(f'    {len(out)} stores, {len(states)} states')
+    print(f'    names: {matched} from the public locator, {derived} derived from city')
+    if dropped:
+        print(f'    dropped {len(dropped)}: ' + '; '.join(dropped))
 
 
 if __name__ == '__main__':
