@@ -1453,3 +1453,31 @@ ul,ol{margin:0;padding:0;list-style:none}
   .verified{font-size:11.5px}
   .rail__meta a{min-height:44px;display:inline-flex;align-items:center}
 }
+
+/* ============================================================
+   The brands band. Six national names in one quiet row under the pricing
+   section, where they substantiate the close-outs claim made directly
+   above. Grey at rest so six house palettes read as one system on this
+   page; their own colour comes back on hover. No carousel: all six are
+   the point, and arrows would hide a third of them behind a click.
+   ============================================================ */
+.brands{padding-block:clamp(36px,5vw,64px);border-top:1px solid var(--rule)}
+.brands .eyebrow{justify-content:flex-start}
+.brands__line{font-family:var(--body);font-weight:400;font-size:var(--t-md);line-height:1.5;
+  color:var(--ink-2);letter-spacing:0;max-width:56ch;margin-top:var(--s3)}
+.brandrow{list-style:none;margin:var(--s6) 0 0;padding:var(--s6) 0 0;border-top:1px solid var(--rule);
+  display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(16px,3vw,44px);align-items:center}
+.brandrow a,.brandrow span{display:grid;place-items:center;min-height:64px}
+.brandrow img{max-width:100%;max-height:64px;width:auto;height:auto;
+  filter:grayscale(1);opacity:.52;transition:filter var(--fast) var(--ease),opacity var(--fast) var(--ease)}
+.brandrow a:hover img,.brandrow a:focus-visible img{filter:none;opacity:1}
+.brandrow a:focus-visible{outline:2.5px solid var(--local-bright);outline-offset:4px}
+@media (max-width:860px){
+  .brandrow{grid-template-columns:repeat(3,1fr);gap:var(--s5) var(--s4)}
+  .brandrow img{max-height:54px}
+}
+@media (prefers-reduced-motion:reduce){.brandrow img{transition:none}}
+/* Three of the files are JPEGs on white, so in the dark theme every logo
+   sits on a small white chip rather than three floating white rectangles. */
+:root[data-theme="dark"] .brandrow a,:root[data-theme="dark"] .brandrow span{
+  background:#fff;border-radius:6px;padding:10px 14px}

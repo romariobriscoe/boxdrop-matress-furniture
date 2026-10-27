@@ -319,6 +319,21 @@
   });
   document.addEventListener('bd:dealerchange', function () { syncStockSwitch(); renderGrid(); });
 
+  /* A brand logo elsewhere on the site links straight into the catalog:
+     category.html?brand=Beautyrest#mattresses. Applied only when that brand
+     really sells in the category, so a bad link degrades to the full list
+     rather than an empty one. First load only: changing category afterwards
+     clears filters, as it always has. */
+  function seedBrandFromURL() {
+    var want = new URLSearchParams(location.search).get('brand');
+    if (!want) return;
+    var hit = inCat()
+      .map(function (p) { return p.brand; })
+      .filter(function (b) { return b.toLowerCase() === want.toLowerCase(); })[0];
+    if (hit) state.f.brand = [hit];
+  }
+
   readHash();
+  seedBrandFromURL();
   renderAll();
 })();
